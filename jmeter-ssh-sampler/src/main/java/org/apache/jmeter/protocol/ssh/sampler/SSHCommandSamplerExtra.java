@@ -79,35 +79,54 @@ public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
                         + " pw=" + getPassword());
                 throw new NullPointerException("Failed to connect to server: " + getFailureReason());
             }
-
-            response = doCommand(getSession(), command, res);
-            res.setResponseData(response.getBytes());
-
-            if(useReturnCode){
-                res.setSuccessful("0".equals(res.getResponseCode()));
-            }else{
-                res.setSuccessful(true);
+            if (!command.equals("")) {
+	            response = doCommand(getSession(), command, res);
+	            res.setResponseData(response.getBytes());
+	
+	            if(useReturnCode){
+	                res.setSuccessful("0".equals(res.getResponseCode()));
+	            }else{
+	                res.setSuccessful(true);
+	            }
+	            res.setResponseMessageOK();
             }
-
-            res.setResponseMessageOK();
+            else
+            {
+	            // consider as successfull since no command had to be executed
+	            res.setSuccessful(true);
+	            res.setResponseCode("Connection Succesfull");
+	            if (this.getCloseConnection()==false)
+	            {
+	            	res.setResponseMessage("SSH Connection established, no Command Executed");
+	            }
+	            else
+	            {
+	            	res.setResponseMessage("SSH Connection closed, no Command Executed");
+	            }
+	            res.setResponseData("", "UTF-8");
+            }
+            
         } catch (JSchException e1) {
             res.setSuccessful(false);
             res.setResponseCode("JSchException");
             res.setResponseMessage(e1.getMessage());
+            res.setResponseData("", "UTF-8");
         } catch (IOException e1) {
             res.setSuccessful(false);
             res.setResponseCode("IOException");
             res.setResponseMessage(e1.getMessage());
+            res.setResponseData("", "UTF-8");
         } catch (NullPointerException e1) {
             res.setSuccessful(false);
             res.setResponseCode("Connection Failed");
             res.setResponseMessage(e1.getMessage());
+            res.setResponseData("", "UTF-8");
         }
 
         // Try a disconnect/sesson = null here instead of in finalize.
         	disconnect();
         	setSession(null); //destroy session reference in this object 
-        	//disconnect function removes session to the session list if needed
+        	//disconnect function moves session to the session list if needed
         return res;
     }
 

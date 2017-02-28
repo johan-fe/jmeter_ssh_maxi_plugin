@@ -113,7 +113,99 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 	
 
 	}
+	@Test 
+	public void testSampleUnkownDestAddress() {
+	     this.instance=new SSHCommandSamplerExtra();          
+		 this.instance.setCommand("dir");
+		 this.instance.setConnectionName("CONN1");
+		 this.instance.setConnectionTimeout(3200);
+		 this.instance.setHostname("1.2.3.4");
+		 this.instance.setPassword("azerty!");
+		 this.instance.setPort(5222);
+		 this.instance.setPrintStdErr(true);
+		 this.instance.setUseReturnCode(false);
+		 this.instance.setUsername("id093108");
+		 this.instance.setUseTty(false);
+ 
+		 SampleResult sr= this.instance.sample(null) ;
+		 Integer errorCount= sr.getErrorCount();
+		 assertTrue("ErrorCount is 1",errorCount==1);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 assertTrue(responseCode.equals("Connection Failed"));
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 String responseMessage=sr.getResponseMessage();
+		 assertTrue("responsemessage is correct",responseMessage.equals("Failed to connect to server: timeout: socket is not established"));
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 String responseData=sr.getResponseDataAsString();
+		 assertTrue("responseData is empty",responseData.equals(""));
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+	
 
+	}
+	@Test 
+	public void testSampleEmptyStringCommand() {
+	     this.instance=new SSHCommandSamplerExtra();          
+		 this.instance.setCommand("");
+		 this.instance.setConnectionName("CONN1");
+		 this.instance.setConnectionTimeout(3200);
+		 this.instance.setHostname("127.0.0.1");
+		 this.instance.setPassword("azerty!");
+		 this.instance.setPort(5222);
+		 this.instance.setPrintStdErr(true);
+		 this.instance.setUseReturnCode(false);
+		 this.instance.setUsername("id093108");
+		 this.instance.setUseTty(false);
+		 this.instance.setCloseConnection(true);
+ 
+		 SampleResult sr= this.instance.sample(null) ;
+		 Integer errorCount= sr.getErrorCount();
+		 assertTrue("ErrorCount is 0",errorCount==0);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 assertTrue(responseCode.equals("Connection Succesfull"));
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 String responseMessage=sr.getResponseMessage();
+		 assertTrue("responsemessage is correct",responseMessage.equals("SSH Connection closed, no Command Executed"));
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 String responseData=sr.getResponseDataAsString();
+		 assertTrue("responseData is empty",responseData.equals(""));
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+	}
+	
+	@Test 
+	public void testSampleEmptyStringCommandKeepConnOpen() {
+	     this.instance=new SSHCommandSamplerExtra();          
+		 this.instance.setCommand("");
+		 this.instance.setConnectionName("CONN1");
+		 this.instance.setConnectionTimeout(3200);
+		 this.instance.setHostname("127.0.0.1");
+		 this.instance.setPassword("azerty!");
+		 this.instance.setPort(5222);
+		 this.instance.setPrintStdErr(true);
+		 this.instance.setUseReturnCode(false);
+		 this.instance.setUsername("id093108");
+		 this.instance.setUseTty(false);
+		 this.instance.setCloseConnection(false);
+ 
+		 SampleResult sr= this.instance.sample(null) ;
+		 Integer errorCount= sr.getErrorCount();
+		 assertTrue("ErrorCount is 0",errorCount==0);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 assertTrue(responseCode.equals("Connection Succesfull"));
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 String responseMessage=sr.getResponseMessage();
+		 assertTrue("responsemessage is correct",responseMessage.equals("SSH Connection established, no Command Executed"));
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 String responseData=sr.getResponseDataAsString();
+		 assertTrue("responseData is empty",responseData.equals(""));
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+	}
+	
 	@Test
 	public void testSetSession() {
 		// fail("Not yet implemented");
