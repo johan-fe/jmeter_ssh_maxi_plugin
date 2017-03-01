@@ -62,7 +62,7 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
         BufferedReader br = new BufferedReader(new InputStreamReader(channel.getInputStream()));
         BufferedReader err = new BufferedReader(new InputStreamReader(channel.getErrStream()));
         channel.setCommand(command);
-        res.sampleStart();
+         
         channel.connect();
 
         if(printStdErr){
@@ -105,20 +105,20 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
         res.setContentType("text/plain");
     	if(connectionName.equals(""))
     	{
-    		res.setSampleLabel(getName() +  " missing connection name");
+    		res.setResponseMessage(getName() +  "Missing Connection Name");
     		samplerData="Invalid sampler configuration connection name is required";
     		res.setSampleLabel(getName()+" ("+samplerData+")");
-    		responseData="connection name not configured in sampler!";
+    		responseData="Connection name not configured in sampler!";
     		res.setSuccessful(false);
     	}
     	else
     	{
     		if(this.command.equals(""))
     		{
-    			res.setSampleLabel(getName() +  " no command configured");
+    			res.setResponseMessage(getName() +  "No Command Configured");
         		samplerData="no command configured in sampler";
         		res.setSampleLabel(getName()+" ("+samplerData+")");
-        		responseData="command not configured in sampler!";
+        		responseData="Command not configured in sampler!";
         		res.setSuccessful(false);
     		}
     		else
@@ -132,11 +132,13 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
     	
     						String result=this.doCommand(ses, this.command,res);
     						if (result !=null){
+    							res.setResponseMessageOK();
     							res.setResponseData(result,"UTF-8");
     							res.setSuccessful(true);
     						}
     						else
     						{
+    							res.setResponseMessage("result=null");
     							res.setResponseData("","UTF-8");
     							res.setSuccessful(true);
     						}

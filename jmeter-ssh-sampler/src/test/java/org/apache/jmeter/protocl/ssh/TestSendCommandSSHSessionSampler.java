@@ -43,6 +43,7 @@ public class TestSendCommandSSHSessionSampler {
 	    }
 	@Before
 	public void setUp() throws Exception {
+		this.instance = new SSHCommandSamplerExtra();  //  for some reason this must be there or else it fails
 	}
 
 	@After
@@ -57,7 +58,8 @@ public class TestSendCommandSSHSessionSampler {
 		 this.instance=new SSHCommandSamplerExtra();           
 		 this.instance.setCommand("dir");
 		 this.instance.setConnectionName("CONNECT1");
-		 this.instance.setConnectionTimeout(3200);
+		 this.instance.setConnectionTimeout(32000);
+		 this.instance.setSessionKeepAliveSeconds(23000);
 		 this.instance.setHostname("127.0.0.1");
 		 this.instance.setPassword("azerty!");
 		 this.instance.setPort(5222);
@@ -66,7 +68,7 @@ public class TestSendCommandSSHSessionSampler {
 		 this.instance.setUsername("johan");
 		 this.instance.setUseTty(false);
 		 this.instance.setCloseConnection(false);
-
+ 
 		 SampleResult sr= this.instance.sample(null) ;
 		 Integer errorCount= sr.getErrorCount();
 		 assertTrue("ErrorCount is 0",errorCount==0);
@@ -82,30 +84,34 @@ public class TestSendCommandSSHSessionSampler {
 		 assertTrue("contains stderr in response Data", responseData.contains("=== stderr ==="));
 		 assertTrue("contains stderr in response Data", responseData.contains("Welcome to Application Shell"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 //sr.connectEnd();
+		 //sr.cleanAfterSample();
 		 
 		 SendCommandSSHSessionSampler sender = new SendCommandSSHSessionSampler();
 		 sender.setCommand("ls");
 		 sender.setConnectionName("CONNECT1");
 		 sender.setPrintStdErr(true);
 		 sender.setUseReturnCode(true);
+		 LOG.log(Level.INFO, "calling command sender");
 		 SampleResult sr2=sender.sample(null);
 		 Integer errorCount2= sr2.getErrorCount();
 		 assertTrue("ErrorCount is 0",errorCount2==0);
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount2));
 		 LOG.log(Level.INFO, "content type:"+sr2.getContentType());
 		 String responseCode2=sr2.getResponseCode();
-		 assertTrue(responseCode2.equals("200"));
+		 assertTrue(responseCode2.equals("0"));
 		 LOG.log(Level.INFO, "response code:"+responseCode2);
 		 String responseMessage2=sr2.getResponseMessage();
 		 assertTrue("response Message is OK",responseMessage2.equals("OK") );
 		 LOG.log(Level.INFO, "response message:"+responseMessage2);
 		 String responseData2=sr2.getResponseDataAsString();
 		 assertTrue("contains stderr in response Data", responseData2.contains("=== stderr ==="));
-		 assertTrue("contains stderr in response Data", responseData2.contains("Welcome to Application Shell"));
+		 assertTrue("contains Welcome to Application Shell in response data", responseData2.contains("Welcome to Application Shell"));
+		 assertTrue("contains file1 file2 in response Data", responseData2.contains("file1 file2"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData2);
 	
 		 
-		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -113,9 +119,9 @@ public class TestSendCommandSSHSessionSampler {
 				 sess.disconnect();
 			 }
 			 catch(Exception e) {}
-			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONN1, tes send command completed" );
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, tes send command completed" );
 
-			 GlobalDataSsh.removeSession("CONN1");
+			 GlobalDataSsh.removeSession("CONNECT1");
 		 }
 	}	 
 

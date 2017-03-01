@@ -218,7 +218,7 @@ public class SshExecCommandFactory implements CommandFactory, Runnable {
 			else if (line.equalsIgnoreCase(SHELL_CMD_HELP))
 				response = "Help is not implemented yet...";
 			else if (line.equalsIgnoreCase(SHELL_CMD_LS))
-				response = "file1 file2 file2";
+				response = "file1 file2 file3";
 			else if (line.equalsIgnoreCase(SHELL_CMD_DIR))
 				response = " Volume in drive C is OSDisk\r\n" + 
 						" Volume Serial Number is 88C9-85F1\r\n" + 
