@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 //import org.apache.jmeter.control.LoopController;
 //import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
@@ -16,6 +17,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.jcraft.jsch.Session;
+
 //import org.junit.runner.RunWith;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsEqual;
@@ -70,7 +74,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 	public void setUp() throws Exception {
 		//super.setUp();
 		 
-			this.instance = new SSHCommandSamplerExtra();
+			this.instance = new SSHCommandSamplerExtra();  
 			//LOG.log(Level.INFO,"created new instance of SSHCommandSamplerExtra");
 		 
 	}
@@ -78,12 +82,12 @@ public class TestSSHCommandSamplerExtra // extends TestCase
     @After
 	public void tearDown() throws Exception {
 		//super.tearDown();
-		this.instance = null;// tbd close connection
+		this.instance = null;//  close connection and cleanup of globaldata in test itself
 	}
     //The Test annotation tells JUnit that the public void method to which it is attached can be run as a test case.
 	@Test 
 	public void testSample() {
-	     this.instance=new SSHCommandSamplerExtra();          
+		 this.instance=new SSHCommandSamplerExtra();           
 		 this.instance.setCommand("dir");
 		 this.instance.setConnectionName("CONN1");
 		 this.instance.setConnectionTimeout(3200);
@@ -92,8 +96,9 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 this.instance.setPort(5222);
 		 this.instance.setPrintStdErr(true);
 		 this.instance.setUseReturnCode(false);
-		 this.instance.setUsername("id093108");
+		 this.instance.setUsername("johan");
 		 this.instance.setUseTty(false);
+		 this.instance.setCloseConnection(true);
  
 		 SampleResult sr= this.instance.sample(null) ;
 		 Integer errorCount= sr.getErrorCount();
@@ -110,8 +115,19 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 assertTrue("contains stderr in response Data", responseData.contains("=== stderr ==="));
 		 assertTrue("contains stderr in response Data", responseData.contains("Welcome to Application Shell"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-	
+		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONN1, session shoul not be stored in there; setCloseConnection==true!" );
 
+			 GlobalDataSsh.removeSession("CONN1");
+		 }
+		 assertTrue("session is null", sess==null);
 	}
 	@Test 
 	public void testSampleUnkownDestAddress() {
@@ -124,9 +140,10 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 this.instance.setPort(5222);
 		 this.instance.setPrintStdErr(true);
 		 this.instance.setUseReturnCode(false);
-		 this.instance.setUsername("id093108");
+		 this.instance.setUsername("johan");
 		 this.instance.setUseTty(false);
- 
+		 this.instance.setCloseConnection(true);
+		 
 		 SampleResult sr= this.instance.sample(null) ;
 		 Integer errorCount= sr.getErrorCount();
 		 assertTrue("ErrorCount is 1",errorCount==1);
@@ -141,7 +158,19 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-	
+		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONN1, session should not be stored in there; setCloseConnection==true!" );
+
+			 GlobalDataSsh.removeSession("CONN1");
+		 }
+		 assertTrue("session is null", sess==null);
 
 	}
 	@Test 
@@ -155,7 +184,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 this.instance.setPort(5222);
 		 this.instance.setPrintStdErr(true);
 		 this.instance.setUseReturnCode(false);
-		 this.instance.setUsername("id093108");
+		 this.instance.setUsername("johan");
 		 this.instance.setUseTty(false);
 		 this.instance.setCloseConnection(true);
  
@@ -173,8 +202,66 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONN1, session should not be stored in there; setCloseConnection==true!" );
+
+			 GlobalDataSsh.removeSession("CONN1");
+		 }
+		 assertTrue("session is null", sess==null);
 	}
-	
+	@Test 
+	public void testSampleWrongPassword() {
+	     this.instance=new SSHCommandSamplerExtra();          
+		 this.instance.setCommand("");
+		 this.instance.setConnectionName("CONN1");
+		 this.instance.setConnectionTimeout(3200);
+		 this.instance.setHostname("127.0.0.1");
+		 this.instance.setPassword("xyz!");
+		 this.instance.setPort(5222);
+		 this.instance.setPrintStdErr(true);
+		 this.instance.setUseReturnCode(false);
+		 this.instance.setUsername("johan");
+		 this.instance.setUseTty(false);
+		 this.instance.setCloseConnection(true);
+ 
+		 SampleResult sr= this.instance.sample(null) ;
+		 Integer errorCount= sr.getErrorCount();
+		 assertTrue("ErrorCount is 1",errorCount==1);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 assertTrue(responseCode.equals("Connection Failed"));
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 String responseMessage=sr.getResponseMessage();
+		 assertTrue("responsemessage is correct",responseMessage.equals("Failed to connect to server: Auth fail"));
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 String responseData=sr.getResponseDataAsString();
+		 assertTrue("responseData is empty",responseData.equals(""));
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONN1, session should not be stored in there; setCloseConnection==true!" );
+
+			 GlobalDataSsh.removeSession("CONN1");
+		 }
+		 assertTrue("session is null", sess==null);
+
+		 
+	}
+		
 	@Test 
 	public void testSampleEmptyStringCommandKeepConnOpen() {
 	     this.instance=new SSHCommandSamplerExtra();          
@@ -186,7 +273,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 this.instance.setPort(5222);
 		 this.instance.setPrintStdErr(true);
 		 this.instance.setUseReturnCode(false);
-		 this.instance.setUsername("id093108");
+		 this.instance.setUsername("johan");
 		 this.instance.setUseTty(false);
 		 this.instance.setCloseConnection(false);
  
@@ -204,6 +291,18 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONN1");
+			 GlobalDataSsh.removeSession("CONN1");
+		 }
+		 assertTrue("session is not null", sess!=null);
 	}
 	
 	@Test
@@ -308,9 +407,9 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 
 	@Test
 	public void testSetUsername() {
-		instance.setUsername("id093108");
+		instance.setUsername("johan");
 		String un = instance.getUsername();
-		assertTrue(un.equals("id093108"));
+		assertTrue(un.equals("johan"));
 	}
 
 	@Test

@@ -86,7 +86,7 @@ public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
             failureReason = "Unknown";
             session = jsch.getSession(getUsername(), getHostname(), getPort());
             // session.setPassword(getPassword()); // Use a userinfo instead
-            if(userinfo.hasConnectionName()&& session!=null){
+            if(userinfo.hasConnectionName()&&this.getCloseConnection()==false&& session!=null){
             	GlobalDataSsh.addSession(connectionName,session);
             }
             session.setUserInfo(userinfo);
