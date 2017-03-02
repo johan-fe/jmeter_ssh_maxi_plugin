@@ -43,7 +43,7 @@ public class TestSendCommandSSHSessionSampler {
 	    }
 	@Before
 	public void setUp() throws Exception {
-		this.instance = new SSHCommandSamplerExtra();  //  for some reason this must be there or else it fails
+	 	this.instance = new SSHCommandSamplerExtra();  //  for some reason this must be there or else it fails
 	}
 
 	@After
@@ -119,10 +119,187 @@ public class TestSendCommandSSHSessionSampler {
 				 sess.disconnect();
 			 }
 			 catch(Exception e) {}
-			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, tes send command completed" );
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command completed" );
 
 			 GlobalDataSsh.removeSession("CONNECT1");
 		 }
 	}	 
+	@Test
+	public void testSampleSendCommandSessionUnknownSession() {
+		
 
+		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command ready to start" );
+
+			 GlobalDataSsh.removeSession("CONNECT1");
+		 } 
+		 SendCommandSSHSessionSampler sender = new SendCommandSSHSessionSampler();
+		 sender.setCommand("ls");
+		 sender.setConnectionName("CONNECT1");
+		 sender.setPrintStdErr(true);
+		 sender.setUseReturnCode(true);
+		 LOG.log(Level.INFO, "calling command sender");
+		 SampleResult sr2=sender.sample(null);
+		 Integer errorCount2= sr2.getErrorCount();
+		 assertTrue("ErrorCount is 1",errorCount2==1);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount2));
+		 LOG.log(Level.INFO, "content type:"+sr2.getContentType());
+		 String responseCode2=sr2.getResponseCode();
+		 assertTrue(responseCode2.equals("Connection Not Found"));
+		 LOG.log(Level.INFO, "response code:"+responseCode2);
+		 String responseMessage2=sr2.getResponseMessage();
+		 assertTrue("response Message is SendCommandSSHSessionSampler connection CONNECT1 not found",responseMessage2.equals("SendCommandSSHSessionSampler connection CONNECT1 not found") );
+		 LOG.log(Level.INFO, "response message:"+responseMessage2);
+		 String responseData2=sr2.getResponseDataAsString();
+		 assertTrue("response data is empty string", responseData2.equals(""));
+		 LOG.log(Level.INFO, "response data as string:"+responseData2);
+	
+		 
+	}
+	@Test
+	public void testSampleSendCommandSessionEmptyCommand() {
+		
+		 this.instance=new SSHCommandSamplerExtra();           
+		 this.instance.setCommand("dir");
+		 this.instance.setConnectionName("CONNECT1");
+		 this.instance.setConnectionTimeout(32000);
+		 this.instance.setSessionKeepAliveSeconds(23000);
+		 this.instance.setHostname("127.0.0.1");
+		 this.instance.setPassword("azerty!");
+		 this.instance.setPort(5222);
+		 this.instance.setPrintStdErr(true);
+		 this.instance.setUseReturnCode(false);
+		 this.instance.setUsername("johan");
+		 this.instance.setUseTty(false);
+		 this.instance.setCloseConnection(false);
+
+		 SampleResult sr= this.instance.sample(null) ;
+		 Integer errorCount= sr.getErrorCount();
+		 assertTrue("ErrorCount is 0",errorCount==0);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 assertTrue(responseCode.equals("200"));
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 String responseMessage=sr.getResponseMessage();
+		 assertTrue("response Message is OK",responseMessage.equals("OK") );
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 String responseData=sr.getResponseDataAsString();
+		 assertTrue("contains stderr in response Data", responseData.contains("=== stderr ==="));
+		 assertTrue("contains stderr in response Data", responseData.contains("Welcome to Application Shell"));
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+
+
+		 SendCommandSSHSessionSampler sender = new SendCommandSSHSessionSampler();
+		 sender.setCommand("");
+		 sender.setConnectionName("CONNECT1");
+		 sender.setPrintStdErr(true);
+		 sender.setUseReturnCode(true);
+		 LOG.log(Level.INFO, "calling command sender");
+		 SampleResult sr2=sender.sample(null);
+		 Integer errorCount2= sr2.getErrorCount();
+		 assertTrue("ErrorCount is 1",errorCount2==1);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount2));
+		 LOG.log(Level.INFO, "content type:"+sr2.getContentType());
+		 String responseCode2=sr2.getResponseCode();
+		 assertTrue(responseCode2.equals("No Command Configured"));
+		 LOG.log(Level.INFO, "response code:"+responseCode2);
+		 String responseMessage2=sr2.getResponseMessage();
+		 assertTrue("response Message is SSendCommandSSHSessionSampler No Command Configured",responseMessage2.equals("SendCommandSSHSessionSampler No Command Configured") );
+		 LOG.log(Level.INFO, "response message:"+responseMessage2);
+		 String responseData2=sr2.getResponseDataAsString();
+		 //assertTrue("response data is empty string", responseData2.equals(""));
+		 LOG.log(Level.INFO, "response data as string:"+responseData2);	 
+		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send empty command completed" );
+
+			 GlobalDataSsh.removeSession("CONNECT1");
+		 } 
+	}	
+	@Test
+	public void testSampleSendCommandSessionDoNotShowStdErr() {
+		
+		 this.instance=new SSHCommandSamplerExtra();           
+		 this.instance.setCommand("dir");
+		 this.instance.setConnectionName("CONNECT1");
+		 this.instance.setConnectionTimeout(32000);
+		 this.instance.setSessionKeepAliveSeconds(23000);
+		 this.instance.setHostname("127.0.0.1");
+		 this.instance.setPassword("azerty!");
+		 this.instance.setPort(5222);
+		 this.instance.setPrintStdErr(true);
+		 this.instance.setUseReturnCode(false);
+		 this.instance.setUsername("johan");
+		 this.instance.setUseTty(false);
+		 this.instance.setCloseConnection(false);
+ 
+		 SampleResult sr= this.instance.sample(null) ;
+		 Integer errorCount= sr.getErrorCount();
+		 assertTrue("ErrorCount is 0",errorCount==0);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 assertTrue(responseCode.equals("200"));
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 String responseMessage=sr.getResponseMessage();
+		 assertTrue("response Message is OK",responseMessage.equals("OK") );
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 String responseData=sr.getResponseDataAsString();
+		 assertTrue("contains stderr in response Data", responseData.contains("=== stderr ==="));
+		 assertTrue("contains stderr in response Data", responseData.contains("Welcome to Application Shell"));
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 
+		 SendCommandSSHSessionSampler sender = new SendCommandSSHSessionSampler();
+		 sender.setCommand("ls");
+		 sender.setConnectionName("CONNECT1");
+		 sender.setPrintStdErr(false);
+		 sender.setUseReturnCode(true);
+		  
+		 LOG.log(Level.INFO, "calling command sender");
+		 SampleResult sr2=sender.sample(null);
+		 Integer errorCount2= sr2.getErrorCount();
+		 assertTrue("ErrorCount is 0",errorCount2==0);
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount2));
+		 LOG.log(Level.INFO, "content type:"+sr2.getContentType());
+		 String responseCode2=sr2.getResponseCode();
+		 assertTrue(responseCode2.equals("-1"));
+		 LOG.log(Level.INFO, "response code:"+responseCode2);
+		 String responseMessage2=sr2.getResponseMessage();
+		 assertTrue("response Message is OK",responseMessage2.equals("OK") );
+		 LOG.log(Level.INFO, "response message:"+responseMessage2);
+		 String responseData2=sr2.getResponseDataAsString();
+		 assertTrue("contains no stderr in response Data", !responseData2.contains("=== stderr ==="));
+		 assertTrue("contains Welcome to Application Shell in response data", responseData2.contains("Welcome to Application Shell"));
+		 assertTrue("contains file1 file2 in response Data", responseData2.contains("file1 file2"));
+		 LOG.log(Level.INFO, "response data as string:"+responseData2);
+	
+		 
+		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
+		 // clean up before assert
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect();
+			 }
+			 catch(Exception e) {}
+			 LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command completed" );
+
+			 GlobalDataSsh.removeSession("CONNECT1");
+		 }
+	}	
+	
 }

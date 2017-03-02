@@ -88,7 +88,7 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
             res.setResponseCodeOK();
         }
         
-        res.sampleEnd();
+        //res.sampleEnd();
         
         return sb.toString();
     }
@@ -105,7 +105,7 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
         res.setContentType("text/plain");
     	if(connectionName.equals(""))
     	{
-    		res.setResponseMessage(getName() +  "Missing Connection Name");
+    		res.setResponseMessage(getName() +  " Missing Connection Name in sampler configuration");
     		samplerData="Invalid sampler configuration connection name is required";
     		res.setSampleLabel(getName()+" ("+samplerData+")");
     		responseData="Connection name not configured in sampler!";
@@ -115,11 +115,12 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
     	{
     		if(this.command.equals(""))
     		{
-    			res.setResponseMessage(getName() +  "No Command Configured");
+    			res.setResponseMessage(getName() +  " No Command Configured");
         		samplerData="no command configured in sampler";
         		res.setSampleLabel(getName()+" ("+samplerData+")");
         		responseData="Command not configured in sampler!";
         		res.setSuccessful(false);
+        		res.setResponseCode("No Command Configured");
     		}
     		else
     		{
@@ -138,8 +139,8 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
     						}
     						else
     						{
-    							res.setResponseMessage("result=null");
     							res.setResponseData("","UTF-8");
+    							res.setResponseMessage("result=null");
     							res.setSuccessful(true);
     						}
     					
@@ -147,41 +148,36 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
 	    		            res.setSuccessful(false);
 	    		            res.setResponseCode("JSchException");
 	    		            res.setResponseMessage(e1.getMessage());
+	    		            res.setResponseData("","UTF-8");
 	    		        } catch (IOException e1) {
 	    		            res.setSuccessful(false);
 	    		            res.setResponseCode("IOException");
 	    		            res.setResponseMessage(e1.getMessage());
+	    		            res.setResponseData("","UTF-8");
 	    		        } catch (NullPointerException e1) {
 	    		            res.setSuccessful(false);
 	    		            res.setResponseCode("Connection Failed");
 	    		            res.setResponseMessage(e1.getMessage());
+	    		            res.setResponseData("","UTF-8");
 	    		        }catch (Throwable e1) {
 	    		            res.setSuccessful(false);
 	    		            res.setResponseCode("Error occurred on command execution");
 	    		            res.setResponseMessage(e1.getMessage());
+	    		            res.setResponseData("","UTF-8");
 	    		        }
     				}
     			}
     			else
     			{
     				// Handle exception session not found
-    				res.setSampleLabel(getName()+ " connection "+this.connectionName+" not found");
+    				res.setResponseMessage(getName()+ " connection "+this.connectionName+" not found");
     				res.setResponseCode("Connection Not Found");
     				res.setSuccessful(false);
+    				res.setResponseData("","UTF-8");
     			}
     		}
     	}
-    	
-        // Set up sampler return types
-        //res.setSamplerData(samplerData);
-        //res.setDataType(SampleResult.TEXT);
-        //res.setContentType("text/plain");
-        //res.setResponseData(responseData,"UTF-8");
-        //res.sampleEnd();
-       // source data
-       // res.setSamplerData(getRequestData());
-        //res.setResponseMessage("all OK");
-        //res.setSuccessful(true);
+    	res.sampleEnd();
     	return res;
     }
        

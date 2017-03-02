@@ -50,6 +50,20 @@ public  class DumpSSHSessionSampler extends AbstractSampler implements TestBean 
     	SampleResult res=new SampleResult();
     	res.sampleStart();
     	String connList=GlobalDataSsh.GetConnectionList(this.connectionName);
+    	if(connList.equals(""))
+    	{
+    		if(connectionName.equals(""))
+    		{res.setResponseCode("No Connections Found");}
+    		else
+    		{res.setResponseCode("No Matching Connections Found");}
+    	}
+    	else
+    	{
+    		if(connectionName.equals(""))
+    		{res.setResponseCode("Connection(s) Found");}
+    		else
+    		{res.setResponseCode("Matching Connection Found");}
+    	}
     	String samplerData="";
     	if(connectionName.equals(""))
     	{
