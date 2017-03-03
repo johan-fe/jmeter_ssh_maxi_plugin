@@ -52,11 +52,15 @@ public  class CloseSSHSessionSampler extends AbstractSampler implements TestBean
     	//String connList=GlobalDataSsh.GetConnectionList(this.connectionName);
     	String samplerData="";
     	String responseData="";
+    	String responseMessage="";
+    	String responseCode="";
     	if(connectionName.equals(""))
     	{
     		samplerData="Invalid sampler configuration connection name is required";
     		res.setSampleLabel(getName()+" ("+samplerData+")");
-    		responseData="connection name not configured in sampler!";
+    		responseMessage="connection name not configured in sampler!";
+    		responseCode="-1";
+    		res.setSuccessful(false);
     	}
     	else
     	{
@@ -68,23 +72,27 @@ public  class CloseSSHSessionSampler extends AbstractSampler implements TestBean
     				ses.disconnect();
     			}
     			GlobalDataSsh.removeSession(this.connectionName);
-    			responseData="connection "+this.connectionName + " closed";
+    			responseMessage="connection "+this.connectionName + " closed";
+    			responseCode="0";
+    			res.setSuccessful(true);
     		}
     		else{
-    			responseData="connection "+this.connectionName +" not found";
+    			responseMessage="connection "+this.connectionName +" not found";
+    			responseCode="-2";
+    			res.setSuccessful(false);
     		}
     	}
-    	
+        res.sampleEnd();
         // Set up sampler return types
         res.setSamplerData(samplerData);
         res.setDataType(SampleResult.TEXT);
         res.setContentType("text/plain");
         res.setResponseData(responseData,"UTF-8");
-        res.sampleEnd();
+
        // source data
        // res.setSamplerData(getRequestData());
-        res.setResponseMessage("all OK");
-        res.setSuccessful(true);
+        res.setResponseMessage(responseMessage);
+        res.setResponseCode(responseCode);
     	return res;
     }
        
