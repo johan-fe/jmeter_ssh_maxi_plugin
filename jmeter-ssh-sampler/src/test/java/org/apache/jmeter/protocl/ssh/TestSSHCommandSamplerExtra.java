@@ -153,8 +153,10 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 assertTrue(responseCode.equals("Connection Failed"));
 		 LOG.log(Level.INFO, "response code:"+responseCode);
 		 String responseMessage=sr.getResponseMessage();
-		 assertTrue("responsemessage is correct",responseMessage.equals("Failed to connect to server: timeout: socket is not established"));
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 assertTrue("responsemessage is correct",responseMessage.equals("Failed to connect to server: timeout: socket is not established")
+				 || responseMessage.equals("Failed to connect to server: java.net.NoRouteToHostException: No route to host: connect"));
+		 
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);

@@ -43,12 +43,14 @@ import org.apache.jmeter.testbeans.TestBean;
 
 
 
-public class SendCommandSSHSessionSamplerBeanInfo extends  BeanInfoSupport {
+public class SendCommandSSHSessionSamplerBeanInfo extends  AbstractSSHMainSamplerBeanInfo {
 	//class must have a public constructor to become visible in the menu
-	
-	public SendCommandSSHSessionSamplerBeanInfo() {
+    public SendCommandSSHSessionSamplerBeanInfo(Class<? extends SendCommandSSHSessionSampler> clazz) {
+        super(clazz);
+   // }
+	//public SendCommandSSHSessionSamplerBeanInfo() {
        
-		super( SendCommandSSHSessionSampler.class); 
+	//	super( SendCommandSSHSessionSampler.class); 
 
         createPropertyGroup("connectionManagement", 
         		new String[]{ 

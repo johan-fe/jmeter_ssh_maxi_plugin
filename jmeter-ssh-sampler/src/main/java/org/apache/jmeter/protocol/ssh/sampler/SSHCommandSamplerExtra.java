@@ -170,6 +170,17 @@ public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
             }
         }
         
+       
+        channel.disconnect();
+        long maxWaitCloseChannelMs=3000L;// wait max 3sec to close
+        long until = System.currentTimeMillis() + maxWaitCloseChannelMs;
+        while (!channel.isClosed()&&System.currentTimeMillis() < until) {
+        	try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+		 
+			}
+        } // wait until channel is closed otherwise you get -1 in getExitStatus
         if(useReturnCode){
             res.setResponseCode(String.valueOf(channel.getExitStatus()));
         }else{
@@ -177,10 +188,7 @@ public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
         }
         
         res.sampleEnd();
-        
-        if (this.getCloseConnection()==true){
-        channel.disconnect();
-        }
+
         return sb.toString();
     }
     

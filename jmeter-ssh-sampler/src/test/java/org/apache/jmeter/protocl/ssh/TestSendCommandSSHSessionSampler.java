@@ -236,28 +236,30 @@ public class TestSendCommandSSHSessionSampler {
 		 this.instance=new SSHCommandSamplerExtra();           
 		 this.instance.setCommand("dir");
 		 this.instance.setConnectionName("CONNECT1");
-		 this.instance.setConnectionTimeout(32000);
-		 this.instance.setSessionKeepAliveSeconds(23000);
+		 this.instance.setConnectionTimeout(320000);
+		 this.instance.setSessionKeepAliveSeconds(230000);
 		 this.instance.setHostname("127.0.0.1");
 		 this.instance.setPassword("azerty!");
 		 this.instance.setPort(5222);
 		 this.instance.setPrintStdErr(true);
-		 this.instance.setUseReturnCode(false);
+		 this.instance.setUseReturnCode(true);
 		 this.instance.setUsername("johan");
 		 this.instance.setUseTty(false);
 		 this.instance.setCloseConnection(false);
  
 		 SampleResult sr= this.instance.sample(null) ;
 		 Integer errorCount= sr.getErrorCount();
-		 assertTrue("ErrorCount is 0",errorCount==0);
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 assertTrue("ErrorCount is 0",errorCount==0);
+		
 		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
 		 String responseCode=sr.getResponseCode();
-		 assertTrue(responseCode.equals("200"));
 		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 assertTrue(responseCode.equals("0"));
+		 
 		 String responseMessage=sr.getResponseMessage();
-		 assertTrue("response Message is OK",responseMessage.equals("OK") );
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 assertTrue("response Message is OK",responseMessage.equals("OK") );
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("contains stderr in response Data", responseData.contains("=== stderr ==="));
 		 assertTrue("contains stderr in response Data", responseData.contains("Welcome to Application Shell"));
@@ -268,19 +270,21 @@ public class TestSendCommandSSHSessionSampler {
 		 sender.setConnectionName("CONNECT1");
 		 sender.setPrintStdErr(false);
 		 sender.setUseReturnCode(true);
-		  
+		 sender.setUseTty(false);
+		 
 		 LOG.log(Level.INFO, "calling command sender");
 		 SampleResult sr2=sender.sample(null);
 		 Integer errorCount2= sr2.getErrorCount();
+		 LOG.log(Level.INFO, "errorcount2:"+ Integer.toString(errorCount2));
 		 assertTrue("ErrorCount is 0",errorCount2==0);
-		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount2));
+		 
 		 LOG.log(Level.INFO, "content type:"+sr2.getContentType());
 		 String responseCode2=sr2.getResponseCode();
-		 assertTrue(responseCode2.equals("-1"));
-		 LOG.log(Level.INFO, "response code:"+responseCode2);
+		 LOG.log(Level.INFO, "response code2:"+responseCode2);
+		 assertTrue("responsecode2 ",responseCode2.equals("0")||responseCode2.equals("-1"));		 
 		 String responseMessage2=sr2.getResponseMessage();
-		 assertTrue("response Message is OK",responseMessage2.equals("OK") );
-		 LOG.log(Level.INFO, "response message:"+responseMessage2);
+		 LOG.log(Level.INFO, "response message2:"+responseMessage2);
+		 assertTrue("response Message is OK",responseMessage2.equals("OK") );		 
 		 String responseData2=sr2.getResponseDataAsString();
 		 assertTrue("contains no stderr in response Data", !responseData2.contains("=== stderr ==="));
 		 assertTrue("contains Welcome to Application Shell in response data", responseData2.contains("Welcome to Application Shell"));

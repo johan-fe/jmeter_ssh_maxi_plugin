@@ -37,7 +37,7 @@ import com.jcraft.jsch.Session;
 /**
  * Dump ssh session sampler
  */
-public  class SendCommandSSHSessionSampler extends AbstractSampler implements TestBean  {
+public  class SendCommandSSHSessionSampler extends AbstractSSHMainSampler implements TestBean  {
 	/**
 	 * 
 	 */
@@ -51,8 +51,8 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
     private boolean printStdErr = true;
 
 	public SendCommandSSHSessionSampler() {
-		super();	 
-		setName("SendCommandSSHSessionSampler"); 
+		super("SendCommandSSHSessionSampler");	 
+		//setName("SendCommandSSHSessionSampler"); 
 	}
 	private String doCommand(Session session, String command, SampleResult res) throws JSchException, IOException {
         StringBuilder sb = new StringBuilder();
@@ -74,15 +74,24 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
             sb.append("\n");
         }
         
-        if(printStdErr){
+        if(this.printStdErr){
             sb.append("\n\n=== stderr ===\n\n");
             for (String line = err.readLine(); line != null; line = err.readLine()) {
                 sb.append(line);
                 sb.append("\n");
             }
         }
-        
-        if(useReturnCode){
+        channel.disconnect();
+        long maxWaitCloseChannelMs=3000L;// wait max 3sec to close
+        long until = System.currentTimeMillis() + maxWaitCloseChannelMs;
+        while (!channel.isClosed()&&System.currentTimeMillis() < until) {
+        	try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+		 
+			}
+        } // wait until channel is closed otherwise you get -1 in getExitStatus
+        if(this.useReturnCode){
             res.setResponseCode(String.valueOf(channel.getExitStatus()));
         }else{
             res.setResponseCodeOK();
@@ -133,7 +142,7 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
     	
     						String result=this.doCommand(ses, this.command,res);
     						if (result !=null){
-    							res.setResponseMessageOK();
+    							res.setResponseMessage("OK");
     							res.setResponseData(result,"UTF-8");
     							res.setSuccessful(true);
     						}
@@ -173,6 +182,8 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
     				res.setResponseMessage(getName()+ " connection "+this.connectionName+" not found");
     				res.setResponseCode("Connection Not Found");
     				res.setSuccessful(false);
+    	    		samplerData="coonection " +this.connectionName+ " not found!";
+    	    		res.setSampleLabel(getName()+" ("+samplerData+")");
     				res.setResponseData("","UTF-8");
     			}
     		}
@@ -182,14 +193,14 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
     }
        
 
-
+ 
 	public void setConnectionName(String conn){
     	this.connectionName=conn.trim();
     }
     public String getConnectionName()
     {
     	return this.connectionName;
-    }
+    } 
     
 	public void setCommand(String comm){
     	this.command=comm;
@@ -238,7 +249,4 @@ public  class SendCommandSSHSessionSampler extends AbstractSampler implements Te
         }
         
     }
-
-
-
 }

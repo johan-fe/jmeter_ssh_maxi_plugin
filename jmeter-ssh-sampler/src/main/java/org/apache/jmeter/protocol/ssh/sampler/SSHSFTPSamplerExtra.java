@@ -35,7 +35,7 @@ import org.apache.log.Logger;
  * them as samples.
  *
  */
-public class SSHSFTPSampler extends AbstractSSHSamplerExtra {
+public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 
     /**
 	 * 
@@ -53,7 +53,7 @@ public class SSHSFTPSampler extends AbstractSSHSamplerExtra {
     private String action;
     private boolean printFile = true;
 
-    public SSHSFTPSampler() {
+    public SSHSFTPSamplerExtra() {
         super("SSH SFTP Sampler");
     }
 

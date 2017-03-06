@@ -19,11 +19,12 @@ package org.apache.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
 
-public class SSHSFTPSamplerBeanInfo extends AbstractSSHSamplerExtraBeanInfo {
-
-    public SSHSFTPSamplerBeanInfo() {
+public class SSHSFTPSamplerExtraBeanInfo extends AbstractSSHSamplerExtraBeanInfo {
+	 public SSHSFTPSamplerExtraBeanInfo(Class<? extends SSHSFTPSamplerExtra> clazz) {
+	        super(clazz);
+    //public SSHSFTPSamplerExtraBeanInfo() {
         
-        super(SSHSFTPSampler.class);
+       // super(SSHSFTPSamplerExtra.class);
         
         createPropertyGroup("fileTransfer", new String[]{
                     "action", // $NON-NLS-1$
@@ -38,11 +39,11 @@ public class SSHSFTPSamplerBeanInfo extends AbstractSSHSamplerExtraBeanInfo {
         p.setValue(NOT_OTHER, Boolean.TRUE);
         p.setValue(DEFAULT, "get");
         p.setValue(TAGS, new String[]{
-            SSHSFTPSampler.SFTP_COMMAND_GET, 
-            SSHSFTPSampler.SFTP_COMMAND_PUT,
-            SSHSFTPSampler.SFTP_COMMAND_RM, 
-            SSHSFTPSampler.SFTP_COMMAND_RMDIR,
-            SSHSFTPSampler.SFTP_COMMAND_LS
+            SSHSFTPSamplerExtra.SFTP_COMMAND_GET, 
+            SSHSFTPSamplerExtra.SFTP_COMMAND_PUT,
+            SSHSFTPSamplerExtra.SFTP_COMMAND_RM, 
+            SSHSFTPSamplerExtra.SFTP_COMMAND_RMDIR,
+            SSHSFTPSamplerExtra.SFTP_COMMAND_LS
         });
         
         p = property("source"); // $NON-NLS-1$
