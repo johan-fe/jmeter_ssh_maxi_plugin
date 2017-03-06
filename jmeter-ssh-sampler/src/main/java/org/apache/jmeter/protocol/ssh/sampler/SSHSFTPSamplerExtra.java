@@ -54,7 +54,7 @@ public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
     private boolean printFile = true;
 
     public SSHSFTPSamplerExtra() {
-        super("SSH SFTP Sampler");
+        super("SSHSFTPSamplerExtra");
     }
 
     /**

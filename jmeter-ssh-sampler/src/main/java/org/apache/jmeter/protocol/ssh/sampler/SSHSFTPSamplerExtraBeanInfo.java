@@ -20,11 +20,10 @@ package org.apache.jmeter.protocol.ssh.sampler;
 import java.beans.PropertyDescriptor;
 
 public class SSHSFTPSamplerExtraBeanInfo extends AbstractSSHSamplerExtraBeanInfo {
-	 public SSHSFTPSamplerExtraBeanInfo(Class<? extends SSHSFTPSamplerExtra> clazz) {
-	        super(clazz);
-    //public SSHSFTPSamplerExtraBeanInfo() {
+
+    public SSHSFTPSamplerExtraBeanInfo() {
         
-       // super(SSHSFTPSamplerExtra.class);
+        super(SSHSFTPSamplerExtra.class);
         
         createPropertyGroup("fileTransfer", new String[]{
                     "action", // $NON-NLS-1$
