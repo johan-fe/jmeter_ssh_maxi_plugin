@@ -33,7 +33,7 @@ import com.jcraft.jsch.Session;
  */
 public  class CloseSSHSessionSampler extends AbstractSampler implements TestBean  {
 	/**
-	 * 
+	 * init
 	 */
 	private static final long serialVersionUID = 2954989469756886583L;
 	 
