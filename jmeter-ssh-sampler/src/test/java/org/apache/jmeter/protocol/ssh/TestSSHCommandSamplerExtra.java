@@ -1,4 +1,4 @@
-package org.apache.jmeter.protocl.ssh;
+package org.apache.jmeter.protocol.ssh;
 
 import static org.junit.Assert.assertTrue;
 
@@ -9,6 +9,7 @@ import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 //import org.apache.jmeter.control.LoopController;
 //import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
+import org.apache.jmeter.protocol.ssh.sampler.SshSession;
 //import org.apache.jmeter.protocol.ssh.sampler.SendCommandSSHSessionSamplerBeanInfo;
 //import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -115,7 +116,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 assertTrue("contains stderr in response Data", responseData.contains("=== stderr ==="));
 		 assertTrue("contains stderr in response Data", responseData.contains("Welcome to Application Shell"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -160,7 +161,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -204,7 +205,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -247,7 +248,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -293,7 +294,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 String responseData=sr.getResponseDataAsString();
 		 assertTrue("responseData is empty",responseData.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 Session sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {

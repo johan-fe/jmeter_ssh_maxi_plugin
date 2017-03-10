@@ -1,4 +1,4 @@
-package org.apache.jmeter.protocl.ssh;
+package org.apache.jmeter.protocol.ssh ;
 
 import static org.junit.Assert.assertTrue;
 
@@ -10,6 +10,7 @@ import org.apache.jmeter.protocol.ssh.sampler.DumpSSHSessionSampler;
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
 import org.apache.jmeter.protocol.ssh.sampler.SendCommandSSHSessionSampler;
+import org.apache.jmeter.protocol.ssh.sampler.SshSession;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -137,7 +138,7 @@ public class TestSSHCloseSessionSampler {
 		LOG.log(Level.INFO, "sampler data:" + samplerData5);
 		assertTrue("sampler data is close ssh connection CONNECT1", samplerData5.equals("close ssh connection CONNECT1"));
 		
-		Session sess = GlobalDataSsh.GetSessionByName("CONNECT1");
+		SshSession sess = GlobalDataSsh.GetSessionByName("CONNECT1");
 		// clean up before assert
 		if (sess != null) {
 			try {
@@ -299,7 +300,7 @@ public class TestSSHCloseSessionSampler {
 		assertTrue("sampler data is close ssh connection CONNECT2", samplerData6.equals("close ssh connection CONNECT2"));
 
 		//check globalSSHData is empty
-		Session sess = GlobalDataSsh.GetSessionByName("CONNECT1");
+		SshSession sess = GlobalDataSsh.GetSessionByName("CONNECT1");
 		// clean up before assert
 		if (sess != null) {
 			try {
@@ -409,7 +410,7 @@ public class TestSSHCloseSessionSampler {
 		// sr.connectEnd();
 		// sr.cleanAfterSample();
 		
-		Session sess = GlobalDataSsh.GetSessionByName("CONNECT1");
+		SshSession sess = GlobalDataSsh.GetSessionByName("CONNECT1");
 		// clean up before assert
 		if (sess != null) {
 			try {

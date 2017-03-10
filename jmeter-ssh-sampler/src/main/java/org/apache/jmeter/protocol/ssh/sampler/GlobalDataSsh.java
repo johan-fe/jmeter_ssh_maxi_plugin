@@ -18,10 +18,10 @@ import com.jcraft.jsch.Session;
  public enum GlobalDataSsh {
 	    INSTANCE;
 	    //using concurrent since synchronized may throw exception when iterating over it 
-	 	static ConcurrentHashMap<String,Session> sessionList = new ConcurrentHashMap<String,Session>();
+	 	static ConcurrentHashMap<String,SshSession> sessionList = new ConcurrentHashMap<String,SshSession>();
 	 	static Long connection_counter=1L;
 	 	private static final Logger log = LoggingManager.getLoggerForClass();
-	 	public static void addSession(String connName, Session ses){
+	 	public static void addSession(String connName, SshSession ses){
 	 		sessionList.put(connName, ses);
 	 	}
 	 	public static void removeSession(String connName ){
@@ -34,8 +34,8 @@ import com.jcraft.jsch.Session;
 	 			log.error("exception in removeSession:"+e.getMessage());
 	 		}
 	 	}
-	 	public static Session GetSessionByName(String connName ){
-	 		Session ses=null;
+	 	public static SshSession GetSessionByName(String connName ){
+	 		SshSession ses=null;
 	 		try
 	 		{
 	 			 ses=sessionList.get(connName );
@@ -81,7 +81,7 @@ import com.jcraft.jsch.Session;
 	    //start mutex here
 	    	
 	    	//synchronized (sessionList) {
-	    		Iterator<Map.Entry<String, Session>> sessionIterator;
+	    		Iterator<Map.Entry<String, SshSession>> sessionIterator;
 	    		StringBuilder sb =new StringBuilder();
 	    	
 	    		sessionIterator = sessionList.entrySet().iterator();
@@ -94,7 +94,7 @@ import com.jcraft.jsch.Session;
 	    			searchSpecific=true;
 	    		}
 	    		while(sessionIterator.hasNext()) {
-		    		 Map.Entry<String, Session> entry = sessionIterator.next();
+		    		 Map.Entry<String, SshSession> entry = sessionIterator.next();
 		    		 try
 		    		 {
 		    		      //String st = Thread.currentThread().getName() + " - [" + entry.getKey() + ", " + entry.getValue() + ']';

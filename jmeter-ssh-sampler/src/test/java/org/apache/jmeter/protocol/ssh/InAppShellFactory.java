@@ -1,4 +1,4 @@
-package org.apache.jmeter.protocl.ssh;
+package org.apache.jmeter.protocol.ssh;
  
 import jline.console.ConsoleReader;
 import jline.console.completer.StringsCompleter;

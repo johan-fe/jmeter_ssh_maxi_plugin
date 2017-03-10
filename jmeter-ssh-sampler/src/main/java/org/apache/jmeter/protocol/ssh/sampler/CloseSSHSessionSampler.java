@@ -66,10 +66,11 @@ public  class CloseSSHSessionSampler extends AbstractSampler implements TestBean
     	{
     		res.setSampleLabel(getName() + " closing connection: ("+this.connectionName  + ")");  
     		samplerData="close ssh connection "+this.connectionName;
-    		Session ses=GlobalDataSsh.GetSessionByName(this.connectionName);
-    		if (ses!= null){
-    			synchronized(ses){
-    				ses.disconnect();
+    		SshSession sshSess=GlobalDataSsh.GetSessionByName(this.connectionName);
+    	
+    		if (sshSess!= null){
+    			synchronized(sshSess){
+    				sshSess.disconnect();
     			}
     			GlobalDataSsh.removeSession(this.connectionName);
     			responseMessage="connection "+this.connectionName + " closed";

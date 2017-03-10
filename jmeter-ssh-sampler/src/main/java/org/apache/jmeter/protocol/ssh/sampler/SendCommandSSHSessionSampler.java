@@ -133,10 +133,11 @@ public  class SendCommandSSHSessionSampler extends AbstractSSHMainSampler implem
     		}
     		else
     		{
-    			Session ses=GlobalDataSsh.GetSessionByName(this.connectionName);
-    			if(ses!=null)
+    			SshSession sshSess=GlobalDataSsh.GetSessionByName(this.connectionName);
+    			if(sshSess!=null)
     			{
     				res.setSampleLabel(getName() +  "send command "+this.command+" on connection "+this.connectionName);
+    				Session ses =sshSess.getSession();
     				synchronized(ses){
     					try{
     	

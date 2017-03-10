@@ -1,4 +1,4 @@
-package org.apache.jmeter.protocl.ssh;
+package org.apache.jmeter.protocol.ssh;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
 import org.apache.jmeter.protocol.ssh.sampler.SendCommandSSHSessionSampler;
+import org.apache.jmeter.protocol.ssh.sampler.SshSession;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -111,7 +112,7 @@ public class TestSendCommandSSHSessionSampler {
 		 LOG.log(Level.INFO, "response data as string:"+responseData2);
 	
 		 
-		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONNECT1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -128,7 +129,7 @@ public class TestSendCommandSSHSessionSampler {
 	public void testSampleSendCommandSessionUnknownSession() {
 		
 
-		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONNECT1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -217,7 +218,7 @@ public class TestSendCommandSSHSessionSampler {
 		 String responseData2=sr2.getResponseDataAsString();
 		 //assertTrue("response data is empty string", responseData2.equals(""));
 		 LOG.log(Level.INFO, "response data as string:"+responseData2);	 
-		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONNECT1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {
@@ -292,7 +293,7 @@ public class TestSendCommandSSHSessionSampler {
 		 LOG.log(Level.INFO, "response data as string:"+responseData2);
 	
 		 
-		 Session sess=GlobalDataSsh.GetSessionByName("CONNECT1");
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONNECT1");
 		 // clean up before assert
 		 if (sess !=null)
 		 {

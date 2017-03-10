@@ -1,12 +1,12 @@
-package org.apache.jmeter.protocl.ssh;
+package org.apache.jmeter.protocol.ssh;
 
 //import java.security.Security;
 import java.lang.System;
 import org.apache.sshd.common.file.virtualfs.VirtualFileSystemFactory;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.security.Provider;
-import java.security.Security;
+//import java.security.Provider;
+//import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 

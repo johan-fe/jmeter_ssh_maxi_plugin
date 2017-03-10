@@ -1,4 +1,4 @@
-package org.apache.jmeter.protocl.ssh;
+package org.apache.jmeter.protocol.ssh;
 
 import java.util.logging.Logger;
 
