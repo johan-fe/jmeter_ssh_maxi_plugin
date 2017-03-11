@@ -24,7 +24,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 	private String shellName = "";
 
 	public SSHClosePersistentShellSampler() {
-		super("SSHOpenPersistentShellSampler");
+		super("SSHClosePersistentShellSampler");
 		// TODO Auto-generated constructor stub
 	}
 

@@ -28,7 +28,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 
 
 	public SSHPersistentShellSendCommandSampler() {
-		super("SSHOpenPersistentShellSampler");
+		super("SSHPersistentShellSendCommandSampler");
 		// TODO Auto-generated constructor stub
 	}
 
