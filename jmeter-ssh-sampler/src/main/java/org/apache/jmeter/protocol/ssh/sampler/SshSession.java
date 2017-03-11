@@ -14,7 +14,7 @@ import com.jcraft.jsch.ChannelShell;
 public class SshSession {
 	private static final Logger log = LoggingManager.getLoggerForClass();
 	Session session = null;
-	ConcurrentHashMap<String, ChannelShell> shellChannels = new ConcurrentHashMap<String, ChannelShell>();
+	ConcurrentHashMap<String, SshChannelShell> shellChannels = new ConcurrentHashMap<String, SshChannelShell>();
 
 	public SshSession(Session sess) {
 		this.session = sess;
@@ -24,17 +24,17 @@ public class SshSession {
 	}
 	public void disconnectAllChannelShells() {
 		synchronized (shellChannels) {
-			Iterator<Map.Entry<String, ChannelShell>> shellChannelIterator;
+			Iterator<Map.Entry<String, SshChannelShell>> shellChannelIterator;
 
 			shellChannelIterator = this.shellChannels.entrySet().iterator();
 
 			while (shellChannelIterator.hasNext()) {
-				Map.Entry<String, ChannelShell> entry = shellChannelIterator.next();
+				Map.Entry<String, SshChannelShell> entry = shellChannelIterator.next();
 				try {
 					// String st = Thread.currentThread().getName() + " - [" +
 					// entry.getKey() + ", " + entry.getValue() + ']';
 					String shellChannelNameFromList = entry.getKey();
-					ChannelShell cShell = entry.getValue();
+					SshChannelShell cShell = entry.getValue();
 					cShell.disconnect();
 					cShell = null;
 					// this thread should not suffer from it be other threads may still have references 
@@ -60,12 +60,12 @@ public class SshSession {
 		}
 	}
 
-	public void addChannelShell(String cName, ChannelShell cs) {
+	public void addChannelShell(String cName, SshChannelShell cs) {
 		shellChannels.put(cName, cs);
 	}
 
-	public ChannelShell getChannelShellByName(String cName) {
-		ChannelShell ses = null;
+	public SshChannelShell getChannelShellByName(String cName) {
+		SshChannelShell ses = null;
 		try {
 			ses = shellChannels.get(cName);
 		} catch (NullPointerException e) {
@@ -81,7 +81,7 @@ public class SshSession {
 		// start mutex here
 
 		// synchronized (sessionList) {
-		Iterator<Map.Entry<String, ChannelShell>> shellChannelIterator;
+		Iterator<Map.Entry<String, SshChannelShell>> shellChannelIterator;
 		StringBuilder sb = new StringBuilder();
 
 		shellChannelIterator = this.shellChannels.entrySet().iterator();
@@ -92,7 +92,7 @@ public class SshSession {
 			searchSpecific = true;
 		}
 		while (shellChannelIterator.hasNext()) {
-			Map.Entry<String, ChannelShell> entry = shellChannelIterator.next();
+			Map.Entry<String, SshChannelShell> entry = shellChannelIterator.next();
 			try {
 				// String st = Thread.currentThread().getName() + " - [" +
 				// entry.getKey() + ", " + entry.getValue() + ']';
@@ -100,7 +100,7 @@ public class SshSession {
 				if (searchSpecific == false || csName.equals(shellChannelNameFromList)) {
 					sb.append(shellChannelNameFromList);
 					if (shellChannelIterator.hasNext()) {
-						sb.append("\n");
+						sb.append(",");
 					}
 				}
 			} catch (Exception e) {

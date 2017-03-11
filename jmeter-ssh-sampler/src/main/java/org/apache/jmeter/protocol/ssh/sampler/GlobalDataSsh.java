@@ -75,7 +75,54 @@ import com.jcraft.jsch.Session;
 	    //or Hashtable in any application that does not rely on the ability to lock the entire table to prevent updates
 	    //However, iterators are designed to be used by only one thread at a time.
 	    
-	    static public synchronized String GetConnectionList(String connName)
+	    static public synchronized String getAllConnectionData(String connName)
+	    {
+	    //TODO adapt to return also shell data	
+	    //start mutex here
+	    	
+	    	//synchronized (sessionList) {
+	    		Iterator<Map.Entry<String, SshSession>> sessionIterator;
+	    		StringBuilder sb =new StringBuilder();
+	    	
+	    		sessionIterator = sessionList.entrySet().iterator();
+	    		boolean searchSpecific;
+	    		if(connName.equals("")){
+	    			searchSpecific=false;
+	    		}
+	    		else
+	    		{
+	    			searchSpecific=true;
+	    		}
+	    		while(sessionIterator.hasNext()) {
+		    		 Map.Entry<String, SshSession> entry = sessionIterator.next();
+		    		 try
+		    		 {
+		    		      //String st = Thread.currentThread().getName() + " - [" + entry.getKey() + ", " + entry.getValue() + ']';
+		    			 String connNameFromList=entry.getKey();
+		    			 SshSession sess=entry.getValue();
+		    			 if ( searchSpecific==false ||connName.equals(connNameFromList) ){
+		    				 sb.append(connNameFromList);
+		    				 String sessionInfoStr=sess.GetChannelShellList("");
+		    				 sb.append("[ChannelShells[").append(sessionInfoStr).append("]]");
+		    			 	 if(sessionIterator.hasNext()){
+		    			 		 sb.append("\n");
+		    			 	 }
+		    			 }
+		    		 } 
+		    		 catch (Exception e)
+		    		 {
+		    		      //e.printStackTrace();
+		    		      return "excpetion:"+e.getMessage();
+		    		 }
+		    		 
+		    		 
+	    		}
+	    		//returning will release the lock no problem
+	    		return sb.toString();
+	    	//}
+	    }
+	    
+	    static public synchronized String getConnectionList(String connName)
 	    {
 	    	
 	    //start mutex here
@@ -118,5 +165,4 @@ import com.jcraft.jsch.Session;
 	    		return sb.toString();
 	    	//}
 	    }
-	    
 }

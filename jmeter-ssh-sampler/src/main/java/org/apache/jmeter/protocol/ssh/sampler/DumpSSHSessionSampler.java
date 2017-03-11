@@ -49,7 +49,7 @@ public  class DumpSSHSessionSampler extends AbstractSampler implements TestBean 
 
     	SampleResult res=new SampleResult();
     	res.sampleStart();
-    	String connList=GlobalDataSsh.GetConnectionList(this.connectionName);
+    	String connList=GlobalDataSsh.getConnectionList(this.connectionName);
     	if(connList.equals(""))
     	{
     		if(connectionName.equals(""))
