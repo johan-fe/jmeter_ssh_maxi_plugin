@@ -147,7 +147,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
             return res;
         }
 		responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
-		// TODO add ChannelShellInfo with readers, writer streams in there objects
+		// TODO add doCommand code
 		SshChannelShell sshcs = new SshChannelShell();
 		sshSess.addChannelShell(this.shellName, sshcs);
 		res.setResponseCode("0");

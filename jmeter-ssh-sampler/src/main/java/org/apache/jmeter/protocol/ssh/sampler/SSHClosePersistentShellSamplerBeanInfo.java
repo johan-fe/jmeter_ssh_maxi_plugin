@@ -8,10 +8,10 @@ public class SSHClosePersistentShellSamplerBeanInfo extends AbstractSSHMainSampl
 	// for this inherited class a constructor without parameters is needed which passes the sampler class 
 		//info to the abstract superclass 
 		super(SSHClosePersistentShellSampler.class);
+		
 		createPropertyGroup("connectionManagement", new String[] { 
 				"shellName", // $NON-NLS-1$
 				"connectionName" // $NON-NLS-1$
-
 		});
 
 		PropertyDescriptor p = property("shellName"); // $NON-NLS-1$
@@ -21,9 +21,6 @@ public class SSHClosePersistentShellSamplerBeanInfo extends AbstractSSHMainSampl
 		p = property("connectionName"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 		p.setValue(DEFAULT, "");
-
-		p = property("command"); // $NON-NLS-1$
-		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-		p.setValue(DEFAULT, "");
+ 
 	}
 }
