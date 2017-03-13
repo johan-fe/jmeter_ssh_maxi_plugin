@@ -1,4 +1,4 @@
-package org.apache.jmeter.protocol.ssh;
+package org.apache.jmeter.protocol.ssh.test;
 
 //import java.security.Security;
 import java.lang.System;

@@ -1,6 +1,8 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -75,18 +77,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		SshChannelShell cs = sshSess.getChannelShellByName(this.shellName);
-		if (cs!=null)
-		{
-			// ssh connection not found
-			responseMessage = "shell with name "+this.shellName+" already exists, no new shell opened on "+this.connectionName;
-			responseCode = "-4";
-			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
-			res.setResponseData(responseMessage, "UTF-8");
-			res.sampleEnd();
-			return res;
-		}
+
 		//make a new shell Session
 		Session sess=sshSess.getSession();
 		//check if session is still open 
@@ -110,50 +101,57 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
+		
 		//ssh session is connected try to connect shell
-		ChannelShell cShell=null;
-		try {
-			cShell=(ChannelShell) sess.openChannel("shell");
-			cShell.setPty(false);
-			cShell.connect();
+		SshChannelShell cs = sshSess.getChannelShellByName(this.shellName);
+		if (cs==null)
+		{
+			// ssh connection not found
+			responseMessage = "shell with name "+this.shellName+" is null on"+this.connectionName;
+			responseCode = "-4";
+			res.setSuccessful(false);
+			res.setSamplerData(samplerData);
+			res.setResponseData(responseMessage, "UTF-8");
+			res.sampleEnd();
+			return res;
 		}
-		catch (JSchException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("JSchException");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }/* catch (IOException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("IOException");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }*/ catch (NullPointerException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("Connection Failed");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }catch (Exception e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("Connection Failed");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }
-		responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
+		// check if channelshell is still connected
+		if (!cs.isConnected())
+		{
+			responseMessage = "shell with name "+this.shellName+" is not connected on: "+this.connectionName;
+			responseCode = "-7";
+			res.setSuccessful(false);
+			res.setSamplerData(samplerData);
+			res.setResponseData(responseMessage, "UTF-8");
+			res.sampleEnd();
+			return res;
+		}
+		// Channelshell isconnected and all conditions fulfilled 
+
+		//responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
 		// TODO add doCommand code
-		SshChannelShell sshcs = new SshChannelShell();
-		sshSess.addChannelShell(this.shellName, sshcs);
+		byte [] responseBytes= {};
+		try 
+		{
+			cs.sendCommand(command);
+		}
+		catch(Exception e)
+		{
+			//TODO handle thrown exceptions
+		}
+		try
+		{
+			responseBytes = cs.readResponse();
+		}
+		catch(Exception e)
+		{
+			//TODO handle thrown exceptions
+		}
+		res.setResponseData(responseBytes);
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
-		res.setResponseData(responseMessage, "UTF-8");
+		 
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
 		return res;

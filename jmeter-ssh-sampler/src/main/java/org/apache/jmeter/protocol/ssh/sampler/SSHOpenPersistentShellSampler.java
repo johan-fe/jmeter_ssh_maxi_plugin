@@ -1,6 +1,11 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -107,10 +112,23 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		}
 		//ssh session is connected try to connect shell
 		ChannelShell cShell=null;
+		InputStream in=null;
+		PrintStream ps=null;
 		try {
+		
 			cShell=(ChannelShell) sess.openChannel("shell");
+			//TODO add usepty option
 			cShell.setPty(false);
+
+			//ext input stream not used for now should be used before connect sends 
+			//InputStream extStr=cShell.getExtInputStream();
+	        //BufferedReader ext = new BufferedReader(new InputStreamReader(errStr));
 			cShell.connect();
+			in=cShell.getInputStream();
+	        OutputStream ops = cShell.getOutputStream();
+            ps = new PrintStream(ops, true);
+            
+           // byte[] bt=new byte[1024];
 		}
 		catch (JSchException e1) {
             res.setSuccessful(false);
@@ -141,9 +159,12 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
             res.sampleEnd();
             return res;
         }
+		//if successfully opened add the shell to shell collection in the ssh session
 		responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
-		// TODO add ChannelShellInfo with readers, writer streams in there objects
 		SshChannelShell sshcs = new SshChannelShell();
+		sshcs.setChannelShell(cShell);
+		sshcs.setInputStream(in);
+		sshcs.setpOutputStream(ps);
 		sshSess.addChannelShell(this.shellName, sshcs);
 		res.setResponseCode("0");
 		res.setSuccessful(true);
