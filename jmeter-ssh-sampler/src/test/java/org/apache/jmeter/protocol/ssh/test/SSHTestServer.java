@@ -62,9 +62,9 @@ public class SSHTestServer extends Thread {
 		}
 		System.out.println("");
 	}
-	public static void main(String args[]) {
+	//public static void main(String args[]) {
 	      //  (new Thread(new SSHTestServer())).start();
-	}
+	//}
 	public void startdaemon() {
 		// PropertyConfigurator.configure(pathLoggerConfig);
 		// prinClassPath();

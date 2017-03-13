@@ -29,7 +29,7 @@ import org.hamcrest.core.IsEqual;
 import jline.internal.Log;
 import org.junit.Assert;
 public class TestSSHOpenPresistenShellSampler {
-	private final static Logger LOG  =Logger.getLogger(TestSSHCommandSamplerExtra.class.getName());
+	private final static Logger LOG  =Logger.getLogger(TestSSHOpenPresistenShellSampler.class.getName());
 	private SSHCommandSamplerExtra instance = null;
 	static private Thread sshts=null;
 
