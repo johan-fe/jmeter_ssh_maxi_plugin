@@ -11,8 +11,8 @@ public class SSHOpenPersistentShellSamplerBeanInfo extends AbstractSSHMainSample
 		super(SSHOpenPersistentShellSampler.class);
 		createPropertyGroup("connectionManagement", new String[] { 
 				"shellName", // $NON-NLS-1$
-				"connectionName" // $NON-NLS-1$
-
+				"connectionName", // $NON-NLS-1$
+				"useTty" // $NON-NLS-1$
 		});
 
 		PropertyDescriptor p = property("shellName"); // $NON-NLS-1$

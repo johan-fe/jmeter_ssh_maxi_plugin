@@ -24,7 +24,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 	private String connectionName = "";
 	private String shellName = "";
 	private String command="";
-
+ 
 
 	private boolean useTty=false;
 
@@ -130,6 +130,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 
 		//responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
 		// TODO add doCommand code
+		cs.getChannelShell().setPty(this.useTty);
 		byte [] responseBytes= {};
 		try 
 		{

@@ -72,10 +72,10 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			return res;
 		}
 		SshChannelShell cs = sshSess.getChannelShellByName(this.shellName);
-		if (cs!=null)
+		if (cs==null)
 		{
 			// ssh connection not found
-			responseMessage = "shell with name "+this.shellName+" already exists, no new shell opened on "+this.connectionName;
+			responseMessage = "shell with name "+this.shellName+" not found on "+this.connectionName;
 			responseCode = "-4";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -83,76 +83,17 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			res.sampleEnd();
 			return res;
 		}
-		//make a new shell Session
-		Session sess=sshSess.getSession();
-		//check if session is still open 
-		if (sess==null)
-		{
-			responseMessage = "severe error ssh session is null";
-			responseCode = "-5";
-			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
-			res.setResponseData(responseMessage, "UTF-8");
-			res.sampleEnd();
-			return res;
-		}
-		if (sess.isConnected()==false)
-		{
-			responseMessage = "ssh connection with name "+this.connectionName+" is not anymore connected";
-			responseCode = "-6";
-			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
-			res.setResponseData(responseMessage, "UTF-8");
-			res.sampleEnd();
-			return res;
-		}
-		//ssh session is connected try to connect shell
-		ChannelShell cShell=null;
-		try {
-			//TODO change to close
-			cShell=(ChannelShell) sess.openChannel("shell");
-			cShell.setPty(false);
-			cShell.connect();
-		}
-		catch (JSchException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("JSchException");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }/* catch (IOException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("IOException");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }*/ catch (NullPointerException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("Connection Failed");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }catch (Exception e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("Connection Failed");
-            res.setResponseMessage(e1.getMessage());
-            res.setResponseData("", "UTF-8");
-            res.sampleEnd();
-            return res;
-        }
-		responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
-		// TODO add ChannelShellInfo with readers, writer streams in there objects
-		SshChannelShell sshcs = new SshChannelShell();
-		sshSess.addChannelShell(this.shellName, sshcs);
+		cs.disconnect();
+		
+		sshSess.removeChannelShell(this.shellName);
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
 		res.setResponseData(responseMessage, "UTF-8");
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
+		responseMessage = "Shell with name "+this.shellName+" closed on "+this.connectionName;
+
 		return res;
 
 	}

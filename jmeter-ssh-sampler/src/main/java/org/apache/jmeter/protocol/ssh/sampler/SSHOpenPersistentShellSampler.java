@@ -26,6 +26,14 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 	private static final long serialVersionUID = 1098L;
 	private String connectionName = "";
 	private String shellName = "";
+	private boolean useTty=false;
+	public boolean getUseTty() {
+		return useTty;
+	}
+
+	public void setUseTty(boolean useTty) {
+		this.useTty = useTty;
+	}
 
 	public SSHOpenPersistentShellSampler() {
 		super("SSHOpenPersistentShellSampler");
@@ -117,18 +125,15 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		try {
 		
 			cShell=(ChannelShell) sess.openChannel("shell");
-			//TODO add usepty option
-			cShell.setPty(false);
+			cShell.setPty(this.useTty);
 
-			//ext input stream not used for now should be used before connect sends 
-			//InputStream extStr=cShell.getExtInputStream();
-	        //BufferedReader ext = new BufferedReader(new InputStreamReader(errStr));
+	
 			cShell.connect();
 			in=cShell.getInputStream();
 	        OutputStream ops = cShell.getOutputStream();
             ps = new PrintStream(ops, true);
-            
-           // byte[] bt=new byte[1024];
+            //TODO read from shell set label
+ 
 		}
 		catch (JSchException e1) {
             res.setSuccessful(false);

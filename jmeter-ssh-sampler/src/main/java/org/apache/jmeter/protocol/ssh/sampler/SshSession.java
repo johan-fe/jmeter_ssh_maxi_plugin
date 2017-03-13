@@ -61,9 +61,18 @@ public class SshSession {
 	}
 
 	public void addChannelShell(String cName, SshChannelShell cs) {
-		shellChannels.put(cName, cs);
+		this.shellChannels.put(cName, cs);
 	}
-
+	public void removeChannelShell(String cName)
+	{
+		try
+		{
+			this.shellChannels.remove(cName);
+		}
+		catch(Exception e) {
+			log.debug("exception when removing Shell Channel "+cName);
+		}
+	}
 	public SshChannelShell getChannelShellByName(String cName) {
 		SshChannelShell ses = null;
 		try {

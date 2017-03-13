@@ -33,9 +33,29 @@ public class SshChannelShell {
 
 	public void disconnect() {
 		try {
-			this.cShell.disconnect();
+			if(this.in !=null)
+			{
+				this.in.close();
+			}
+		}
+		catch(Exception e) {
+			//
+		}
+		try {
+			if(this.pOut!=null)
+			{
+				this.pOut.close();
+			}
+		}
+		catch(Exception e) {
+			//
+		}
+		try {
+			if (cShell != null) {
+				this.cShell.disconnect();
+			}
 		} catch (Exception e) {
-			Log.debug("Error when disconnecting shell");
+			Log.debug("Error when disconnecting Channel Shell");
 		}
 	}
 
@@ -60,7 +80,7 @@ public class SshChannelShell {
 	}
 
 	public void sendCommand(String command) {
-		this.pOut.print(command+"\n");
+		this.pOut.print(command + "\n");
 	}
 
 	protected byte[] appendData(byte[] firstObject, byte[] secondObject) {
@@ -77,17 +97,18 @@ public class SshChannelShell {
 	}
 
 	public byte[] readResponse() {
-		int count=5;
-		boolean stop=false;
+		int count = 5;
+		boolean stop = false;
 		byte[] tmp = new byte[1024];
 		byte[] result = {};
-		while (count >0) {
+		while (count > 0) {
 			try {
 				while (in.available() > 0) {
 					int i = in.read(tmp, 0, 1024);
 					if (i < 0) {
-						count=5;
-						break;}
+						count = 5;
+						break;
+					}
 					result = appendData(result, tmp);
 				}
 			} catch (Exception e) {
@@ -102,11 +123,11 @@ public class SshChannelShell {
 				} catch (Exception e) {
 					return result;// TODO throw exception
 				}
-				count=5;
+				count = 5;
 			}
 			try {
 				Thread.sleep(200);
-				count=count-1;
+				count = count - 1;
 			} catch (Exception ee) {
 				return result;
 			}
