@@ -54,6 +54,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		if (this.connectionName.equals("")) {
 			// empty connection name
 			responseMessage = "connection name is empty";
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-2";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -69,6 +70,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseCode = "-1";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
 			return res;
@@ -79,6 +81,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseCode = "-3";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
 			return res;
@@ -91,6 +94,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseCode = "-4";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
 			return res;
@@ -104,6 +108,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseCode = "-5";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
 			return res;
@@ -115,6 +120,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.sampleEnd();
 			return res;
 		}
@@ -139,6 +145,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
             res.setSuccessful(false);
             res.setResponseCode("JSchException");
             res.setResponseMessage(e1.getMessage());
+			res.setSampleLabel(getName()+" (Exception)");
             res.setResponseData("", "UTF-8");
             res.sampleEnd();
             return res;
@@ -152,6 +159,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
         }*/ catch (NullPointerException e1) {
             res.setSuccessful(false);
             res.setResponseCode("Connection Failed");
+			res.setSampleLabel(getName()+" (Exception)");
             res.setResponseMessage(e1.getMessage());
             res.setResponseData("", "UTF-8");
             res.sampleEnd();
@@ -159,6 +167,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
         }catch (Exception e1) {
             res.setSuccessful(false);
             res.setResponseCode("Connection Failed");
+			res.setSampleLabel(getName()+" (Exception)");
             res.setResponseMessage(e1.getMessage());
             res.setResponseData("", "UTF-8");
             res.sampleEnd();
@@ -166,6 +175,8 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
         }
 		//if successfully opened add the shell to shell collection in the ssh session
 		responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
+		res.setSampleLabel(getName()+" ("+responseMessage+")");
+
 		SshChannelShell sshcs = new SshChannelShell();
 		sshcs.setChannelShell(cShell);
 		sshcs.setInputStream(in);

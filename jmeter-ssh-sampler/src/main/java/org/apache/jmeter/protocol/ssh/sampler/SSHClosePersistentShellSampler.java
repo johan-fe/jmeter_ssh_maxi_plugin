@@ -39,9 +39,11 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 		String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
+		
 		if (this.connectionName.equals("")) {
 			// empty connection name
 			responseMessage = "connection name is empty";
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-2";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -56,6 +58,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "connection " + this.connectionName + " not found";
 			responseCode = "-1";
 			res.setSuccessful(false);
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
@@ -66,6 +69,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "shell name is empty";
 			responseCode = "-3";
 			res.setSuccessful(false);
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
@@ -78,6 +82,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "shell with name "+this.shellName+" not found on "+this.connectionName;
 			responseCode = "-4";
 			res.setSuccessful(false);
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
@@ -93,7 +98,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
 		responseMessage = "Shell with name "+this.shellName+" closed on "+this.connectionName;
-
+		res.setSampleLabel(getName()+" ("+responseMessage+")");
 		return res;
 
 	}

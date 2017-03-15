@@ -48,6 +48,8 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (this.connectionName.equals("")) {
 			// empty connection name
 			responseMessage = "connection name is empty";
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
+
 			responseCode = "-2";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -60,6 +62,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (sshSess == null) {
 			// ssh connection not found
 			responseMessage = "connection " + this.connectionName + " not found";
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-1";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -70,6 +73,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (this.shellName.equals("")) {
 			// ssh connection not found
 			responseMessage = "shell name is empty";
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-3";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -84,6 +88,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (sess==null)
 		{
 			responseMessage = "severe error ssh session is null";
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-5";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -94,6 +99,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (sess.isConnected()==false)
 		{
 			responseMessage = "ssh connection with name "+this.connectionName+" is not anymore connected";
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-6";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -108,6 +114,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		{
 			// ssh connection not found
 			responseMessage = "shell with name "+this.shellName+" is null on"+this.connectionName;
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-4";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -118,7 +125,8 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		// check if channelshell is still connected
 		if (!cs.isConnected())
 		{
-			responseMessage = "shell with name "+this.shellName+" is not connected on: "+this.connectionName;
+			responseMessage = "Shell with name "+this.shellName+" is not connected on: "+this.connectionName;
+			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-7";
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -128,7 +136,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		}
 		// Channelshell isconnected and all conditions fulfilled 
 
-		//responseMessage = "Shell with name "+this.shellName+" opened on "+this.connectionName;
+		responseMessage = "Command "+this.command+" sent on shell "+this.shellName+" on "+this.connectionName;
 		// TODO add doCommand code
 		cs.getChannelShell().setPty(this.useTty);
 		byte [] responseBytes= {};
@@ -152,7 +160,8 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
-		 
+		res.setSampleLabel(getName()+" ("+responseMessage+")");
+ 
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
 		return res;
