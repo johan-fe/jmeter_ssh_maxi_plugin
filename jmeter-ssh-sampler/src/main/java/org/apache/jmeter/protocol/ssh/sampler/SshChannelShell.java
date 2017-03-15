@@ -100,6 +100,7 @@ public class SshChannelShell {
 		String result=new String(readResponseBytes(), encoding);
 		if (stripCommand==true)
 		{
+			//remove command if at first position and immediately followed by CR/LF LF/Cr CR LF
 			int indexLF=result.indexOf("\n");
 			int indexCR=result.indexOf("\r");
 			int maxindex=Math.max(indexLF,indexCR);
@@ -128,9 +129,33 @@ public class SshChannelShell {
 				result=result.substring(stripLength);
 			}
 		}
+		//todo handle special case command with eempty response just prompt returned
 		if(stripPrompt)
 		{
-			//TODO lastIndexOf
+			int lastIndexCR=result.lastIndexOf("\r");
+			int lastIndexLF=result.lastIndexOf("\n");
+			int maxLastIndex=Math.max(lastIndexCR, lastIndexLF);
+			int stripIndex=result.length();
+			if (maxLastIndex > 0)
+			{
+				if (lastIndexCR > lastIndexLF)
+				{
+					if(lastIndexLF==lastIndexCR-1)
+						stripIndex=lastIndexLF;
+					else
+						stripIndex=lastIndexCR;
+				}
+				else
+				{
+					if(lastIndexCR==lastIndexLF-1)
+						stripIndex=lastIndexCR;
+					else
+						stripIndex=lastIndexLF;
+				}
+				result=result.substring(0, stripIndex);
+				//promptregex toevoegen
+			}
+
 		}
 		return result.getBytes();
 	}
@@ -149,10 +174,10 @@ public class SshChannelShell {
 					}
 					result2 = appendData(result, tmp, i);
 					result=result2;
-					log.debug("while: "+Integer.toString(i)+"==="+new String(tmp, "UTF-8")+"\n=====");
+					//log.debug("while: "+Integer.toString(i)+"==="+new String(tmp, "UTF-8")+"\n=====");
 				}
 			} catch (Exception e) {
-				log.info("(while)Exception in SSHChannelShell:"+e.getMessage());
+				//log.info("(while)Exception in SSHChannelShell:"+e.getMessage());
 				return result;// TODO throw exception
 			}
 			if (cShell.isClosed()) {
@@ -164,7 +189,7 @@ public class SshChannelShell {
 						log.debug("shell closed while: "+new String(result,  "UTF-8"));
 					}
 				} catch (Exception e) {
-					log.info("(if closed)Exception in SSHChannelShell:"+e.getMessage());
+					//log.info("(if closed)Exception in SSHChannelShell:"+e.getMessage());
 					return result;// TODO throw exception
 				}
 				count = 5;
@@ -173,7 +198,7 @@ public class SshChannelShell {
 				Thread.sleep(200);
 				count = count - 1;
 			} catch (Exception e) {
-				log.info("(thread sleep)Exception in SSHChannelShell:"+e.getMessage());
+				//log.info("(thread sleep)Exception in SSHChannelShell:"+e.getMessage());
 				return result;//TODO throw exception 
 			}
 		}

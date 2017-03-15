@@ -48,19 +48,19 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "";
+		String samplerData = "Open shell "+this.shellName+" on "+this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
+		res.setSamplerData(samplerData);
 		if (this.connectionName.equals("")) {
 			// empty connection name
 			responseMessage = "connection name is empty";
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			responseCode = "-2";
 			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
 			return res;
@@ -72,7 +72,6 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "connection " + this.connectionName + " not found";
 			responseCode = "-1";
 			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
@@ -83,7 +82,6 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "shell name is empty";
 			responseCode = "-3";
 			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
@@ -96,7 +94,6 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "shell with name "+this.shellName+" already exists, no new shell opened on "+this.connectionName;
 			responseCode = "-4";
 			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
@@ -110,7 +107,6 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "severe error ssh session is null";
 			responseCode = "-5";
 			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
@@ -121,7 +117,6 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "ssh connection with name "+this.connectionName+" is not anymore connected";
 			responseCode = "-6";
 			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.sampleEnd();
@@ -135,8 +130,6 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		
 			cShell=(ChannelShell) sess.openChannel("shell");
 			cShell.setPty(this.useTty);
-
-	
 			cShell.connect();
 			in=cShell.getInputStream();
 	        OutputStream ops = cShell.getOutputStream();
@@ -195,8 +188,9 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			res.setResponseCode("-8");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
+			res.setSampleLabel(getName()+" Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
 			res.setResponseData(responseDataBytes2);
-			res.setResponseMessage("Exception:"+e.getMessage());
+			res.setResponseMessage("Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
 			res.sampleEnd();
 			return res;
 		}

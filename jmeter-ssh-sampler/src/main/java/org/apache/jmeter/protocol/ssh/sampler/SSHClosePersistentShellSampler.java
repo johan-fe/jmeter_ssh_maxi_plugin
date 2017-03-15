@@ -33,7 +33,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "";
+		String samplerData = "Close shell "+this.shellName+" on "+this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";

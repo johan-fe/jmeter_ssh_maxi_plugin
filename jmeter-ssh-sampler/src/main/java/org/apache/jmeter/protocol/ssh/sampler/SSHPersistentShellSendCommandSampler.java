@@ -41,7 +41,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "";
+		String samplerData = "Send Command "+this.command+" to shell "+this.shellName+" on "+this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
@@ -160,8 +160,9 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.setResponseCode("-8");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
+			res.setSampleLabel(getName()+" Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
+			res.setResponseMessage("Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
 			res.setResponseData(responseDataBytes2);
-			res.setResponseMessage("Exception:"+e.getMessage());
 			res.sampleEnd();
 			return res;
 		}
