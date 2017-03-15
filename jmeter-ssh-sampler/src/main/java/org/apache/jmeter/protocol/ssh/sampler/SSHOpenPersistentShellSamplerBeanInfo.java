@@ -11,7 +11,7 @@ public class SSHOpenPersistentShellSamplerBeanInfo extends AbstractSSHMainSample
 		super(SSHOpenPersistentShellSampler.class);
 		createPropertyGroup("connectionManagement", new String[] { 
 				"shellName", // $NON-NLS-1$
-				"connectionName", // $NON-NLS-1$
+				"connectionName",// $NON-NLS-1$
 				"useTty" // $NON-NLS-1$
 		});
 
@@ -23,5 +23,8 @@ public class SSHOpenPersistentShellSamplerBeanInfo extends AbstractSSHMainSample
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 		p.setValue(DEFAULT, "");
 
+		p = property("resultEncoding"); // $NON-NLS-1$
+	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+	    p.setValue(DEFAULT, "UTF-8");
 	}
 }

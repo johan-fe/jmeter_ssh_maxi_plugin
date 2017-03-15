@@ -27,6 +27,8 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 	private String connectionName = "";
 	private String shellName = "";
 	private boolean useTty=false;
+	private String resultEncoding="UTF-8";
+	
 	public boolean getUseTty() {
 		return useTty;
 	}
@@ -182,10 +184,11 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		sshcs.setInputStream(in);
 		sshcs.setpOutputStream(ps);
 		sshSess.addChannelShell(this.shellName, sshcs);
+		byte[] responseDataBytes=sshcs.readResponse();
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
-		res.setResponseData(responseMessage, "UTF-8");
+		res.setResponseData(responseDataBytes);
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
 		return res;
@@ -206,5 +209,13 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 
 	public String getShellName() {
 		return this.shellName;
+	}
+
+	public String getResultEncoding() {
+		return resultEncoding;
+	}
+
+	public void setResultEncoding(String resultEncoding) {
+		this.resultEncoding = resultEncoding;
 	}
 }

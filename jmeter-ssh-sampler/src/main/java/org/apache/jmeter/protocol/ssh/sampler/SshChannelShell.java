@@ -83,13 +83,13 @@ public class SshChannelShell {
 		this.pOut.print(command + "\n");
 	}
 
-	protected byte[] appendData(byte[] firstObject, byte[] secondObject) {
+	protected byte[] appendData(byte[] firstObject, byte[] secondObject, int lengthSecond) {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
 			if (firstObject != null && firstObject.length != 0)
 				outputStream.write(firstObject);
-			if (secondObject != null && secondObject.length != 0)
-				outputStream.write(secondObject);
+			if (secondObject != null && lengthSecond != 0)
+				outputStream.write(secondObject,0,lengthSecond );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,9 +109,9 @@ public class SshChannelShell {
 						count = 5;
 						break;
 					}
-					result2 = appendData(result, tmp);
+					result2 = appendData(result, tmp, i);
 					result=result2;
-					log.debug("while: "+result.toString());
+					log.debug("while: "+Integer.toString(i)+"==="+new String(tmp, "UTF-8")+"\n=====");
 				}
 			} catch (Exception e) {
 				log.info("(while)Exception in SSHChannelShell:"+e.getMessage());
@@ -121,9 +121,9 @@ public class SshChannelShell {
 				try {
 					while (in.available() > 0) {
 						int i = in.read(tmp, 0, 1024);
-						result2 = appendData(result, tmp);
+						result2 = appendData(result, tmp,i);
 						result=result2;
-						log.debug("shell closed while: "+result.toString());
+						log.debug("shell closed while: "+new String(result,  "UTF-8"));
 					}
 				} catch (Exception e) {
 					log.info("(if closed)Exception in SSHChannelShell:"+e.getMessage());

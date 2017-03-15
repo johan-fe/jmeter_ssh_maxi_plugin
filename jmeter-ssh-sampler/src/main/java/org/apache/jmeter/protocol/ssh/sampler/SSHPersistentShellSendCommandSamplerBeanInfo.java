@@ -31,5 +31,17 @@ public class SSHPersistentShellSendCommandSamplerBeanInfo extends AbstractSSHMai
 	     p = property("useTty"); // $NON-NLS-1$
 	     p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 	     p.setValue(DEFAULT, Boolean.FALSE);
+	     
+	     p = property("stripCommand"); // $NON-NLS-1$
+	     p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+	     p.setValue(DEFAULT, Boolean.TRUE);
+	     
+	     p = property("stripPrompt"); // $NON-NLS-1$
+	     p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+	     p.setValue(DEFAULT, Boolean.TRUE);
+	     
+	     p = property("resultEncoding"); // $NON-NLS-1$
+	     p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+	     p.setValue(DEFAULT, "UTF-8");
 	}
 }

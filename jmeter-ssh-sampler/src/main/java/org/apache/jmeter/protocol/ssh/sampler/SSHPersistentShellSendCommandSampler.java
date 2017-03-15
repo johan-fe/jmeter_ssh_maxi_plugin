@@ -24,7 +24,16 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 	private String connectionName = "";
 	private String shellName = "";
 	private String command="";
- 
+    private String resultEncoding="UTF-8";
+    private boolean stripPrompt=true;
+    private boolean stripCommand=true;
+	public String getResultEncoding() {
+		return resultEncoding;
+	}
+
+	public void setResultEncoding(String resultEncoding) {
+		this.resultEncoding = resultEncoding;
+	}
 
 	private boolean useTty=false;
 
@@ -197,5 +206,21 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 
 	public void setUseTty(boolean useTty) {
 		this.useTty = useTty;
+	}
+
+	public boolean isStripPrompt() {
+		return stripPrompt;
+	}
+
+	public void setStripPrompt(boolean stripPrompt) {
+		this.stripPrompt = stripPrompt;
+	}
+
+	public boolean isStripCommand() {
+		return stripCommand;
+	}
+
+	public void setStripCommand(boolean stripCommand) {
+		this.stripCommand = stripCommand;
 	}
 }
