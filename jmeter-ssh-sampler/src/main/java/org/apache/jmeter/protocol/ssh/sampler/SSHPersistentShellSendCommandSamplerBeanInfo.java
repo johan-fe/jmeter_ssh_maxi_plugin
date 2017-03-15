@@ -15,7 +15,12 @@ public class SSHPersistentShellSendCommandSamplerBeanInfo extends AbstractSSHMai
 				"command", // $NON-NLS-1$
 				"useTty" // $NON-NLS-1$
 		});
-
+        createPropertyGroup("resultProcessing", new String[]{ 
+                "resultEncoding", // $NON-NLS-1$
+                "stripCommand", // $NON-NLS-1$
+                "stripPrompt"  // $NON-NLS-1$
+ 
+            });
 		PropertyDescriptor p = property("shellName"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 		p.setValue(DEFAULT, "");

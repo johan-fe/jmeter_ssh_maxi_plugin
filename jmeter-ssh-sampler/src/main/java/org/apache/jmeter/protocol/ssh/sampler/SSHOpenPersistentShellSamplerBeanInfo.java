@@ -14,7 +14,11 @@ public class SSHOpenPersistentShellSamplerBeanInfo extends AbstractSSHMainSample
 				"connectionName",// $NON-NLS-1$
 				"useTty" // $NON-NLS-1$
 		});
-
+        createPropertyGroup("resultProcessing", new String[]{ 
+                "resultEncoding", // $NON-NLS-1$
+                "stripPrompt"  // $NON-NLS-1$
+ 
+            });
 		PropertyDescriptor p = property("shellName"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 		p.setValue(DEFAULT, "");
@@ -26,5 +30,9 @@ public class SSHOpenPersistentShellSamplerBeanInfo extends AbstractSSHMainSample
 		p = property("resultEncoding"); // $NON-NLS-1$
 	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 	    p.setValue(DEFAULT, "UTF-8");
+	    
+		p = property("stripPrompt"); // $NON-NLS-1$
+	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+	    p.setValue(DEFAULT, Boolean.FALSE);
 	}
 }

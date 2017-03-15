@@ -27,13 +27,6 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
     private String resultEncoding="UTF-8";
     private boolean stripPrompt=true;
     private boolean stripCommand=true;
-	public String getResultEncoding() {
-		return resultEncoding;
-	}
-
-	public void setResultEncoding(String resultEncoding) {
-		this.resultEncoding = resultEncoding;
-	}
 
 	private boolean useTty=false;
 
@@ -223,4 +216,12 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 	public void setStripCommand(boolean stripCommand) {
 		this.stripCommand = stripCommand;
 	}
+	public String getResultEncoding() {
+		return resultEncoding;
+	}
+
+	public void setResultEncoding(String resultEncoding) {
+		this.resultEncoding = resultEncoding;
+	}
+
 }
