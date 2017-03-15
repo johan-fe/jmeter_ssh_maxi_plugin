@@ -95,8 +95,46 @@ public class SshChannelShell {
 		}
 		return outputStream.toByteArray();
 	}
-
-	public byte[] readResponse() {
+	public byte[] readResponse(boolean stripCommand, String command, boolean stripPrompt, String encoding ) throws Exception
+	{
+		String result=new String(readResponseBytes(), encoding);
+		if (stripCommand==true)
+		{
+			int indexLF=result.indexOf("\n");
+			int indexCR=result.indexOf("\r");
+			int maxindex=Math.max(indexLF,indexCR);
+			log.info("indexLF:"+Integer.toString(indexLF));
+			log.info("indexCR:"+Integer.toString(indexLF));
+			log.info("command length:"+command.length());
+			int commandIndex=result.indexOf(command);
+			int commandLength=command.length();
+			int stripLength=0;
+			if (commandIndex==0)
+			{
+				if(indexLF==commandLength+1)
+				{
+					stripLength=commandLength+2;
+					if(indexCR==commandLength+2) {
+						stripLength++;
+					}
+				}
+				else if (indexCR==commandLength+1)
+				{
+					stripLength=commandLength+2;
+					if(indexLF==commandLength+2) {
+						stripLength++;
+					}
+				}
+				result=result.substring(stripLength);
+			}
+		}
+		if(stripPrompt)
+		{
+			//TODO lastIndexOf
+		}
+		return result.getBytes();
+	}
+	private byte[] readResponseBytes() {
 		int count = 5;
 		byte[] tmp = new byte[1024];
 		byte[] result = {};

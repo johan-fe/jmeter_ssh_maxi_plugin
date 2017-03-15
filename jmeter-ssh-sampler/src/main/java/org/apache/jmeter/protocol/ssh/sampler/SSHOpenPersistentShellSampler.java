@@ -185,7 +185,21 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		sshcs.setInputStream(in);
 		sshcs.setpOutputStream(ps);
 		sshSess.addChannelShell(this.shellName, sshcs);
-		byte[] responseDataBytes=sshcs.readResponse();
+		byte[] responseDataBytes= {};
+		try {
+			responseDataBytes=sshcs.readResponse(false,"",this.stripPrompt,this.resultEncoding );
+		}
+		catch(Exception e)
+		{
+			byte[] responseDataBytes2= {};
+			res.setResponseCode("-8");
+			res.setSuccessful(false);
+			res.setSamplerData(samplerData);
+			res.setResponseData(responseDataBytes2);
+			res.setResponseMessage("Exception:"+e.getMessage());
+			res.sampleEnd();
+			return res;
+		}
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
@@ -220,7 +234,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		this.resultEncoding = resultEncoding;
 	}
 
-	public boolean isStripPrompt() {
+	public boolean getStripPrompt() {
 		return stripPrompt;
 	}
 

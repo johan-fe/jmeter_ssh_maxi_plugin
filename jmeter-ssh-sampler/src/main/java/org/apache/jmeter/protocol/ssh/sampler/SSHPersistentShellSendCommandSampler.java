@@ -141,7 +141,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		responseMessage = "Command "+this.command+" sent on shell "+this.shellName+" on "+this.connectionName;
 		// TODO add doCommand code
 		cs.getChannelShell().setPty(this.useTty);
-		byte [] responseBytes= {};
+		byte [] responseDataBytes= {};
 		try 
 		{
 			cs.sendCommand(command);
@@ -150,15 +150,22 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		{
 			//TODO handle thrown exceptions
 		}
-		try
-		{
-			responseBytes = cs.readResponse();
+	 
+		try {
+			responseDataBytes= cs.readResponse(this.stripCommand,this.command,this.stripPrompt,this.resultEncoding );
 		}
 		catch(Exception e)
 		{
-			//TODO handle thrown exceptions
+			byte[] responseDataBytes2= {};
+			res.setResponseCode("-8");
+			res.setSuccessful(false);
+			res.setSamplerData(samplerData);
+			res.setResponseData(responseDataBytes2);
+			res.setResponseMessage("Exception:"+e.getMessage());
+			res.sampleEnd();
+			return res;
 		}
-		res.setResponseData(responseBytes);
+		res.setResponseData(responseDataBytes);
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
@@ -201,7 +208,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		this.useTty = useTty;
 	}
 
-	public boolean isStripPrompt() {
+	public boolean getStripPrompt() {
 		return stripPrompt;
 	}
 
@@ -209,7 +216,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		this.stripPrompt = stripPrompt;
 	}
 
-	public boolean isStripCommand() {
+	public boolean getStripCommand() {
 		return stripCommand;
 	}
 
