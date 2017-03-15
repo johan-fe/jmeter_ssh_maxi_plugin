@@ -91,13 +91,14 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 		cs.disconnect();
 		
 		sshSess.removeChannelShell(this.shellName);
+		responseMessage = "Shell with name "+this.shellName+" closed on "+this.connectionName;
+
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
 		res.setResponseData(responseMessage, "UTF-8");
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
-		responseMessage = "Shell with name "+this.shellName+" closed on "+this.connectionName;
 		res.setSampleLabel(getName()+" ("+responseMessage+")");
 		return res;
 
