@@ -98,9 +98,9 @@ public class SshChannelShell {
 
 	public byte[] readResponse() {
 		int count = 5;
-		boolean stop = false;
 		byte[] tmp = new byte[1024];
 		byte[] result = {};
+		byte[] result2= {};
 		while (count > 0) {
 			try {
 				while (in.available() > 0) {
@@ -109,18 +109,24 @@ public class SshChannelShell {
 						count = 5;
 						break;
 					}
-					result = appendData(result, tmp);
+					result2 = appendData(result, tmp);
+					result=result2;
+					log.debug("while: "+result.toString());
 				}
 			} catch (Exception e) {
+				log.info("(while)Exception in SSHChannelShell:"+e.getMessage());
 				return result;// TODO throw exception
 			}
 			if (cShell.isClosed()) {
 				try {
 					while (in.available() > 0) {
 						int i = in.read(tmp, 0, 1024);
-						result = appendData(result, tmp);
+						result2 = appendData(result, tmp);
+						result=result2;
+						log.debug("shell closed while: "+result.toString());
 					}
 				} catch (Exception e) {
+					log.info("(if closed)Exception in SSHChannelShell:"+e.getMessage());
 					return result;// TODO throw exception
 				}
 				count = 5;
@@ -128,8 +134,9 @@ public class SshChannelShell {
 			try {
 				Thread.sleep(200);
 				count = count - 1;
-			} catch (Exception ee) {
-				return result;
+			} catch (Exception e) {
+				log.info("(thread sleep)Exception in SSHChannelShell:"+e.getMessage());
+				return result;//TODO throw exception 
 			}
 		}
 		return result;
