@@ -93,11 +93,8 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 String responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
 		 assertTrue("response Message is SSH Connection established, no Command Executed",
-				 responseMessage.equals("SSH Connection established, no Command Executed") );
-		
+				 responseMessage.equals("SSH Connection established, no Command Executed") );		
 		 String responseData=sr.getResponseDataAsString();
-		 //assertTrue("contains stderr in response Data", responseData.contains("=== stderr ==="));
-		 //assertTrue("contains stderr in response Data", responseData.contains("Welcome to Application Shell"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
 		 
 		 SSHOpenPersistentShellSampler pss = new SSHOpenPersistentShellSampler();
@@ -120,7 +117,7 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
 
 		 SSHPersistentShellSendCommandSampler pssc =new SSHPersistentShellSendCommandSampler();
-		 pssc.setCommand("ls");
+		 pssc.setCommand("dir");
 		 pssc.setConnectionName("CONN1");
 		 pssc.setShellName("SHELL1");
 		 sr= pssc.sample(null);
@@ -137,6 +134,7 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 responseData=sr.getResponseDataAsString();
 		 //assertTrue("Shell with name SHELL1 opened on CONN1 in response Data", responseData.contains("Shell with name SHELL1 opened on CONN1"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 
 		 SSHPersistentShellSendCommandSampler pssc2 =new SSHPersistentShellSendCommandSampler();
 		 pssc2.setCommand("date");
 		 pssc2.setConnectionName("CONN1");
