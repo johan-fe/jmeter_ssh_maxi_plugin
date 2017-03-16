@@ -23,7 +23,7 @@ import com.jcraft.jsch.Session;
 import jline.internal.Log;
 
 public class TestSSHCloseSessionSampler {
-	private final static Logger LOG = Logger.getLogger(TestSendCommandSSHSessionSampler.class.getName());
+	private final static Logger LOG = Logger.getLogger(TestSSHCloseSessionSampler.class.getName());
 	private SSHCommandSamplerExtra instance = null;
 	static private Thread sshts = null;
 

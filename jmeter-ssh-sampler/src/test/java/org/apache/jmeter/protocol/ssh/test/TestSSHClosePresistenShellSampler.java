@@ -11,6 +11,7 @@ import org.apache.jmeter.protocol.ssh.sampler.SSHOpenPersistentShellSampler;
 import org.apache.jmeter.protocol.ssh.sampler.SSHPersistentShellSendCommandSampler;
 import org.apache.jmeter.protocol.ssh.sampler.SshSession;
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
+import org.apache.jmeter.protocol.ssh.sampler.SSHClosePersistentShellSampler;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -25,12 +26,12 @@ import jline.internal.Log;
 import org.junit.Assert;
 
 
-public class TestSSHPresistenShellSendCommandSampler {
-	private final static Logger LOG  =Logger.getLogger(TestSSHPresistenShellSendCommandSampler.class.getName());
+public class TestSSHClosePresistenShellSampler {
+	private final static Logger LOG  =Logger.getLogger(TestSSHClosePresistenShellSampler.class.getName());
 	private SSHCommandSamplerExtra instance = null;
 	static private Thread sshts=null;
 
-	public TestSSHPresistenShellSendCommandSampler() {
+	public TestSSHClosePresistenShellSampler() {
 		//super(name);
 	}
 	//Sometimes several tests need to share computationally expensive setup (like logging into a database).	
@@ -68,6 +69,7 @@ public class TestSSHPresistenShellSendCommandSampler {
     //The Test annotation tells JUnit that the public void method to which it is attached can be run as a test case.
 	@Test 
 	public void testSSHPersistentShellSendCommandSampler() {
+		// open ssh session
 		 this.instance=new SSHCommandSamplerExtra();           
 		 this.instance.setCommand("");
 		 this.instance.setConnectionName("CONN1");
@@ -80,7 +82,6 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 this.instance.setUsername("johan");
 		 this.instance.setUseTty(false);
 		 this.instance.setCloseConnection(false);
- 
 		 SampleResult sr= this.instance.sample(null) ;
 		 Integer errorCount= sr.getErrorCount();
 		 assertTrue("ErrorCount is 0",errorCount==0);
@@ -89,20 +90,18 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 String responseCode=sr.getResponseCode();
 		 LOG.log(Level.INFO, "response code:"+responseCode);
 		 assertTrue(responseCode.equals("Connection Succesfull"));
-
 		 String responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
 		 assertTrue("response Message is SSH Connection established, no Command Executed",
 				 responseMessage.equals("SSH Connection established, no Command Executed") );		
 		 String responseData=sr.getResponseDataAsString();
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 
+		 // open persistent shell
 		 SSHOpenPersistentShellSampler pss = new SSHOpenPersistentShellSampler();
 		 pss.setConnectionName("CONN1");
 		 pss.setShellName("SHELL1");
 		 pss.setResultEncoding("UTF-8");
 		 pss.setStripPrompt(true);
-		
 		 sr= pss.sample(null);
 		 errorCount= sr.getErrorCount();
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
@@ -116,10 +115,9 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 assertTrue("response Message is OK",responseMessage.equals("Shell with name SHELL1 opened on CONN1") );
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
 		 responseData=sr.getResponseDataAsString();
+		 //assertTrue("Shell with name SHELL1 opened on CONN1 in response Data", responseData.contains("Shell with name SHELL1 opened on CONN1"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 assertTrue("Contains Welcome to Application Shell", responseData.contains("Welcome to Application Shell"));
-		 
-
+		 // send dir command to persistent shell
 		 SSHPersistentShellSendCommandSampler pssc =new SSHPersistentShellSendCommandSampler();
 		 pssc.setCommand("dir");
 		 pssc.setConnectionName("CONN1");
@@ -140,35 +138,36 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 assertTrue("response Message is Command dir sent on shell SHELL1 on CONN1",responseMessage.equals("Command dir sent on shell SHELL1 on CONN1") );
 		 responseData=sr.getResponseDataAsString();
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 assertTrue("contains ======> \"dir\"", responseData.contains("======> \"dir\""));
-		 
-		 
-		 SSHPersistentShellSendCommandSampler pssc2 =new SSHPersistentShellSendCommandSampler();
-		 pssc2.setCommand("ls");
-		 pssc2.setConnectionName("CONN1");
-		 pssc2.setShellName("SHELL1");
-		 pssc2.setResultEncoding("UTF-8");
-		 pssc2.setStripPrompt(true);
-		 pssc2.setStripCommand(true);
-		 sr= pssc2.sample(null);
-		 errorCount= sr.getErrorCount();
-		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
-		 assertTrue("ErrorCount is 0",errorCount==0); 
-		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
-		 responseCode=sr.getResponseCode();
-		 LOG.log(Level.INFO, "response code:"+responseCode);
-		 assertTrue(responseCode.equals("0"));
-		 responseMessage=sr.getResponseMessage();
-		 LOG.log(Level.INFO, "response message:"+responseMessage);
-		 assertTrue("response Message is Command ls sent on shell SHELL1 on CONN1",
-				 responseMessage.equals("Command ls sent on shell SHELL1 on CONN1") );
-		 responseData=sr.getResponseDataAsString();
-		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 assertTrue("file1 file2 file2", responseData.contains("file1 file2 file2"));
+		 assertTrue("======> ", responseData.contains("======> \"dir\""));
 
-		 
 		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 assertTrue("session is not null", sess!=null);
+		 String gcd = GlobalDataSsh.getAllConnectionData("");
+		 assertTrue("all connection data == CONN1[ChannelShells[SHELL1]]",gcd.equals("CONN1[ChannelShells[SHELL1]]") );
+		 // close the persistent shell
+		 SSHClosePersistentShellSampler cs =new SSHClosePersistentShellSampler();
+		 cs.setConnectionName("CONN1");
+		 cs.setShellName("SHELL1");
+		 sr= cs.sample(null);
+		 errorCount= sr.getErrorCount();
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 //assertTrue("ErrorCount is 0",errorCount==0); 
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 //responseCode=sr.getResponseCode();
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 //assertTrue(responseCode.equals("0"));
+		 responseMessage=sr.getResponseMessage();
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 //assertTrue("response Message is OK",responseMessage.equals("Shell with name SHELL1 opened on CONN1") );
+		 responseData=sr.getResponseDataAsString();
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 //assertTrue("Shell with name SHELL1 opened on CONN1 in response Data", responseData.contains("Shell with name SHELL1 opened on CONN1"));
+		 
+		 gcd = GlobalDataSsh.getAllConnectionData("");
+		 LOG.log(Level.INFO, "All connection data:"+gcd);
+		 assertTrue("all connection data == CONN1[ChannelShells[]]",gcd.equals("CONN1[ChannelShells[]]") );
+
+		 
 		 
 		 // clean up before assert
 		 if (sess !=null)

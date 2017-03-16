@@ -104,9 +104,9 @@ public class SshChannelShell {
 			int indexLF=result.indexOf("\n");
 			int indexCR=result.indexOf("\r");
 			int maxindex=Math.max(indexLF,indexCR);
-			log.info("indexLF:"+Integer.toString(indexLF));
-			log.info("indexCR:"+Integer.toString(indexLF));
-			log.info("command length:"+command.length());
+			//log.info("indexLF:"+Integer.toString(indexLF));
+			//log.info("indexCR:"+Integer.toString(indexLF));
+			//log.info("command length:"+command.length());
 			int commandIndex=result.indexOf(command);
 			int commandLength=command.length();
 			int stripLength=0;
@@ -129,7 +129,7 @@ public class SshChannelShell {
 				result=result.substring(stripLength);
 			}
 		}
-		//todo handle special case command with eempty response just prompt returned
+		//TODO handle special case command with empty response just prompt returned
 		if(stripPrompt)
 		{
 			int lastIndexCR=result.lastIndexOf("\r");
