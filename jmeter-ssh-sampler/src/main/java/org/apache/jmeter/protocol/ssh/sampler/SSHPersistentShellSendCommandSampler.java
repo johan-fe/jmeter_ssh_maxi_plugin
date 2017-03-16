@@ -51,11 +51,11 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			// empty connection name
 			responseMessage = "connection name is empty";
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-
-			responseCode = "-2";
+			res.setResponseCode("-2");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -65,9 +65,10 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			// ssh connection not found
 			responseMessage = "connection " + this.connectionName + " not found";
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-			responseCode = "-1";
+			res.setResponseCode("-1");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
+			res.setResponseMessage(responseMessage);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
 			return res;
@@ -76,10 +77,11 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			// ssh connection not found
 			responseMessage = "shell name is empty";
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-			responseCode = "-3";
+			res.setResponseCode("-3");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -91,10 +93,11 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		{
 			responseMessage = "severe error ssh session is null";
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-			responseCode = "-5";
+			res.setResponseCode("-5");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -102,10 +105,11 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		{
 			responseMessage = "ssh connection with name "+this.connectionName+" is not anymore connected";
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-			responseCode = "-6";
+			res.setResponseCode("-6");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -117,10 +121,11 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			// ssh connection not found
 			responseMessage = "shell with name "+this.shellName+" is null on"+this.connectionName;
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-			responseCode = "-4";
+			res.setResponseCode("-4");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -129,10 +134,11 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		{
 			responseMessage = "Shell with name "+this.shellName+" is not connected on: "+this.connectionName;
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-			responseCode = "-7";
+			res.setResponseCode("-7");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -148,7 +154,15 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		}
 		catch(Exception e)
 		{
-			//TODO handle thrown exceptions
+			byte[] responseDataBytes2= {};
+			res.setResponseCode("-9");
+			res.setSuccessful(false);
+			res.setSamplerData(samplerData);
+			res.setSampleLabel(getName()+"Send Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
+			res.setResponseMessage("Send Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
+			res.setResponseData(responseDataBytes2);
+			res.sampleEnd();
+			return res;
 		}
 	 
 		try {
@@ -160,8 +174,8 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.setResponseCode("-8");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
-			res.setSampleLabel(getName()+" Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
-			res.setResponseMessage("Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
+			res.setSampleLabel(getName()+"Receive Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
+			res.setResponseMessage("Receive Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
 			res.setResponseData(responseDataBytes2);
 			res.sampleEnd();
 			return res;

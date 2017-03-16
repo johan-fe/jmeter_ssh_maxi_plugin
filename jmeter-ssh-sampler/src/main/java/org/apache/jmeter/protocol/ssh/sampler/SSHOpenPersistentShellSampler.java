@@ -59,8 +59,9 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 			// empty connection name
 			responseMessage = "connection name is empty";
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
-			responseCode = "-2";
+			res.setResponseCode("-2");
 			res.setSuccessful(false);
+			res.setResponseMessage(responseMessage);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.sampleEnd();
 			return res;
@@ -70,20 +71,22 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		if (sshSess == null) {
 			// ssh connection not found
 			responseMessage = "connection " + this.connectionName + " not found";
-			responseCode = "-1";
+			res.setResponseCode("-1");
 			res.setSuccessful(false);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
 		if (this.shellName.equals("")) {
 			// ssh connection not found
 			responseMessage = "shell name is empty";
-			responseCode = "-3";
+			res.setResponseCode("-3");
 			res.setSuccessful(false);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -92,10 +95,11 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		{
 			// ssh connection not found
 			responseMessage = "shell with name "+this.shellName+" already exists, no new shell opened on "+this.connectionName;
-			responseCode = "-4";
+			res.setResponseCode("-4");
 			res.setSuccessful(false);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
@@ -105,20 +109,22 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		if (sess==null)
 		{
 			responseMessage = "severe error ssh session is null";
-			responseCode = "-5";
+			res.setResponseCode("-5");
 			res.setSuccessful(false);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseData(responseMessage, "UTF-8");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}
 		if (sess.isConnected()==false)
 		{
 			responseMessage = "ssh connection with name "+this.connectionName+" is not anymore connected";
-			responseCode = "-6";
+			res.setResponseCode("-6");
 			res.setSuccessful(false);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setResponseMessage(responseMessage);
 			res.sampleEnd();
 			return res;
 		}

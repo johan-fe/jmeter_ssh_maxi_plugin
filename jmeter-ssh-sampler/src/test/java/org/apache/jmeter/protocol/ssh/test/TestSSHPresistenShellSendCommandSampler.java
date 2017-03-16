@@ -183,5 +183,36 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 }
 		 
 	}
+	@Test 
+	public void testSSHPersistentShellSendCommandSamplerNotExistingShell() {
+		 
+		 
 
+		 SSHPersistentShellSendCommandSampler pssc =new SSHPersistentShellSendCommandSampler();
+		 pssc.setCommand("dir");
+		 pssc.setConnectionName("CONN1");
+		 pssc.setShellName("SHELL1");
+		 pssc.setResultEncoding("UTF-8");
+		 pssc.setStripPrompt(true);
+		 pssc.setStripCommand(true);
+		 SampleResult sr= pssc.sample(null);
+		 int errorCount= sr.getErrorCount();
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 assertTrue("ErrorCount is 1",errorCount==1); 
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 assertTrue(responseCode.equals("-1"));
+		 String responseMessage=sr.getResponseMessage();
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 assertTrue("response Message is connection CONN1 not found"
+				 ,responseMessage.equals("connection CONN1 not found") );
+		 String responseData=sr.getResponseDataAsString();
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 assertTrue("response data contains connection CONN1 not found", responseData.contains("connection CONN1 not found"));
+		 
+
+		 
+		
+	}
 }
