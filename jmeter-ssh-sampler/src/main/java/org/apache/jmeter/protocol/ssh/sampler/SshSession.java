@@ -40,6 +40,7 @@ public class SshSession {
 					// this thread should not suffer from it be other threads may still have references 
 					// so their operations may fail if the shell is closed here
 					shellChannels.remove(shellChannelNameFromList);
+					log.debug("Session "+shellChannelNameFromList+" successfully closed");
 				} catch (Exception e) {
 					// e.printStackTrace();
 					log.debug("excpetion in closeAllChannelShells:" + e.getMessage());

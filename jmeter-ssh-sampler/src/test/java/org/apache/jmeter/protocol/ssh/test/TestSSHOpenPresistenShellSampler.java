@@ -114,10 +114,10 @@ public class TestSSHOpenPresistenShellSampler {
 		 responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
 		 assertTrue("response Message is OK",responseMessage.equals("Shell with name SHELL1 opened on CONN1") );
-		 LOG.log(Level.INFO, "response message:"+responseMessage);
 		 responseData=sr.getResponseDataAsString();
-		 assertTrue("Shell with name SHELL1 opened on CONN1 in response Data", responseData.contains("Shell with name SHELL1 opened on CONN1"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 assertTrue("response data contains Welcome to Application Shell.", responseData.contains("Welcome to Application Shell."));
+		 
 
 		 
 		 pss = new SSHOpenPersistentShellSampler();
@@ -136,11 +136,10 @@ public class TestSSHOpenPresistenShellSampler {
 		 assertTrue("response Message is OK",responseMessage.equals("Shell with name SHELL2 opened on CONN1") );
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
 		 responseData=sr.getResponseDataAsString();
-		 assertTrue("Shell with name SHELL2 opened on CONN1 in response Data", responseData.contains("Shell with name SHELL2 opened on CONN1"));
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-
+		 assertTrue("response data contains Welcome to Application Shell.", responseData.contains("Welcome to Application Shell."));
 		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
-		 assertTrue("session is null", sess!=null);
+		 assertTrue("session CONN1 is not null", sess!=null);
 		 
 		 String gcd = GlobalDataSsh.getAllConnectionData("");
 		 assertTrue("all connection data == CONN1[ChannelShells[SHELL2,SHELL1]]",gcd.equals("CONN1[ChannelShells[SHELL2,SHELL1]]") );
@@ -148,8 +147,9 @@ public class TestSSHOpenPresistenShellSampler {
 		 // clean up before assert
 		 if (sess !=null)
 		 {
+			 
 			 try {
-				 sess.disconnect();
+				 sess.disconnect();//disconnecting all sessions closes as well all channelshells
 			 }
 			 catch(Exception e) {}
 			 LOG.log(Level.INFO, "removing ssh session GlobalDataSsh from CONN1" );

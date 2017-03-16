@@ -166,7 +166,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		res.setResponseData(responseDataBytes);
+		res.setResponseData(new String(responseDataBytes),this.resultEncoding);
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);

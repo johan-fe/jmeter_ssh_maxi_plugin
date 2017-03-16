@@ -197,7 +197,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
-		res.setResponseData(responseDataBytes);
+		res.setResponseData(new String(responseDataBytes),this.resultEncoding);
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
 		return res;
