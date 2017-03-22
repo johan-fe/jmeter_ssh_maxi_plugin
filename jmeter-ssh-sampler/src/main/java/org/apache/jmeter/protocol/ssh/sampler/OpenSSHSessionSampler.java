@@ -45,7 +45,7 @@ public  class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Te
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2954989469756886583L;
+	private static final long serialVersionUID = 2954789087756886583L;
 	private static final Logger log = LoggingManager.getLoggerForClass();
     private String hostname = "";
     private int port = 22;

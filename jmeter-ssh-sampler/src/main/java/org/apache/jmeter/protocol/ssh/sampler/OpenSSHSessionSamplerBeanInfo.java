@@ -115,9 +115,6 @@ public class OpenSSHSessionSamplerBeanInfo extends  AbstractSSHMainSamplerBeanIn
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "");
         
-        p = property("closeConnection"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.FALSE);
         
         p = property("connectionName"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
