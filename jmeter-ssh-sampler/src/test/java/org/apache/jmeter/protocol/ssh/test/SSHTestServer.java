@@ -2,6 +2,7 @@ package org.apache.jmeter.protocol.ssh.test;
 
 //import java.security.Security;
 import java.lang.System;
+import java.lang.Thread;
 import org.apache.sshd.common.file.virtualfs.VirtualFileSystemFactory;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -84,6 +85,7 @@ public class SSHTestServer extends Thread {
 		sshd.setKeyExchangeFactories(Arrays.<NamedFactory<KeyExchange>>asList(new DHG1.Factory()));
 
 		sshd.setShellFactory(new InAppShellFactory());
+		
 		/*
 		 * if (System.getProperty("os.name").toLowerCase().indexOf("windows") <
 		 * 0) { sshd.setShellFactory(new ProcessShellFactory(new String[] {

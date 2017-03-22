@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-
 /**
  * @author Maxim Kalina
  * @version $Id$

@@ -185,6 +185,7 @@ public  class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Te
     		res.setResponseData(responseMessage, "UTF-8");
     		res.setResponseMessage(responseMessage);
     		res.sampleEnd();
+    		return res;
         }		
         responseMessage="Connected";
         res.sampleEnd();
