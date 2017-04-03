@@ -372,10 +372,18 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
     }
 
 	public String getSftpSessionName() {
-		return sftpSessionName;
+		return this.sftpSessionName;
 	}
 
 	public void setSftpSessionName(String sftpSessionName) {
 		this.sftpSessionName = sftpSessionName;
+	}
+ 
+	public String getConnectionName() {
+		return this.connectionName;
+	}
+
+	public void setConnectionName(String connectionName) {
+		this.connectionName = connectionName;
 	}
 }

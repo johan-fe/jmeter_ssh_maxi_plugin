@@ -19,13 +19,13 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1098L;
+	private static final long serialVersionUID = 10498L;
 	private String connectionName = "";
 	private String shellName = "";
 
 	public SSHClosePersistentShellSampler() {
 		super("SSHClosePersistentShellSampler");
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override

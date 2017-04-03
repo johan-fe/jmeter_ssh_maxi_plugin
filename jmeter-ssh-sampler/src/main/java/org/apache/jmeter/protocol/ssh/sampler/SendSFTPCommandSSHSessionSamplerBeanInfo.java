@@ -26,8 +26,8 @@ public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSam
         super(SendSFTPCommandSSHSessionSampler.class);
 		createPropertyGroup("connectionManagement", new String[] { 
 				"sftpSessionName", // $NON-NLS-1$
-				"connectionName",// $NON-NLS-1$
-				"useTty" // $NON-NLS-1$
+				"connectionName" // $NON-NLS-1$
+ 
 		});
         createPropertyGroup("fileTransfer", new String[]{
                     "action", // $NON-NLS-1$
@@ -48,7 +48,7 @@ public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSam
             SSHSFTPSamplerExtra.SFTP_COMMAND_LS
         });
         
-        p = property("SFTPsessionName"); // $NON-NLS-1$
+        p = property("sftpSessionName"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT,"" );
         

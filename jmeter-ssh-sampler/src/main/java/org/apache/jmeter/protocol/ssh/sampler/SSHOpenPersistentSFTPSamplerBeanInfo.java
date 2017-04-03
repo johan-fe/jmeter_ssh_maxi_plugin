@@ -19,7 +19,7 @@ public class SSHOpenPersistentSFTPSamplerBeanInfo extends AbstractSSHMainSampler
                 "stripPrompt"  // $NON-NLS-1$
  
             });
-		PropertyDescriptor p = property("shellName"); // $NON-NLS-1$
+		PropertyDescriptor p = property("sftpSessionName"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 		p.setValue(DEFAULT, "");
 

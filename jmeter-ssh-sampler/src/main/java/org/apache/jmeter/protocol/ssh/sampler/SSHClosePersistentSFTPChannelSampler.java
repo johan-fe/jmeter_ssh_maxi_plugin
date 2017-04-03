@@ -21,10 +21,10 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 	 */
 	private static final long serialVersionUID = 1098L;
 	private String connectionName = "";
-	private String shellName = "";
+	private String sftpSessionName = "";
 
 	public SSHClosePersistentSFTPChannelSampler() {
-		super("SSHClosePersistentShellSampler");
+		super("SSHClosePersistentSFTPChannelSampler");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,7 +33,7 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "Close shell "+this.shellName+" on "+this.connectionName;
+		String samplerData = "Close shell "+this.sftpSessionName+" on "+this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
@@ -66,9 +66,9 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		if (this.shellName.equals("")) {
+		if (this.sftpSessionName.equals("")) {
 			// ssh connection not found
-			responseMessage = "shell name is empty";
+			responseMessage = "SFTP session name is empty";
 			res.setResponseCode("-3");
 			res.setSuccessful(false);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
@@ -78,11 +78,11 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		SshChannelShell cs = sshSess.getChannelShellByName(this.shellName);
-		if (cs==null)
+		SshChannelSFTP csftp = sshSess.getChannelSftpByName(this.sftpSessionName);
+		if (csftp==null)
 		{
 			// ssh connection not found
-			responseMessage = "shell with name "+this.shellName+" not found on "+this.connectionName;
+			responseMessage = "SFTP session with name "+this.sftpSessionName+" not found on "+this.connectionName;
 			res.setResponseCode("-4");
 			res.setSuccessful(false);
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
@@ -92,10 +92,10 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		cs.disconnect();
+		csftp.disconnect();
 		
-		sshSess.removeChannelShell(this.shellName);
-		responseMessage = "Shell with name "+this.shellName+" closed on "+this.connectionName;
+		sshSess.removeChannelShell(this.sftpSessionName);
+		responseMessage = "Shell with name "+this.sftpSessionName+" closed on "+this.connectionName;
 
 		res.setResponseCode("0");
 		res.setSuccessful(true);
@@ -116,11 +116,11 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 		return this.connectionName;
 	}
 
-	public void setShellName(String sh) {
-		this.shellName = sh;
+	public void setSftpSessionName(String sh) {
+		this.sftpSessionName = sh;
 	}
 
-	public String getShellName() {
-		return this.shellName;
+	public String getSftpSessionName() {
+		return this.sftpSessionName;
 	}
 }
