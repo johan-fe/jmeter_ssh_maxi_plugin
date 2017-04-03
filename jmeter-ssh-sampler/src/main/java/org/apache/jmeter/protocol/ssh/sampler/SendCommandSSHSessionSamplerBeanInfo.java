@@ -54,8 +54,7 @@ public class SendCommandSSHSessionSamplerBeanInfo extends  AbstractSSHMainSample
 
         createPropertyGroup("connectionManagement", 
         		new String[]{ 
-                "connectionName", // $NON-NLS-1$
-
+                "connectionName" // $NON-NLS-1$
             });
         createPropertyGroup("execute", new String[]{ 
                 "command", // $NON-NLS-1$
