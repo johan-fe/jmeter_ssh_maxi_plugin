@@ -33,7 +33,7 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "Close shell "+this.sftpSessionName+" on "+this.connectionName;
+		String samplerData = "Close SFTP "+this.sftpSessionName+" on "+this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
@@ -95,7 +95,7 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 		csftp.disconnect();
 		
 		sshSess.removeChannelShell(this.sftpSessionName);
-		responseMessage = "Shell with name "+this.sftpSessionName+" closed on "+this.connectionName;
+		responseMessage = "SFTP with name "+this.sftpSessionName+" closed on "+this.connectionName;
 
 		res.setResponseCode("0");
 		res.setSuccessful(true);

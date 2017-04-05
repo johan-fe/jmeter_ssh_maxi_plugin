@@ -31,7 +31,7 @@ import com.jcraft.jsch.Session;
 /**
  * Dump ssh session sampler
  */
-public  class CloseSSHSessionSampler extends AbstractSampler implements TestBean  {
+public  class CloseSSHSessionSampler extends AbstractSSHMainSampler   {
 	/**
 	 * init
 	 */
@@ -40,8 +40,8 @@ public  class CloseSSHSessionSampler extends AbstractSampler implements TestBean
 	private static final Logger log = LoggingManager.getLoggerForClass();
     private String connectionName= "";
 	public CloseSSHSessionSampler() {
-		super();	 
-		setName("SSHCloseSessionSampler"); 
+		super("SSHCloseSessionSampler");	 
+
 	}
 
 	@Override

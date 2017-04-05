@@ -34,5 +34,9 @@ public class SSHOpenPersistentShellSamplerBeanInfo extends AbstractSSHMainSample
 		p = property("stripPrompt"); // $NON-NLS-1$
 	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 	    p.setValue(DEFAULT, Boolean.FALSE);
+	    
+		p = property("useTty"); // $NON-NLS-1$
+	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+	    p.setValue(DEFAULT, Boolean.FALSE);
 	}
 }

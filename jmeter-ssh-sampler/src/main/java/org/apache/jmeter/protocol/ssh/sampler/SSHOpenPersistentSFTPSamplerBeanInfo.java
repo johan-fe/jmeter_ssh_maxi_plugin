@@ -11,12 +11,12 @@ public class SSHOpenPersistentSFTPSamplerBeanInfo extends AbstractSSHMainSampler
 		super(SSHOpenPersistentSFTPSampler.class);
 		createPropertyGroup("connectionManagement", new String[] { 
 				"sftpSessionName", // $NON-NLS-1$
-				"connectionName",// $NON-NLS-1$
-				"useTty" // $NON-NLS-1$
+				"connectionName", // $NON-NLS-1$
+				"usePty" // $NON-NLS-1$
 		});
         createPropertyGroup("resultProcessing", new String[]{ 
-                "resultEncoding", // $NON-NLS-1$
-                "stripPrompt"  // $NON-NLS-1$
+                "resultEncoding" // $NON-NLS-1$
+        /*        "stripPrompt"  // $NON-NLS-1$*/
  
             });
 		PropertyDescriptor p = property("sftpSessionName"); // $NON-NLS-1$
@@ -31,8 +31,13 @@ public class SSHOpenPersistentSFTPSamplerBeanInfo extends AbstractSSHMainSampler
 	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 	    p.setValue(DEFAULT, "UTF-8");
 	    
-		p = property("stripPrompt"); // $NON-NLS-1$
+		p = property("usePty"); // $NON-NLS-1$
 	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 	    p.setValue(DEFAULT, Boolean.FALSE);
+	    
+	/*    
+		p = property("stripPrompt"); // $NON-NLS-1$
+	    p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+	    p.setValue(DEFAULT, Boolean.FALSE);*/
 	}
 }

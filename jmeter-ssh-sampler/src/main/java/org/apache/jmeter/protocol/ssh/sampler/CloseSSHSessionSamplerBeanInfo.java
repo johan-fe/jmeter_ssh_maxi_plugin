@@ -43,7 +43,7 @@ import org.apache.jmeter.testbeans.TestBean;
 
 
 
-public class CloseSSHSessionSamplerBeanInfo extends  BeanInfoSupport {
+public class CloseSSHSessionSamplerBeanInfo extends  AbstractSSHMainSamplerBeanInfo {
 	//class must have a public constructor to become visible in the menu
 	
 	public CloseSSHSessionSamplerBeanInfo() {

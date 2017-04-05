@@ -30,13 +30,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 	private String resultEncoding="UTF-8";
 	private boolean stripPrompt=false;
 	
-	public boolean getUseTty() {
-		return useTty;
-	}
 
-	public void setUseTty(boolean useTty) {
-		this.useTty = useTty;
-	}
 
 	public SSHOpenPersistentShellSampler() {
 		super("SSHOpenPersistentShellSampler");
@@ -227,7 +221,7 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 	}
 
 	public String getResultEncoding() {
-		return resultEncoding;
+		return this.resultEncoding;
 	}
 
 	public void setResultEncoding(String resultEncoding) {
@@ -240,5 +234,13 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 
 	public void setStripPrompt(boolean stripPrompt) {
 		this.stripPrompt = stripPrompt;
+	}
+	
+	public boolean getUseTty() {
+		return this.useTty;
+	}
+
+	public void setUseTty(boolean useTty) {
+		this.useTty = useTty;
 	}
 }

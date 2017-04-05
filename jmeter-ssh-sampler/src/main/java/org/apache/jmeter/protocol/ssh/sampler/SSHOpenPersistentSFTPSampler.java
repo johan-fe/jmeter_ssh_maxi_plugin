@@ -27,17 +27,11 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 	private static final long serialVersionUID = 1098L;
 	private String connectionName = "";
 	private String sftpSessionName="";
-	private boolean useTty=false;
+	private boolean usePty;
 	private String resultEncoding="UTF-8";
-	private boolean stripPrompt=false;
+//	private boolean stripPrompt=false;
 	
-	public boolean getUseTty() {
-		return useTty;
-	}
 
-	public void setUseTty(boolean useTty) {
-		this.useTty = useTty;
-	}
 
 	public SSHOpenPersistentSFTPSampler() {
 		super("SSHOpenPersistentSFTPSampler");
@@ -48,7 +42,7 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "Open shell "+this.sftpSessionName+" on "+this.connectionName;
+		String samplerData = "Open SFTP "+this.sftpSessionName+" on "+this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
@@ -135,7 +129,7 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 		try {
 		
 			cSftp=(ChannelSftp) sess.openChannel("sftp");
-			cSftp.setPty(this.useTty);
+			cSftp.setPty(this.usePty);
 			cSftp.connect();
 			in=cSftp.getInputStream();
 	        OutputStream ops = cSftp.getOutputStream();
@@ -176,7 +170,7 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
             return res;
         }
 		//if successfully opened add the shell to shell collection in the ssh session
-		responseMessage = "Shell with name "+this.sftpSessionName+" opened on "+this.connectionName;
+		responseMessage = "SFTP with name "+this.sftpSessionName+" opened on "+this.connectionName;
 		res.setSampleLabel(getName()+" ("+responseMessage+")");
 
 		SshChannelSFTP sshcsftp = new SshChannelSFTP();
@@ -227,7 +221,7 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 	public void setResultEncoding(String resultEncoding) {
 		this.resultEncoding = resultEncoding;
 	}
-
+/*
 	public boolean getStripPrompt() {
 		return stripPrompt;
 	}
@@ -235,12 +229,18 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 	public void setStripPrompt(boolean stripPrompt) {
 		this.stripPrompt = stripPrompt;
 	}
-
+*/
 	public String getSftpSessionName() {
-		return sftpSessionName;
+		return this.sftpSessionName;
 	}
 
 	public void setSftpSessionName(String sftpSessionName) {
 		this.sftpSessionName = sftpSessionName;
+	}
+	public boolean getUsePty() {
+		return this.usePty;
+	}
+	public void setUsePty(boolean uPty) {
+		this.usePty=uPty;
 	}
 }
