@@ -29,9 +29,10 @@ public class TestSSHCloseSessionSampler {
 
 	// Sometimes several tests need to share computationally expensive setup
 	// (like logging into a database).
+	
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		sshts = new Thread(new SSHTestServer());
+		sshts = new Thread(new org.apache.jmeter.protocol.ssh.test.SSHTestServer());
 		sshts.start();
 		Thread.sleep(1000);
 		Log.info("ssh test server thread started");

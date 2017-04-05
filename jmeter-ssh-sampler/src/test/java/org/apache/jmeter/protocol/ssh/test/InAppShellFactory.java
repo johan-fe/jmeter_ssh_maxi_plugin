@@ -21,6 +21,7 @@ import java.util.Date;
 public class InAppShellFactory implements Factory<Command> {
 	//private static final Logger log = LogManager.getLogger(InAppShellFactory.class);
 
+
 	public Command create() {
 		return new InAppShell();
 	}

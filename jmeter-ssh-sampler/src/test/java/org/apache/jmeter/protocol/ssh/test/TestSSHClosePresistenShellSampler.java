@@ -143,6 +143,7 @@ public class TestSSHClosePresistenShellSampler {
 		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 assertTrue("session is not null", sess!=null);
 		 String gcd = GlobalDataSsh.getAllConnectionData("");
+		 LOG.log(Level.INFO,"global connection data:"+gcd );
 		 assertTrue("all connection data == CONN1[ChannelShells[SHELL1]]",gcd.equals("CONN1[ChannelShells[SHELL1]]") );
 		 // close the persistent shell
 		 SSHClosePersistentShellSampler cs =new SSHClosePersistentShellSampler();

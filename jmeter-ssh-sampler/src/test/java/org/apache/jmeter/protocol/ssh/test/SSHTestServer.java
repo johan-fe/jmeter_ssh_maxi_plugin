@@ -107,6 +107,7 @@ public class SSHTestServer extends Thread {
 		// sshd.setSubsystemFactories(Collections.<NamedFactory<Command>>singletonList(new
 		// SftpSubsystem.Factory()));
 
+		
 		// sshd.setCommandFactory(new ScpCommandFactory());
 		sshd.setCommandFactory(new SshExecCommandFactory());
 		// log.info("registering SshExecCommandFactory");
