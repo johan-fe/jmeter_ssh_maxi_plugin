@@ -27,7 +27,7 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 	private static final long serialVersionUID = 1098L;
 	private String connectionName = "";
 	private String sftpSessionName="";
-	private boolean usePty;
+	private boolean usePty=false;
 	private String resultEncoding="UTF-8";
 //	private boolean stripPrompt=false;
 	

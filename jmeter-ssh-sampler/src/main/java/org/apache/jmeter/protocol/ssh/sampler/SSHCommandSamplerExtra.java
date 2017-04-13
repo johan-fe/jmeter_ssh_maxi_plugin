@@ -94,7 +94,7 @@ public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
             {
 	            // consider as successfull since no command had to be executed
 	            res.setSuccessful(true);
-	            res.setResponseCode("Connection Succesfull");
+	            res.setResponseCode("Connection Successful");
 	            if (this.getCloseConnection()==false)
 	            {
 	            	res.setResponseMessage("SSH Connection established, no Command Executed");

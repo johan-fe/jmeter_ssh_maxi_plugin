@@ -198,7 +198,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
 		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
 		 String responseCode=sr.getResponseCode();
-		 assertTrue(responseCode.equals("Connection Succesfull"));
+		 assertTrue(responseCode.equals("Connection Successful"));
 		 LOG.log(Level.INFO, "response code:"+responseCode);
 		 String responseMessage=sr.getResponseMessage();
 		 assertTrue("responsemessage is correct",responseMessage.equals("SSH Connection closed, no Command Executed"));
@@ -287,7 +287,7 @@ public class TestSSHCommandSamplerExtra // extends TestCase
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
 		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
 		 String responseCode=sr.getResponseCode();
-		 assertTrue(responseCode.equals("Connection Succesfull"));
+		 assertTrue(responseCode.equals("Connection Successful"));
 		 LOG.log(Level.INFO, "response code:"+responseCode);
 		 String responseMessage=sr.getResponseMessage();
 		 assertTrue("responsemessage is correct",responseMessage.equals("SSH Connection established, no Command Executed"));
