@@ -53,7 +53,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
     private String destination;
     private String action;
     private String sftpSessionName="";
-    private String connectionName;
+    private String connectionName="";
     private boolean printFile = true;
 	private boolean useTty;
 	private String resultEncoding="UTF-8";
@@ -74,11 +74,12 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	public SampleResult sample(Entry arg0) {
 		SampleResult res = new SampleResult();
 		res.sampleStart();
-
-		String samplerData = "Send Command "+this.action+" to shell "+this.sftpSessionName+" on "+this.connectionName;
+		
+		String samplerData = "Send Command "+this.action+" to SFTP "+this.sftpSessionName+" on "+this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
+		res.setSamplerData(samplerData);
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
 		if (this.connectionName.equals("")) {
@@ -149,11 +150,11 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 		}
 		
 		//ssh session is connected try to connect shell
-		SshChannelSFTP cs = sshSess.getChannelSftpByName(this.sftpSessionName);
-		if (cs==null)
+		SshChannelSFTP cSftp = sshSess.getChannelSftpByName(this.sftpSessionName);
+		if (cSftp==null)
 		{
 			// ssh connection not found
-			responseMessage = "shell with name "+this.sftpSessionName+" is null on"+this.connectionName;
+			responseMessage = "SFTP session with name "+this.sftpSessionName+" is null on"+this.connectionName;
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseCode("-4");
 			res.setSuccessful(false);
@@ -164,9 +165,9 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			return res;
 		}
 		// check if channelshell is still connected
-		if (!cs.isConnected())
+		if (!cSftp.isConnected())
 		{
-			responseMessage = "Shell with name "+this.sftpSessionName+" is not connected on: "+this.connectionName;
+			responseMessage = "SFTP session with name "+this.sftpSessionName+" is not connected on: "+this.connectionName;
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseCode("-7");
 			res.setSuccessful(false);
@@ -178,29 +179,14 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 		}
 		// Channelftp isconnected and all conditions fulfilled 
 
-		responseMessage = "Command "+this.action+" sent on shell "+this.sftpSessionName+" on "+this.connectionName;
+		responseMessage = "Command "+this.action+" sent to SFTP "+this.sftpSessionName+" on "+this.connectionName;
 		// TODO add doCommand code
-		cs.getChannelSftp().setPty(this.useTty);
-		byte [] responseDataBytes= {};
-		try 
-		{
-		   //TODO execute action	cs.sendCommand(command);
-		}
-		catch(Exception e)
-		{
-			byte[] responseDataBytes2= {};
-			res.setResponseCode("-9");
-			res.setSuccessful(false);
-			res.setSamplerData(samplerData);
-			res.setSampleLabel(getName()+"Send Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
-			res.setResponseMessage("Send Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
-			res.setResponseData(responseDataBytes2);
-			res.sampleEnd();
-			return res;
-		}
-	 
+		cSftp.getChannelSftp().setPty(this.useTty);
+		
 		try {
-		//TODO read response	responseDataBytes= cs.readResponse(this.stripCommand,this.command,this.stripPrompt,this.resultEncoding );
+			// execute the sftp command
+			responseData = this.doFileTransfer(cSftp.getChannelSftp(), source, destination, res);
+            
 		}
 		catch(Exception e)
 		{
@@ -214,12 +200,13 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			res.sampleEnd();
 			return res;
 		}
-		res.setResponseData(new String(responseDataBytes),this.resultEncoding);
+//		res.setResponseData(new String(responseDataBytes),this.resultEncoding);
+		res.setResponseData(responseData.getBytes());
+        res.setResponseMessageOK();
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
 		res.setSampleLabel(getName()+" ("+responseMessage+")");
- 
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
 		return res;
@@ -296,12 +283,10 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
      * @throws SftpException
      * @throws IOException
      */
-    private String doFileTransfer(Session session, String src, String dst, SampleResult res) throws JSchException, SftpException, IOException {
+    private String doFileTransfer(ChannelSftp channel , String src, String dst, SampleResult res) throws JSchException, SftpException, IOException {
         StringBuilder sb = new StringBuilder();
-        ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
-
-        res.sampleStart();
-        channel.connect();
+        //ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
+       // channel.connect();
 
         if (SFTP_COMMAND_GET.equals(action)) {
 
@@ -331,10 +316,10 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
             channel.rename(src, dst);
         }
 
-        res.sampleEnd();
+        //res.sampleEnd();
 
 
-        channel.disconnect();
+        //channel.disconnect();
         return sb.toString();
     }
 

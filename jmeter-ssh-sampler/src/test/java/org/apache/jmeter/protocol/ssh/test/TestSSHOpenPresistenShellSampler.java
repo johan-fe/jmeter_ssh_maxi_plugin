@@ -39,6 +39,7 @@ public class TestSSHOpenPresistenShellSampler {
 	//Sometimes several tests need to share computationally expensive setup (like logging into a database).	
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		GlobalDataSsh.removeAllSessions();
 		sshts = new Thread(new SSHTestServer());
 		sshts.start();
 		Thread.sleep(1000);
@@ -142,8 +143,9 @@ public class TestSSHOpenPresistenShellSampler {
 		 assertTrue("session CONN1 is not null", sess!=null);
 		 
 		 String gcd = GlobalDataSsh.getAllConnectionData("");
-		 assertTrue("all connection data == CONN1[ChannelShells[SHELL2,SHELL1]]",gcd.equals("CONN1[ChannelShells[SHELL2,SHELL1]]") );
 		 LOG.log(Level.INFO,"all connection data:\n"+gcd);
+		 assertTrue("all connection data == CONN1[ShellChannels[SHELL2,SHELL1],[SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[SHELL2,SHELL1],[SFTPChannels[]]") );
+		 
 		 // clean up before assert
 		 if (sess !=null)
 		 {

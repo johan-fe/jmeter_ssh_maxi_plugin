@@ -57,6 +57,7 @@ public class DumpSSHSessionSamplerBeanInfo extends  BeanInfoSupport {
                 "connectionName", // $NON-NLS-1$
 
             });
+        
         PropertyDescriptor p;
      
         p = property("connectionName"); // $NON-NLS-1$

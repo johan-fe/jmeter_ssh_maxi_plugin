@@ -32,6 +32,8 @@ public class TestSSHCloseSessionSampler {
 	
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		GlobalDataSsh.removeAllSessions();
+
 		sshts = new Thread(new org.apache.jmeter.protocol.ssh.test.SSHTestServer());
 		sshts.start();
 		Thread.sleep(1000);
@@ -134,7 +136,7 @@ public class TestSSHCloseSessionSampler {
 		assertTrue("response Message is connection CONNECT1 closed", responseMessage5.equals("connection CONNECT1 closed"));
 		String responseData5 = sr5.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData5);
-		assertTrue("resonse data empty", responseData5.equals(""));
+		assertTrue("response Message is connection CONNECT1 closed", responseData5.equals("connection CONNECT1 closed"));
 		String samplerData5 =sr5.getSamplerData();
 		LOG.log(Level.INFO, "sampler data:" + samplerData5);
 		assertTrue("sampler data is close ssh connection CONNECT1", samplerData5.equals("close ssh connection CONNECT1"));
@@ -274,7 +276,7 @@ public class TestSSHCloseSessionSampler {
 		assertTrue("response Message is connection CONNECT1 closed", responseMessage5.equals("connection CONNECT1 closed"));
 		String responseData5 = sr5.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData5);
-		assertTrue("resonse data empty", responseData5.equals(""));
+		assertTrue("resonse data connection CONNECT1 closed", responseData5.equals("connection CONNECT1 closed"));
 		String samplerData5 =sr5.getSamplerData();
 		LOG.log(Level.INFO, "sampler data:" + samplerData5);
 		assertTrue("sampler data is close ssh connection CONNECT1", samplerData5.equals("close ssh connection CONNECT1"));
@@ -295,7 +297,7 @@ public class TestSSHCloseSessionSampler {
 		assertTrue("response Message is connection CONNECT2 closed", responseMessage6.equals("connection CONNECT2 closed"));
 		String responseData6 = sr6.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData6);
-		assertTrue("resonse data empty", responseData6.equals(""));
+		assertTrue("resonse data connection CONNECT2 closed", responseData6.equals("connection CONNECT2 closed"));
 		String samplerData6 =sr6.getSamplerData();
 		LOG.log(Level.INFO, "sampler data:" + samplerData6);
 		assertTrue("sampler data is close ssh connection CONNECT2", samplerData6.equals("close ssh connection CONNECT2"));
@@ -347,7 +349,7 @@ public class TestSSHCloseSessionSampler {
 		assertTrue("response Message is connection name not configured in sampler!", responseMessage5.equals("connection name not configured in sampler!"));
 		String responseData5 = sr5.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData5);
-		assertTrue("resonse data empty", responseData5.equals(""));
+		assertTrue("resonse data connection name not configured in sampler!", responseData5.equals("connection name not configured in sampler!"));
 		String samplerData5 =sr5.getSamplerData();
 		LOG.log(Level.INFO, "sampler data:" + samplerData5);
 		assertTrue("sampler data is Invalid sampler configuration connection name is required", samplerData5.equals("Invalid sampler configuration connection name is required"));
@@ -371,7 +373,7 @@ public class TestSSHCloseSessionSampler {
 		assertTrue("response Message is connection CCCC not found", responseMessage5.equals("connection CCCC not found"));
 		String responseData5 = sr5.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData5);
-		assertTrue("resonse data empty", responseData5.equals(""));
+		assertTrue("resonse data connection CCCC not found", responseData5.equals("connection CCCC not found"));
 		String samplerData5 =sr5.getSamplerData();
 		LOG.log(Level.INFO, "sampler data:" + samplerData5);
 		assertTrue("sampler data is close ssh connection CCCC", samplerData5.equals("close ssh connection CCCC"));
@@ -439,7 +441,7 @@ public class TestSSHCloseSessionSampler {
 		assertTrue("response Message is connection CONNECT1 closed", responseMessage5.equals("connection CONNECT1 closed"));
 		String responseData5 = sr5.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData5);
-		assertTrue("resonse data empty", responseData5.equals(""));
+		assertTrue("response Message is connection CONNECT1 closed", responseData5.equals("connection CONNECT1 closed"));
 		String samplerData5 =sr5.getSamplerData();
 		LOG.log(Level.INFO, "sampler data:" + samplerData5);
 		assertTrue("sampler data is close ssh connection CONNECT1", samplerData5.equals("close ssh connection CONNECT1"));

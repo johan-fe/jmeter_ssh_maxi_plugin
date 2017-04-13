@@ -44,6 +44,7 @@ public class TestOpenSSHSessionSampler {
     }
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		GlobalDataSsh.removeAllSessions();
 		sshts = new Thread(new SSHTestServer() );
 		sshts.start();
 		Thread.sleep(1000);

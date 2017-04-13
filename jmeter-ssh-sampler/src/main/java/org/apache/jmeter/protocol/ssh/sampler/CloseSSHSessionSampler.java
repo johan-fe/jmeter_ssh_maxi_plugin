@@ -29,7 +29,7 @@ import org.apache.log.Logger;
 import com.jcraft.jsch.Session;
 
 /**
- * Dump ssh session sampler
+ * Close ssh session sampler
  */
 public  class CloseSSHSessionSampler extends AbstractSSHMainSampler   {
 	/**
@@ -59,6 +59,7 @@ public  class CloseSSHSessionSampler extends AbstractSSHMainSampler   {
     		samplerData="Invalid sampler configuration connection name is required";
     		res.setSampleLabel(getName()+" ("+samplerData+")");
     		responseMessage="connection name not configured in sampler!";
+    		responseData=responseMessage;
     		responseCode="-1";
     		res.setSuccessful(false);
     	}
@@ -74,12 +75,14 @@ public  class CloseSSHSessionSampler extends AbstractSSHMainSampler   {
     			}
     			GlobalDataSsh.removeSession(this.connectionName);
     			responseMessage="connection "+this.connectionName + " closed";
+    			responseData=responseMessage;
     			responseCode="0";
     			res.setSuccessful(true);
     		}
     		else{
     			responseMessage="connection "+this.connectionName +" not found";
     			responseCode="-2";
+    			responseData=responseMessage;
     			res.setSuccessful(false);
     		}
     	}

@@ -37,6 +37,8 @@ public class TestSSHClosePresistenShellSampler {
 	//Sometimes several tests need to share computationally expensive setup (like logging into a database).	
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		GlobalDataSsh.removeAllSessions();
+
 		sshts = new Thread(new SSHTestServer());
 		sshts.start();
 		Thread.sleep(1000);
@@ -144,7 +146,7 @@ public class TestSSHClosePresistenShellSampler {
 		 assertTrue("session is not null", sess!=null);
 		 String gcd = GlobalDataSsh.getAllConnectionData("");
 		 LOG.log(Level.INFO,"global connection data:"+gcd );
-		 assertTrue("all connection data == CONN1[ChannelShells[SHELL1]]",gcd.equals("CONN1[ChannelShells[SHELL1]]") );
+		 assertTrue("all connection data == CONN1[ShellChannels[SHELL1],[SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[SHELL1],[SFTPChannels[]]") );
 		 // close the persistent shell
 		 SSHClosePersistentShellSampler cs =new SSHClosePersistentShellSampler();
 		 cs.setConnectionName("CONN1");
@@ -166,7 +168,7 @@ public class TestSSHClosePresistenShellSampler {
 		 
 		 gcd = GlobalDataSsh.getAllConnectionData("");
 		 LOG.log(Level.INFO, "All connection data:"+gcd);
-		 assertTrue("all connection data == CONN1[ChannelShells[]]",gcd.equals("CONN1[ChannelShells[]]") );
+		 assertTrue("all connection data == CONN1[ShellChannels[],[SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[],[SFTPChannels[]]") );
 
 		 
 		 

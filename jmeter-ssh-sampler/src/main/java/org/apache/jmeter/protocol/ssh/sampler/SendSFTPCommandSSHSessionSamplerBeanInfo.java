@@ -52,6 +52,10 @@ public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSam
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT,"" );
         
+        p = property("connectionName"); // $NON-NLS-1$
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT,"" );
+        
         p = property("source"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "");

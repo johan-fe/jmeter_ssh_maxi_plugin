@@ -29,6 +29,8 @@ public class TestSendCommandSSHSessionSampler {
 	//Sometimes several tests need to share computationally expensive setup (like logging into a database).	
 		@BeforeClass
 		public static void setUpClass() throws Exception {
+			GlobalDataSsh.removeAllSessions();
+
 			sshts = new Thread(new SSHTestServer());
 			sshts.start();
 			Thread.sleep(1000);

@@ -24,6 +24,7 @@ import com.jcraft.jsch.Session;
 	 	public static void addSession(String connName, SshSession ses){
 	 		sessionList.put(connName, ses);
 	 	}
+
 	 	public static void removeSession(String connName ){
 	 		try
 	 		{
@@ -102,8 +103,10 @@ import com.jcraft.jsch.Session;
 		    			 SshSession sess=entry.getValue();
 		    			 if ( searchSpecific==false ||connName.equals(connNameFromList) ){
 		    				 sb.append(connNameFromList);
-		    				 String sessionInfoStr=sess.GetChannelShellList("");
-		    				 sb.append("[ChannelShells[").append(sessionInfoStr).append("]]");
+		    				 String shellInfoStr=sess.GetChannelShellList("");
+		    				 String sftpInfoStr=sess.GetChannelSftpList("");
+		    				 sb.append("[ShellChannels[").append(shellInfoStr).append("]").append(",");
+		    				 sb.append("[SFTPChannels[").append(sftpInfoStr).append("]]");
 		    			 	 if(sessionIterator.hasNext()){
 		    			 		 sb.append("\n");
 		    			 	 }
@@ -122,7 +125,7 @@ import com.jcraft.jsch.Session;
 	    	//}
 	    }
 	    
-	    static public synchronized String getConnectionList(String connName)
+	    static public synchronized String getConnectionList(String connName, boolean dumpChannelInfo)
 	    {
 	    	
 	    //start mutex here
@@ -147,7 +150,14 @@ import com.jcraft.jsch.Session;
 		    		      //String st = Thread.currentThread().getName() + " - [" + entry.getKey() + ", " + entry.getValue() + ']';
 		    			 String connNameFromList=entry.getKey();
 		    			 if ( searchSpecific==false ||connName.equals(connNameFromList) ){
-		    				 sb.append(connNameFromList);
+		    				 if(dumpChannelInfo)
+		    				 {
+		    					 sb.append(connNameFromList);
+		    				 }
+		    				 else
+		    				 {
+		    					 sb.append(GlobalDataSsh.getAllConnectionData(connNameFromList));
+		    				 }
 		    			 	 if(sessionIterator.hasNext()){
 		    			 		 sb.append("\n");
 		    			 	 }
@@ -165,4 +175,36 @@ import com.jcraft.jsch.Session;
 	    		return sb.toString();
 	    	//}
 	    }
+	    /*
+	     * clean up function for junit tests
+	    */
+	 	public static void removeAllSessions() {
+    		Iterator<Map.Entry<String, SshSession>> sessionIterator;
+    		sessionIterator = sessionList.entrySet().iterator();
+    	
+    		while(sessionIterator.hasNext()) {
+	    		 Map.Entry<String, SshSession> entry = sessionIterator.next();
+	    		 try
+	    		 {
+	    			
+	    			SshSession session=entry.getValue();
+	    			try {
+	    				session.disconnectAllChannelShells();
+	    			}
+	    			catch(Exception e) {}
+	    			try
+	    			{
+	    				session.disconnectAllSftpChannels();
+	    			}
+	    			catch(Exception e) {}
+	    			session.disconnect();
+	    			GlobalDataSsh.removeSession(entry.getKey());
+	    		 } 
+	    		 catch (Exception e)
+	    		 {
+	    		      //e.printStackTrace();
+	    		      return;
+	    		 }
+    		}
+	 	}
 }

@@ -34,7 +34,7 @@ public  class DumpSSHSessionSampler extends AbstractSampler implements TestBean 
 	 * 
 	 */
 	private static final long serialVersionUID = 2954989469756886583L;
-	 
+	private static boolean dumpChannelInfo=true; 
 	private static final Logger log = LoggingManager.getLoggerForClass();
     private String connectionName= "";
 	public DumpSSHSessionSampler() {
@@ -49,7 +49,7 @@ public  class DumpSSHSessionSampler extends AbstractSampler implements TestBean 
 
     	SampleResult res=new SampleResult();
     	res.sampleStart();
-    	String connList=GlobalDataSsh.getConnectionList(this.connectionName);
+    	String connList=GlobalDataSsh.getConnectionList(this.connectionName, dumpChannelInfo);
     	if(connList.equals(""))
     	{
     		if(connectionName.equals(""))
