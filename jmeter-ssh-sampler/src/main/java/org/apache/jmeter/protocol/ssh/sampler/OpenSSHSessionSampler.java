@@ -188,7 +188,6 @@ public  class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Te
     		return res;
         }		
         responseMessage="Connected";
-        res.sampleEnd();
 		res.setSampleLabel(getName()+" Connect ("+this.getUsername()+"@"+this.getHostname()+")");
 		res.setResponseCode("0");
 		res.setSuccessful(true);

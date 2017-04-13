@@ -132,7 +132,7 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 sftpCommand.setConnectionName("CONN1");
 		 sftpCommand.setSftpSessionName("SESS1");
 		 sftpCommand.setPrintFile(false);
-		 sftpCommand.setSource("");
+		 sftpCommand.setSource("/");
 		 sftpCommand.setDestination("");
 		 sftpCommand.setAction("ls");
 		 sr= sftpCommand.sample(null) ;
