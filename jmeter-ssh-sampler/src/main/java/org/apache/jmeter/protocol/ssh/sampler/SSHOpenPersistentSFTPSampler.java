@@ -124,17 +124,12 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 		}
 		//ssh session is connected try to connect shell
 		ChannelSftp cSftp=null;
-		InputStream in=null;
-		PrintStream ps=null;
+ 
 		try {
 		
 			cSftp=(ChannelSftp) sess.openChannel("sftp");
 			cSftp.setPty(this.usePty);
 			cSftp.connect();
-			in=cSftp.getInputStream();
-	        OutputStream ops = cSftp.getOutputStream();
-            ps = new PrintStream(ops, true);
-            //TODO read from shell set label
  
 		}
 		catch (JSchException e1) {

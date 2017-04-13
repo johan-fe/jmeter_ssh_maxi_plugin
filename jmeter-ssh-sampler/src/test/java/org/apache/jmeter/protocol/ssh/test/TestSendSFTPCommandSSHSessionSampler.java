@@ -145,20 +145,20 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 assertTrue(responseCode.equals("0"));
 		 responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
-		 assertTrue("response message is SFTP with name SESS1 opened on CONN1",
-				 responseMessage.equals("SFTP with name SESS1 opened on CONN1") );		
+		 assertTrue("response message is Command ls sent to SFTP SESS1 on CONN1",
+				 responseMessage.equals("Command ls sent to SFTP SESS1 on CONN1") );		
 		 responseData=sr.getResponseDataAsString();
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 assertTrue("response data is SFTP with name SESS1 opened on CONN1",
-				 responseData.equals("SFTP with name SESS1 opened on CONN1") );
+		// assertTrue("response data is Command ls sent to SFTP SESS1 on CONN1",
+		//		 responseData.equals("Command ls sent to SFTP SESS1 on CONN1") );
 		 responseLabel= sr.getSampleLabel();
 		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
-		 assertTrue(" responseLabel is SFTP with name SESS1 opened on CONN1",
-				 responseLabel.equals("SSHOpenPersistentSFTPSampler (SFTP with name SESS1 opened on CONN1)") );
+		 assertTrue(" responseLabel is SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)",
+				 responseLabel.equals("SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)") );
 		 responseSamplerData = sr.getSamplerData();
 		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
-		 assertTrue("responseSamplerData is Open SFTP SESS1 on CONN1",
-				 responseSamplerData.equals("Open SFTP SESS1 on CONN1") );
+		 assertTrue("Send Command ls to SFTP SESS1 on CONN1",
+				 responseSamplerData.equals("Send Command ls to SFTP SESS1 on CONN1") );
 	
 		 // clean up before assert
 		 
