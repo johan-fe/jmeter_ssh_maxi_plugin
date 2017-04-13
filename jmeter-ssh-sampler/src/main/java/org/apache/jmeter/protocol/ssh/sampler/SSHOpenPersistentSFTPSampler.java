@@ -175,8 +175,7 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 
 		SshChannelSFTP sshcsftp = new SshChannelSFTP();
 		sshcsftp.setChannelSftp(cSftp);
-		sshcsftp.setInputStream(in);
-		sshcsftp.setpOutputStream(ps);
+ 
 		sshSess.addChannelSftp(this.sftpSessionName, sshcsftp);
 		/*byte[] responseDataBytes= {}; // no need here to read greeting data like oin interactive shell
 		try {

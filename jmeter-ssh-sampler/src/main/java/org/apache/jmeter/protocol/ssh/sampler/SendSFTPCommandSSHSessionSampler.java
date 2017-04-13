@@ -284,7 +284,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
      * @throws IOException
      */
     private String doFileTransfer(ChannelSftp channel , String src, String dst, SampleResult res) throws JSchException, SftpException, IOException {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("");
         //ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
        // channel.connect();
 
