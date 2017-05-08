@@ -1,7 +1,3 @@
-package org.apache.jmeter.protocol.ssh.test;
-
-import java.io.FilterOutputStream;
-
 /*
 * #%L 
 * ExpectIt 
@@ -21,6 +17,11 @@ import java.io.FilterOutputStream;
 * limitations under the License. 
 * #L% 
 */
+package org.apache.jmeter.protocol.ssh.test;
+
+import java.io.FilterOutputStream;
+
+
 
 import java.io.IOException;
 import java.io.InputStream;
