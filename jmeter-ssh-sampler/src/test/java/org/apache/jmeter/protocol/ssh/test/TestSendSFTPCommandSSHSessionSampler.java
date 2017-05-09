@@ -244,7 +244,6 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 assertTrue("responseSamplerData is Open SSH connection (johan@127.0.0.1) with name: CONN1",
 				 responseSamplerData.equals("Open SSH connection (johan@127.0.0.1) with name: CONN1") );
 		 
-		 
 		 SendSFTPCommandSSHSessionSampler sftpCommand=new SendSFTPCommandSSHSessionSampler();
 		 sftpCommand.setConnectionName("CONN1");
 		 sftpCommand.setSftpSessionName("SESS1");
@@ -255,23 +254,23 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 sr= sftpCommand.sample(null) ;
 		 errorCount= sr.getErrorCount();
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
-		 assertTrue("ErrorCount is 0",errorCount==0);
+		 assertTrue("ErrorCount is 1",errorCount==1);
 		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
 		 responseCode=sr.getResponseCode();
 		 LOG.log(Level.INFO, "response code:"+responseCode);
-		 assertTrue(responseCode.equals("0"));
+		 assertTrue(!responseCode.equals("0"));
 		 responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
-		 assertTrue("response message is Command ls sent to SFTP SESS1 on CONN1",
-				 responseMessage.equals("Command ls sent to SFTP SESS1 on CONN1") );		
+		 assertTrue("response message is SFTP session with name SESS1 is null on CONN1",
+				 responseMessage.equals("SFTP session with name SESS1 is null on CONN1") );		
 		 responseData=sr.getResponseDataAsString();
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		// assertTrue("response data is Command ls sent to SFTP SESS1 on CONN1",
-		//		 responseData.equals("Command ls sent to SFTP SESS1 on CONN1") );
+		 assertTrue("response data is SFTP session with name SESS1 is null on CONN1",
+				 responseData.equals("SFTP session with name SESS1 is null on CONN1") );
 		 responseLabel= sr.getSampleLabel();
 		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
-		 assertTrue(" responseLabel is SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)",
-				 responseLabel.equals("SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)") );
+		 assertTrue(" responseLabel is SendSFTPCommandSSHSessionSampler (SFTP session with name SESS1 is null on CONN1)",
+				 responseLabel.equals("SendSFTPCommandSSHSessionSampler (SFTP session with name SESS1 is null on CONN1)") );
 		 responseSamplerData = sr.getSamplerData();
 		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
 		 assertTrue("Send Command ls to SFTP SESS1 on CONN1",
@@ -283,7 +282,7 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 assertTrue("session is not null", sess!=null);
 		 SshChannelSFTP csftp=sess.getChannelSftpByName("SESS1");
-		 assertTrue("csftp is not null", csftp!=null);
+		 assertTrue("csftp is not null", csftp==null);
 		 if (csftp!=null)
 		 {
 			 try {

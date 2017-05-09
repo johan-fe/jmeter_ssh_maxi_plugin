@@ -171,7 +171,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 		if (cSftp==null)
 		{
 			// ssh connection not found
-			responseMessage = "SFTP session with name "+this.sftpSessionName+" is null on"+this.connectionName;
+			responseMessage = "SFTP session with name "+this.sftpSessionName+" is null on "+this.connectionName;
 			res.setSampleLabel(getName()+" ("+responseMessage+")");
 			res.setResponseCode("-4");
 			res.setSuccessful(false);

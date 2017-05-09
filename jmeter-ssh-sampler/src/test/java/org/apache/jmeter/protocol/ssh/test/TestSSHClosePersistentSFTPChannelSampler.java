@@ -206,77 +206,41 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 			 GlobalDataSsh.removeSession("CONN1");
 		 }
 	}
-	/*
+	
 	@Test 
 	public void testjavaSSHClosePersistentSFTPChannelSamplerNotExistingChannel() {
-		 this.instance=new OpenSSHSessionSampler();           
-		 this.instance.setConnectionName("CONN1");
-		 this.instance.setConnectionTimeout(3200);
-		 this.instance.setHostname("127.0.0.1");
-		 this.instance.setPassword("azerty!");
-		 this.instance.setPort(5222);
-		 this.instance.setUsername("johan"); 
-		 SampleResult sr= this.instance.sample(null) ;
+		 SSHClosePersistentSFTPChannelSampler sftp3 =new SSHClosePersistentSFTPChannelSampler();
+		 sftp3.setConnectionName("CONN1");
+		 sftp3.setSftpSessionName("SESS1");
+		 SampleResult sr= sftp3.sample(null) ;
 		 Integer errorCount= sr.getErrorCount();
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
-		 assertTrue("ErrorCount is 0",errorCount==0);
+		 assertTrue("ErrorCount is 1",errorCount==1);
 		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
 		 String responseCode=sr.getResponseCode();
 		 LOG.log(Level.INFO, "response code:"+responseCode);
-		 assertTrue(responseCode.equals("0"));
+		 assertTrue(responseCode.equals("-1"));
 		 String responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
-		 assertTrue("response message is Connected",
-				 responseMessage.equals("Connected") );		
+		 assertTrue("response message is connection CONN1 not found",
+				 responseMessage.equals("connection CONN1 not found") );		
 		 String responseData=sr.getResponseDataAsString();
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 assertTrue("response data is Connected",
-				 responseData.equals("Connected") );
+		 assertTrue("response data is connection CONN1 not found",
+				 responseData.equals("connection CONN1 not found") );
 		 String responseLabel= sr.getSampleLabel();
 		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
-		 assertTrue(" responseLabel is OpenSSHSessionSampler Connect (johan@127.0.0.1)",
-				 responseLabel.equals("OpenSSHSessionSampler Connect (johan@127.0.0.1)") );
+		 assertTrue(" responseLabel is SSHClosePersistentSFTPChannelSampler (connection CONN1 not found)",
+				 responseLabel.equals("SSHClosePersistentSFTPChannelSampler (connection CONN1 not found)") );
 		 String responseSamplerData = sr.getSamplerData();
 		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
-		 assertTrue("responseSamplerData is Open SSH connection (johan@127.0.0.1) with name: CONN1",
-				 responseSamplerData.equals("Open SSH connection (johan@127.0.0.1) with name: CONN1") );
-		 
-
-	
-		 // clean up before assert
-		 
-		 
-		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
-		 assertTrue("session is not null", sess!=null);
-		 SshChannelSFTP csftp=sess.getChannelSftpByName("SESS1");
-		 assertTrue("csftp is not null", csftp!=null);
-		 if (csftp!=null)
-		 {
-			 try {
-				 csftp.disconnect(); // closes all shells
-			 }
-			 catch(Exception e) {
-				 LOG.log(Level.INFO, "disconnect failed for csftp" );
-			 }
-			 LOG.log(Level.INFO, "removing csftp session GlobalDataSsh from CONN1" );			 
-		 }
-		 if (sess !=null)
-		 {
-			 try {
-				 sess.disconnect(); // closes all shells
-			 }
-			 catch(Exception e) {
-				 LOG.log(Level.INFO, "disconnect failed" );
-			 }
-			 LOG.log(Level.INFO, "removing ssh session GlobalDataSsh from CONN1" );
-
-			 GlobalDataSsh.removeSession("CONN1");
-		 }
+		 assertTrue("responseSamplerData is Close SFTP SESS1 on CONN1",
+				 responseSamplerData.equals("Close SFTP SESS1 on CONN1") );
 	}
-	*/
-	/*
+	
+	
 	@Test 
-	public void testjavaSSHClosePersistentSFTPChannelSamplerNotExistingSSHConnection() {
+	public void testjavaSSHClosePersistentSFTPChannelSamplerNotExistingSFTPShell() {
 		 this.instance=new OpenSSHSessionSampler();           
 		 this.instance.setConnectionName("CONN1");
 		 this.instance.setConnectionTimeout(3200);
@@ -309,15 +273,39 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 		 assertTrue("responseSamplerData is Open SSH connection (johan@127.0.0.1) with name: CONN1",
 				 responseSamplerData.equals("Open SSH connection (johan@127.0.0.1) with name: CONN1") );
 		 
-
-	
-		 // clean up before assert
+		 SSHClosePersistentSFTPChannelSampler sftp3 =new SSHClosePersistentSFTPChannelSampler();
+		 sftp3.setConnectionName("CONN1");
+		 sftp3.setSftpSessionName("SESS1");
+		 sr= sftp3.sample(null) ;
+		 errorCount= sr.getErrorCount();
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 assertTrue("ErrorCount is 1",errorCount==1);
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 responseCode=sr.getResponseCode();
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 assertTrue(!responseCode.equals("0"));
+		 responseMessage=sr.getResponseMessage();
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 assertTrue("response message is SFTP session with name SESS1 not found on CONN1",
+				 responseMessage.equals("SFTP session with name SESS1 not found on CONN1") );		
+		 responseData=sr.getResponseDataAsString();
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 assertTrue("response data is SFTP session with name SESS1 not found on CONN1",
+				 responseData.equals("SFTP session with name SESS1 not found on CONN1") );
+		 responseLabel= sr.getSampleLabel();
+		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
+		 assertTrue(" responseLabel is SSHClosePersistentSFTPChannelSampler (SFTP session with name SESS1 not found on CONN1)",
+				 responseLabel.equals("SSHClosePersistentSFTPChannelSampler (SFTP session with name SESS1 not found on CONN1)") );
+		 responseSamplerData = sr.getSamplerData();
+		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
+		 assertTrue("responseSamplerData is Close SFTP SESS1 on CONN1",
+				 responseSamplerData.equals("Close SFTP SESS1 on CONN1") );
 		 
 		 
 		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 assertTrue("session is not null", sess!=null);
 		 SshChannelSFTP csftp=sess.getChannelSftpByName("SESS1");
-		 assertTrue("csftp is not null", csftp!=null);
+		 assertTrue("csftp is null", csftp==null);
 		 if (csftp!=null)
 		 {
 			 try {
@@ -340,7 +328,6 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 
 			 GlobalDataSsh.removeSession("CONN1");
 		 }
+		 
 	}
-	*/
-	
 }
