@@ -111,7 +111,7 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 		}
 		csftp.disconnect();
 		
-		sshSess.removeChannelShell(this.sftpSessionName);
+		sshSess.removeChannelSftp(this.sftpSessionName);
 		responseMessage = "SFTP with name "+this.sftpSessionName+" closed on "+this.connectionName;
 
 		res.setResponseCode("0");
