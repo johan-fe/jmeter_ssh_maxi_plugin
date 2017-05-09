@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 import org.apache.jmeter.protocol.ssh.sampler.OpenSSHSessionSampler;
+import org.apache.jmeter.protocol.ssh.sampler.SSHClosePersistentSFTPChannelSampler;
 import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
 import org.apache.jmeter.protocol.ssh.sampler.SSHOpenPersistentSFTPSampler;
 import org.apache.jmeter.protocol.ssh.sampler.SendSFTPCommandSSHSessionSampler;
@@ -38,12 +39,12 @@ import org.junit.Test;
 
 import jline.internal.Log;
 
-public class TestSendSFTPCommandSSHSessionSampler {
-	private final static Logger LOG  =Logger.getLogger(TestSendSFTPCommandSSHSessionSampler.class.getName());
+public class TestSSHClosePersistentSFTPChannelSampler {
+	private final static Logger LOG  =Logger.getLogger(TestSSHClosePersistentSFTPChannelSampler.class.getName());
 	private OpenSSHSessionSampler instance = null;
 	static private Thread sshts=null;
 
-	public TestSendSFTPCommandSSHSessionSampler() {
+	public TestSSHClosePersistentSFTPChannelSampler() {
 		//super(name);
 	}
 	//Sometimes several tests need to share computationally expensive setup (like logging into a database).	
@@ -85,7 +86,7 @@ public class TestSendSFTPCommandSSHSessionSampler {
 	
 		
 	@Test 
-	public void testSendSFTPCommandSSHSessionSampler() {
+	public void testSSHClosePersistentSFTPChannelSampler() {
 		 this.instance=new OpenSSHSessionSampler();           
 		 this.instance.setConnectionName("CONN1");
 		 this.instance.setConnectionTimeout(3200);
@@ -147,15 +148,12 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
 		 assertTrue("responseSamplerData is Open SFTP SESS1 on CONN1",
 				 responseSamplerData.equals("Open SFTP SESS1 on CONN1") );
+		
 		 
-		 SendSFTPCommandSSHSessionSampler sftpCommand=new SendSFTPCommandSSHSessionSampler();
-		 sftpCommand.setConnectionName("CONN1");
-		 sftpCommand.setSftpSessionName("SESS1");
-		 sftpCommand.setPrintFile(false);
-		 sftpCommand.setSource("/");
-		 sftpCommand.setDestination("");
-		 sftpCommand.setAction("ls");
-		 sr= sftpCommand.sample(null) ;
+		 SSHClosePersistentSFTPChannelSampler sftp3 =new SSHClosePersistentSFTPChannelSampler();
+		 sftp3.setConnectionName("CONN1");
+		 sftp3.setSftpSessionName("SESS1");
+		 sr= sftp3.sample(null) ;
 		 errorCount= sr.getErrorCount();
 		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
 		 assertTrue("ErrorCount is 0",errorCount==0);
@@ -165,28 +163,26 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 assertTrue(responseCode.equals("0"));
 		 responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
-		 assertTrue("response message is Command ls sent to SFTP SESS1 on CONN1",
-				 responseMessage.equals("Command ls sent to SFTP SESS1 on CONN1") );		
+		 assertTrue("response message is SFTP with name SESS1 closed on CONN1",
+				 responseMessage.equals("SFTP with name SESS1 closed on CONN1") );		
 		 responseData=sr.getResponseDataAsString();
 		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		// assertTrue("response data is Command ls sent to SFTP SESS1 on CONN1",
-		//		 responseData.equals("Command ls sent to SFTP SESS1 on CONN1") );
+		 assertTrue("response data is SFTP with name SESS1 closed on CONN1",
+				 responseData.equals("SFTP with name SESS1 closed on CONN1") );
 		 responseLabel= sr.getSampleLabel();
 		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
-		 assertTrue(" responseLabel is SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)",
-				 responseLabel.equals("SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)") );
+		 assertTrue(" responseLabel is SSHClosePersistentSFTPChannelSampler (SFTP with name SESS1 closed on CONN1)",
+				 responseLabel.equals("SSHClosePersistentSFTPChannelSampler (SFTP with name SESS1 closed on CONN1)") );
 		 responseSamplerData = sr.getSamplerData();
 		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
-		 assertTrue("Send Command ls to SFTP SESS1 on CONN1",
-				 responseSamplerData.equals("Send Command ls to SFTP SESS1 on CONN1") );
-	
-		 // clean up before assert
+		 assertTrue("responseSamplerData is Close SFTP SESS1 on CONN1",
+				 responseSamplerData.equals("Close SFTP SESS1 on CONN1") );
 		 
 		 
 		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
 		 assertTrue("session is not null", sess!=null);
 		 SshChannelSFTP csftp=sess.getChannelSftpByName("SESS1");
-		 assertTrue("csftp is not null", csftp!=null);
+		 assertTrue("csftp is null", csftp==null);
 		 if (csftp!=null)
 		 {
 			 try {
@@ -210,8 +206,9 @@ public class TestSendSFTPCommandSSHSessionSampler {
 			 GlobalDataSsh.removeSession("CONN1");
 		 }
 	}
+	/*
 	@Test 
-	public void testSendSFTPCommandSSHSessionSamplerNotExistingSession() {
+	public void testjavaSSHClosePersistentSFTPChannelSamplerNotExistingChannel() {
 		 this.instance=new OpenSSHSessionSampler();           
 		 this.instance.setConnectionName("CONN1");
 		 this.instance.setConnectionTimeout(3200);
@@ -244,38 +241,7 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		 assertTrue("responseSamplerData is Open SSH connection (johan@127.0.0.1) with name: CONN1",
 				 responseSamplerData.equals("Open SSH connection (johan@127.0.0.1) with name: CONN1") );
 		 
-		 
-		 SendSFTPCommandSSHSessionSampler sftpCommand=new SendSFTPCommandSSHSessionSampler();
-		 sftpCommand.setConnectionName("CONN1");
-		 sftpCommand.setSftpSessionName("SESS1");
-		 sftpCommand.setPrintFile(false);
-		 sftpCommand.setSource("/");
-		 sftpCommand.setDestination("");
-		 sftpCommand.setAction("ls");
-		 sr= sftpCommand.sample(null) ;
-		 errorCount= sr.getErrorCount();
-		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
-		 assertTrue("ErrorCount is 0",errorCount==0);
-		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
-		 responseCode=sr.getResponseCode();
-		 LOG.log(Level.INFO, "response code:"+responseCode);
-		 assertTrue(responseCode.equals("0"));
-		 responseMessage=sr.getResponseMessage();
-		 LOG.log(Level.INFO, "response message:"+responseMessage);
-		 assertTrue("response message is Command ls sent to SFTP SESS1 on CONN1",
-				 responseMessage.equals("Command ls sent to SFTP SESS1 on CONN1") );		
-		 responseData=sr.getResponseDataAsString();
-		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		// assertTrue("response data is Command ls sent to SFTP SESS1 on CONN1",
-		//		 responseData.equals("Command ls sent to SFTP SESS1 on CONN1") );
-		 responseLabel= sr.getSampleLabel();
-		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
-		 assertTrue(" responseLabel is SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)",
-				 responseLabel.equals("SendSFTPCommandSSHSessionSampler (Command ls sent to SFTP SESS1 on CONN1)") );
-		 responseSamplerData = sr.getSamplerData();
-		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
-		 assertTrue("Send Command ls to SFTP SESS1 on CONN1",
-				 responseSamplerData.equals("Send Command ls to SFTP SESS1 on CONN1") );
+
 	
 		 // clean up before assert
 		 
@@ -307,5 +273,74 @@ public class TestSendSFTPCommandSSHSessionSampler {
 			 GlobalDataSsh.removeSession("CONN1");
 		 }
 	}
+	*/
+	/*
+	@Test 
+	public void testjavaSSHClosePersistentSFTPChannelSamplerNotExistingSSHConnection() {
+		 this.instance=new OpenSSHSessionSampler();           
+		 this.instance.setConnectionName("CONN1");
+		 this.instance.setConnectionTimeout(3200);
+		 this.instance.setHostname("127.0.0.1");
+		 this.instance.setPassword("azerty!");
+		 this.instance.setPort(5222);
+		 this.instance.setUsername("johan"); 
+		 SampleResult sr= this.instance.sample(null) ;
+		 Integer errorCount= sr.getErrorCount();
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 assertTrue("ErrorCount is 0",errorCount==0);
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		 String responseCode=sr.getResponseCode();
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 assertTrue(responseCode.equals("0"));
+		 String responseMessage=sr.getResponseMessage();
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 assertTrue("response message is Connected",
+				 responseMessage.equals("Connected") );		
+		 String responseData=sr.getResponseDataAsString();
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 assertTrue("response data is Connected",
+				 responseData.equals("Connected") );
+		 String responseLabel= sr.getSampleLabel();
+		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
+		 assertTrue(" responseLabel is OpenSSHSessionSampler Connect (johan@127.0.0.1)",
+				 responseLabel.equals("OpenSSHSessionSampler Connect (johan@127.0.0.1)") );
+		 String responseSamplerData = sr.getSamplerData();
+		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
+		 assertTrue("responseSamplerData is Open SSH connection (johan@127.0.0.1) with name: CONN1",
+				 responseSamplerData.equals("Open SSH connection (johan@127.0.0.1) with name: CONN1") );
+		 
+
+	
+		 // clean up before assert
+		 
+		 
+		 SshSession sess=GlobalDataSsh.GetSessionByName("CONN1");
+		 assertTrue("session is not null", sess!=null);
+		 SshChannelSFTP csftp=sess.getChannelSftpByName("SESS1");
+		 assertTrue("csftp is not null", csftp!=null);
+		 if (csftp!=null)
+		 {
+			 try {
+				 csftp.disconnect(); // closes all shells
+			 }
+			 catch(Exception e) {
+				 LOG.log(Level.INFO, "disconnect failed for csftp" );
+			 }
+			 LOG.log(Level.INFO, "removing csftp session GlobalDataSsh from CONN1" );			 
+		 }
+		 if (sess !=null)
+		 {
+			 try {
+				 sess.disconnect(); // closes all shells
+			 }
+			 catch(Exception e) {
+				 LOG.log(Level.INFO, "disconnect failed" );
+			 }
+			 LOG.log(Level.INFO, "removing ssh session GlobalDataSsh from CONN1" );
+
+			 GlobalDataSsh.removeSession("CONN1");
+		 }
+	}
+	*/
 	
 }
