@@ -108,7 +108,7 @@ public class TestSSHClosePresistenShellSampler {
 		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
 		 String responseCode=sr.getResponseCode();
 		 LOG.log(Level.INFO, "response code:"+responseCode);
-		 assertTrue(responseCode.equals("Connection Succesfull"));
+		 assertTrue(responseCode.equals("Connection Successful"));
 		 String responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
 		 assertTrue("response Message is SSH Connection established, no Command Executed",

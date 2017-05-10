@@ -106,7 +106,7 @@ public class TestSSHPresistenShellSendCommandSampler {
 		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
 		 String responseCode=sr.getResponseCode();
 		 LOG.log(Level.INFO, "response code:"+responseCode);
-		 assertTrue(responseCode.equals("Connection Succesfull"));
+		 assertTrue(responseCode.equals("Connection Successful"));
 
 		 String responseMessage=sr.getResponseMessage();
 		 LOG.log(Level.INFO, "response message:"+responseMessage);
