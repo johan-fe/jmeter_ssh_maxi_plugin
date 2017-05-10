@@ -168,7 +168,7 @@ import com.jcraft.jsch.Session;
 		    		      //String st = Thread.currentThread().getName() + " - [" + entry.getKey() + ", " + entry.getValue() + ']';
 		    			 String connNameFromList=entry.getKey();
 		    			 if ( searchSpecific==false ||connName.equals(connNameFromList) ){
-		    				 if(dumpChannelInfo)
+		    				 if(dumpChannelInfo==false)
 		    				 {
 		    					 sb.append(connNameFromList);
 		    				 }

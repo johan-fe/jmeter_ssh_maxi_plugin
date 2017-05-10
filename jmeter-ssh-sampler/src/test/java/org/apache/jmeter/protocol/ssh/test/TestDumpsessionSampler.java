@@ -26,6 +26,7 @@ import org.apache.jmeter.protocol.ssh.sampler.DumpSSHSessionSampler;
 //import org.apache.jmeter.protocol.ssh.sampler.DumpSSHSessionSampler;
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
+import org.apache.jmeter.protocol.ssh.sampler.SSHOpenPersistentSFTPSampler;
 import org.apache.jmeter.protocol.ssh.sampler.SendCommandSSHSessionSampler;
 import org.apache.jmeter.protocol.ssh.sampler.SshSession;
 import org.apache.jmeter.samplers.SampleResult;
@@ -134,6 +135,35 @@ public class TestDumpsessionSampler {
 		assertTrue("contains file1 file2 in response Data", responseData2.contains("file1 file2"));
 		LOG.log(Level.INFO, "response data as string:" + responseData2);
 		
+		 SSHOpenPersistentSFTPSampler sftp=new SSHOpenPersistentSFTPSampler();
+		 sftp.setConnectionName("CONN1");
+		 sftp.setSftpSessionName("SESS1");
+		 sr= sftp.sample(null) ;
+		  errorCount= sr.getErrorCount();
+		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
+		 assertTrue("ErrorCount is 1",errorCount==1);
+		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
+		  responseCode=sr.getResponseCode();
+		 LOG.log(Level.INFO, "response code:"+responseCode);
+		 assertTrue(responseCode.equals("-1"));
+		 responseMessage=sr.getResponseMessage();
+		 LOG.log(Level.INFO, "response message:"+responseMessage);
+		 assertTrue("response message is connection CONN1 not found",
+				 responseMessage.equals("connection CONN1 not found") );		
+		 responseData=sr.getResponseDataAsString();
+		 LOG.log(Level.INFO, "response data as string:"+responseData);
+		 assertTrue("response data is connection CONN1 not found",
+				 responseData.equals("connection CONN1 not found") );
+		 String responseLabel= sr.getSampleLabel();
+		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
+		 assertTrue(" responseLabel is SSHOpenPersistentSFTPSampler (connection CONN1 not found)",
+				 responseLabel.equals("SSHOpenPersistentSFTPSampler (connection CONN1 not found)") );
+		 String responseSamplerData = sr.getSamplerData();
+		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
+		 assertTrue("responseSamplerData is Open SFTP SESS1 on CONN1",
+				 responseSamplerData.equals("Open SFTP SESS1 on CONN1") );
+		
+		
 		DumpSSHSessionSampler dumper = new DumpSSHSessionSampler();
 		dumper.setConnectionName("");
 		dumper.setDumpChannelInfo(true);
@@ -158,7 +188,9 @@ public class TestDumpsessionSampler {
 		if (sess != null) {
 			try {
 				sess.disconnect();
-			} catch (Exception e) {
+			} 
+			catch (Exception e) 
+			{
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command completed");
 
