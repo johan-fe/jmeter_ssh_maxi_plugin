@@ -54,15 +54,24 @@ public class DumpSSHSessionSamplerBeanInfo extends  BeanInfoSupport {
 
         createPropertyGroup("connectionManagement", 
         		new String[]{ 
-                "connectionName", // $NON-NLS-1$
+                "connectionName" // $NON-NLS-1$
 
             });
+        createPropertyGroup("dumpParameters", 
+        		new String[]{  
+                "dumpChannelInfo" // $NON-NLS-1$
+            });
+        
         
         PropertyDescriptor p;
      
         p = property("connectionName"); // $NON-NLS-1$
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT,"" );
+        
+        p = property("dumpChannelInfo"); // $NON-NLS-1$
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT,Boolean.TRUE );
 
 	}
 }

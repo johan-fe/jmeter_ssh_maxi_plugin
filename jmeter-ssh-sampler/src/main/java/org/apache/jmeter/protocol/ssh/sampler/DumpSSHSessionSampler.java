@@ -34,7 +34,8 @@ public  class DumpSSHSessionSampler extends AbstractSampler implements TestBean 
 	 * 
 	 */
 	private static final long serialVersionUID = 2954989469756886583L;
-	private static boolean dumpChannelInfo=true; 
+
+	private boolean dumpChannelInfo=true; 
 	private static final Logger log = LoggingManager.getLoggerForClass();
     private String connectionName= "";
 	public DumpSSHSessionSampler() {
@@ -107,6 +108,15 @@ public  class DumpSSHSessionSampler extends AbstractSampler implements TestBean 
     {
     	return this.connectionName;
     }
+	public boolean getDumpChannelInfo() {
+		return dumpChannelInfo;
+	}
+
+	public  void setDumpChannelInfo(boolean dumpChannelInfo) {
+		this.dumpChannelInfo = dumpChannelInfo;
+	}
+    
+    
     @Override
     public void finalize() {
         try {

@@ -91,7 +91,7 @@ public class TestDumpsessionSampler {
 		this.instance.setUsername("johan");
 		this.instance.setUseTty(false);
 		this.instance.setCloseConnection(false);
-
+		
 		SampleResult sr = this.instance.sample(null);
 		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
@@ -136,7 +136,7 @@ public class TestDumpsessionSampler {
 		
 		DumpSSHSessionSampler dumper = new DumpSSHSessionSampler();
 		dumper.setConnectionName("");
-		
+		dumper.setDumpChannelInfo(true);
 		LOG.log(Level.INFO, "calling session dump sampler");
 		SampleResult sr3 = dumper.sample(null);
 		int errorCount3 = sr3.getErrorCount();
@@ -252,6 +252,7 @@ public class TestDumpsessionSampler {
 		
 		DumpSSHSessionSampler dumper = new DumpSSHSessionSampler();
 		dumper.setConnectionName("");
+		dumper.setDumpChannelInfo(true);
 		
 		LOG.log(Level.INFO, "calling session dump sampler");
 		SampleResult sr3 = dumper.sample(null);
