@@ -163,7 +163,7 @@ public class TestSSHClosePresistenShellSampler {
 		 assertTrue("session is not null", sess!=null);
 		 String gcd = GlobalDataSsh.getAllConnectionData("");
 		 LOG.log(Level.INFO,"global connection data:"+gcd );
-		 assertTrue("all connection data == CONN1[ShellChannels[SHELL1],[SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[SHELL1],[SFTPChannels[]]") );
+		 assertTrue("all connection data == CONN1[ShellChannels[SHELL1],SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[SHELL1],SFTPChannels[]]") );
 		 // close the persistent shell
 		 SSHClosePersistentShellSampler cs =new SSHClosePersistentShellSampler();
 		 cs.setConnectionName("CONN1");
@@ -185,7 +185,7 @@ public class TestSSHClosePresistenShellSampler {
 		 
 		 gcd = GlobalDataSsh.getAllConnectionData("");
 		 LOG.log(Level.INFO, "All connection data:"+gcd);
-		 assertTrue("all connection data == CONN1[ShellChannels[],[SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[],[SFTPChannels[]]") );
+		 assertTrue("all connection data == CONN1[ShellChannels[],SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[],SFTPChannels[]]") );
 
 		 
 		 

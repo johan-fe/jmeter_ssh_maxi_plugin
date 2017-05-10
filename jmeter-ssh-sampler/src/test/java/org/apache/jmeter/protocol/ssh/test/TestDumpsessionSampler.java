@@ -180,9 +180,29 @@ public class TestDumpsessionSampler {
 		assertTrue("response Message is OK", responseMessage3.equals("OK"));
 		LOG.log(Level.INFO, "response message:" + responseMessage3);
 		String responseData3 = sr3.getResponseDataAsString();
-		assertTrue("contains CONNECT1 in response Data", responseData3.equals("CONNECT1"));
 		LOG.log(Level.INFO, "response data as string:" + responseData3);
-			
+		assertTrue("contains CONNECT1[ShellChannels[],SFTPChannels[]]", responseData3.contains("CONNECT1[ShellChannels[],SFTPChannels[]]"));
+		
+		DumpSSHSessionSampler dumper2 = new DumpSSHSessionSampler();
+		dumper2.setConnectionName("");
+		dumper2.setDumpChannelInfo(false);
+		LOG.log(Level.INFO, "calling session dump sampler");
+		 sr3 = dumper2.sample(null);
+		 errorCount3 = sr3.getErrorCount();
+		assertTrue("ErrorCount is 0", errorCount3 == 0);
+		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount3));
+		LOG.log(Level.INFO, "content type:" + sr3.getContentType());
+		 responseCode3 = sr3.getResponseCode();
+		assertTrue(responseCode3.equals("Connection(s) Found"));
+		LOG.log(Level.INFO, "response code:" + responseCode3);
+		 responseMessage3 = sr3.getResponseMessage();
+		assertTrue("response Message is OK", responseMessage3.equals("OK"));
+		LOG.log(Level.INFO, "response message:" + responseMessage3);
+		 responseData3 = sr3.getResponseDataAsString();
+		LOG.log(Level.INFO, "response data as string:" + responseData3);
+		assertTrue("contains CONNECT1", responseData3.equals("CONNECT1"));
+		
+
 		SshSession sess = GlobalDataSsh.GetSessionByName("CONNECT1");
 		// clean up before assert
 		if (sess != null) {

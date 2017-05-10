@@ -162,7 +162,7 @@ public class TestSSHOpenPresistenShellSampler {
 		 
 		 String gcd = GlobalDataSsh.getAllConnectionData("");
 		 LOG.log(Level.INFO,"all connection data:\n"+gcd);
-		 assertTrue("all connection data == CONN1[ShellChannels[SHELL2,SHELL1],[SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[SHELL2,SHELL1],[SFTPChannels[]]") );
+		 assertTrue("all connection data == CONN1[ShellChannels[SHELL2,SHELL1],SFTPChannels[]]",gcd.equals("CONN1[ShellChannels[SHELL2,SHELL1],SFTPChannels[]]") );
 		 
 		 // clean up before assert
 		 if (sess !=null)
