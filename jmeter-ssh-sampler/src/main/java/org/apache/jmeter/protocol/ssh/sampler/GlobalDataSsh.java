@@ -124,7 +124,7 @@ import com.jcraft.jsch.Session;
 		    				 String shellInfoStr=sess.GetChannelShellList("");
 		    				 String sftpInfoStr=sess.GetChannelSftpList("");
 		    				 sb.append("[ShellChannels[").append(shellInfoStr).append("]").append(",");
-		    				 sb.append("[SFTPChannels[").append(sftpInfoStr).append("]]");
+		    				 sb.append("SFTPChannels[").append(sftpInfoStr).append("]]");
 		    			 	 if(sessionIterator.hasNext()){
 		    			 		 sb.append("\n");
 		    			 	 }
