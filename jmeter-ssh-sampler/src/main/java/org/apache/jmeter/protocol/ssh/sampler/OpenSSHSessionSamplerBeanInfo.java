@@ -42,93 +42,81 @@ import org.apache.jmeter.testbeans.gui.FileEditor;
 //attribute, so that it can be used for further localization. 
 //TestBeanGUI, for example, uses it to obtain the group's display names from properties groupName.displayName.
 
-
-
-public class OpenSSHSessionSamplerBeanInfo extends  AbstractSSHMainSamplerBeanInfo {
-	//class must have a public constructor to become visible in the menu
-   // public SendCommandSSHSessionSamplerBeanInfo(Class<? extends SendCommandSSHSessionSampler> clazz) {
-     //   super(clazz);
-   // }
+public class OpenSSHSessionSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
+	// class must have a public constructor to become visible in the menu
+	// public SendCommandSSHSessionSamplerBeanInfo(Class<? extends
+	// SendCommandSSHSessionSampler> clazz) {
+	// super(clazz);
+	// }
 	public OpenSSHSessionSamplerBeanInfo() {
-       
-	 	super( OpenSSHSessionSampler.class); 
 
+		super(OpenSSHSessionSampler.class);
 
-        
-        createPropertyGroup("server", // $NON-NLS-1$
-                new String[]{
-                    "hostname", // $NON-NLS-1$
-                    "port", // $NON-NLS-1$
-                    "connectionTimeout"
-                });
+		createPropertyGroup("server", // $NON-NLS-1$
+				new String[] { "hostname", // $NON-NLS-1$
+						"port", // $NON-NLS-1$
+						"connectionTimeout" });
 
-        createPropertyGroup("user", // $NON-NLS-1$
-                new String[]{
-                    "username", // $NON-NLS-1$
-                    "password" // $NON-NLS-1$
-                });
+		createPropertyGroup("user", // $NON-NLS-1$
+				new String[] { "username", // $NON-NLS-1$
+						"password" // $NON-NLS-1$
+				});
 
-        createPropertyGroup("keyFile", // $NON-NLS-1$
-                new String[]{
-                    "sshkeyfile", // $NON-NLS-1$
-                    "passphrase" // $NON-NLS-1$
-                });
-        createPropertyGroup("connectionManagement", // $NON-NLS-1$
-        		new String[]{ 
-                "tunnels", // $NON-NLS-1$
-                "connectionName", // $NON-NLS-1$
-                "sessionKeepAliveSeconds", // $NON-NLS-1$
-            });
-        
-        PropertyDescriptor p;
-        p = property("username"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
+		createPropertyGroup("keyFile", // $NON-NLS-1$
+				new String[] { "sshkeyfile", // $NON-NLS-1$
+						"passphrase" // $NON-NLS-1$
+				});
+		createPropertyGroup("connectionManagement", // $NON-NLS-1$
+				new String[] { "tunnels", // $NON-NLS-1$
+						"connectionName", // $NON-NLS-1$
+						"sessionKeepAliveSeconds", // $NON-NLS-1$
+				});
 
-        p = property("password"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
+		PropertyDescriptor p;
+		p = property("username"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
 
-        p = property("sshkeyfile");// $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
-        p.setPropertyEditorClass(FileEditor.class);
+		p = property("password"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
 
-        p = property("passphrase");// $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
+		p = property("sshkeyfile");// $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+		p.setPropertyEditorClass(FileEditor.class);
 
-        p = property("hostname"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
+		p = property("passphrase");// $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
 
-        p = property("port"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, new Integer(22));
+		p = property("hostname"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
 
-        p = property("connectionTimeout");
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, new Integer(50000));
+		p = property("port"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, new Integer(22));
 
-        
-        p = property("tunnels"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
-        
-        
-        p = property("connectionName"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
+		p = property("connectionTimeout");
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, new Integer(50000));
 
-        p = property("sessionKeepAliveSeconds");
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, new Integer(7200));
-        
-        p = property("connectionName"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
-        
-  
-       
+		p = property("tunnels"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("connectionName"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("sessionKeepAliveSeconds");
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, new Integer(7200));
+
+		p = property("connectionName"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
 	}
 }

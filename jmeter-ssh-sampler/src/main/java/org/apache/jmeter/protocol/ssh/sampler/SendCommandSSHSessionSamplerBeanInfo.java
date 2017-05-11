@@ -41,47 +41,43 @@ import org.apache.jmeter.testbeans.TestBean;
 //attribute, so that it can be used for further localization. 
 //TestBeanGUI, for example, uses it to obtain the group's display names from properties groupName.displayName.
 
-
-
-public class SendCommandSSHSessionSamplerBeanInfo extends  AbstractSSHMainSamplerBeanInfo {
-	//class must have a public constructor to become visible in the menu
-   // public SendCommandSSHSessionSamplerBeanInfo(Class<? extends SendCommandSSHSessionSampler> clazz) {
-     //   super(clazz);
-   // }
+public class SendCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
+	// class must have a public constructor to become visible in the menu
+	// public SendCommandSSHSessionSamplerBeanInfo(Class<? extends
+	// SendCommandSSHSessionSampler> clazz) {
+	// super(clazz);
+	// }
 	public SendCommandSSHSessionSamplerBeanInfo() {
-       
-	 	super( SendCommandSSHSessionSampler.class); 
 
-        createPropertyGroup("connectionManagement", 
-        		new String[]{ 
-                "connectionName" // $NON-NLS-1$
-            });
-        createPropertyGroup("execute", new String[]{ 
-                "command", // $NON-NLS-1$
-                "useReturnCode", // $NON-NLS-1$
-                "useTty", // $NON-NLS-1$
-                "printStdErr" // $NON-NLS-1$
-            });
-        PropertyDescriptor p;
-     
-        p = property("connectionName"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
-        
-        p = property("command"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
+		super(SendCommandSSHSessionSampler.class);
 
-        p = property("useReturnCode"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.TRUE);
-        
-        p = property("useTty"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.FALSE);
-        
-        p = property("printStdErr"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.TRUE);
+		createPropertyGroup("connectionManagement", new String[] { "connectionName" // $NON-NLS-1$
+		});
+		createPropertyGroup("execute", new String[] { "command", // $NON-NLS-1$
+				"useReturnCode", // $NON-NLS-1$
+				"useTty", // $NON-NLS-1$
+				"printStdErr" // $NON-NLS-1$
+		});
+		PropertyDescriptor p;
+
+		p = property("connectionName"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("command"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("useReturnCode"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.TRUE);
+
+		p = property("useTty"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.FALSE);
+
+		p = property("printStdErr"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.TRUE);
 	}
 }

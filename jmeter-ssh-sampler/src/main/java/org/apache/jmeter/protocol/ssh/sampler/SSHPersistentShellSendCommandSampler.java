@@ -40,13 +40,12 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 	private static final long serialVersionUID = 1098L;
 	private String connectionName = "";
 	private String shellName = "";
-	private String command="";
-    private String resultEncoding="UTF-8";
-    private boolean stripPrompt=true;
-    private boolean stripCommand=true;
+	private String command = "";
+	private String resultEncoding = "UTF-8";
+	private boolean stripPrompt = true;
+	private boolean stripCommand = true;
 
-	private boolean useTty=false;
-
+	private boolean useTty = false;
 
 	public SSHPersistentShellSendCommandSampler() {
 		super("SSHPersistentShellSendCommandSampler");
@@ -58,7 +57,8 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "Send Command "+this.command+" to shell "+this.shellName+" on "+this.connectionName;
+		String samplerData = "Send Command " + this.command + " to shell " + this.shellName + " on "
+				+ this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
@@ -67,7 +67,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (this.connectionName.equals("")) {
 			// empty connection name
 			responseMessage = "connection name is empty";
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-2");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -81,7 +81,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (sshSess == null) {
 			// ssh connection not found
 			responseMessage = "connection " + this.connectionName + " not found";
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-1");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -93,7 +93,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 		if (this.shellName.equals("")) {
 			// ssh connection not found
 			responseMessage = "shell name is empty";
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-3");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -103,13 +103,12 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			return res;
 		}
 
-		//make a new shell Session
-		Session sess=sshSess.getSession();
-		//check if session is still open 
-		if (sess==null)
-		{
+		// make a new shell Session
+		Session sess = sshSess.getSession();
+		// check if session is still open
+		if (sess == null) {
 			responseMessage = "severe error ssh session is null";
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-5");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -118,10 +117,9 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		if (sess.isConnected()==false)
-		{
-			responseMessage = "ssh connection with name "+this.connectionName+" is not anymore connected";
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+		if (sess.isConnected() == false) {
+			responseMessage = "ssh connection with name " + this.connectionName + " is not anymore connected";
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-6");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -130,14 +128,13 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		
-		//ssh session is connected try to connect shell
+
+		// ssh session is connected try to connect shell
 		SshChannelShell cs = sshSess.getChannelShellByName(this.shellName);
-		if (cs==null)
-		{
+		if (cs == null) {
 			// ssh connection not found
-			responseMessage = "shell with name "+this.shellName+" is null on"+this.connectionName;
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			responseMessage = "shell with name " + this.shellName + " is null on" + this.connectionName;
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-4");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -147,10 +144,9 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			return res;
 		}
 		// check if channelshell is still connected
-		if (!cs.isConnected())
-		{
-			responseMessage = "Shell with name "+this.shellName+" is not connected on: "+this.connectionName;
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+		if (!cs.isConnected()) {
+			responseMessage = "Shell with name " + this.shellName + " is not connected on: " + this.connectionName;
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-7");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -159,50 +155,47 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 			res.sampleEnd();
 			return res;
 		}
-		// Channelshell isconnected and all conditions fulfilled 
+		// Channelshell isconnected and all conditions fulfilled
 
-		responseMessage = "Command "+this.command+" sent on shell "+this.shellName+" on "+this.connectionName;
+		responseMessage = "Command " + this.command + " sent on shell " + this.shellName + " on " + this.connectionName;
 		// TODO add doCommand code
 		cs.getChannelShell().setPty(this.useTty);
-		byte [] responseDataBytes= {};
-		try 
-		{
+		byte[] responseDataBytes = {};
+		try {
 			cs.sendCommand(command);
-		}
-		catch(Exception e)
-		{
-			byte[] responseDataBytes2= {};
+		} catch (Exception e) {
+			byte[] responseDataBytes2 = {};
 			res.setResponseCode("-9");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
-			res.setSampleLabel(getName()+"Send Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
-			res.setResponseMessage("Send Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
+			res.setSampleLabel(
+					getName() + "Send Exception(" + e.getClass().getSimpleName() + " " + e.getMessage() + ")");
+			res.setResponseMessage("Send Exception(" + e.getClass().getSimpleName() + " " + e.getMessage() + ")");
 			res.setResponseData(responseDataBytes2);
 			res.sampleEnd();
 			return res;
 		}
-	 
+
 		try {
-			responseDataBytes= cs.readResponse(this.stripCommand,this.command,this.stripPrompt,this.resultEncoding );
-		}
-		catch(Exception e)
-		{
-			byte[] responseDataBytes2= {};
+			responseDataBytes = cs.readResponse(this.stripCommand, this.command, this.stripPrompt, this.resultEncoding);
+		} catch (Exception e) {
+			byte[] responseDataBytes2 = {};
 			res.setResponseCode("-8");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
-			res.setSampleLabel(getName()+"Receive Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
-			res.setResponseMessage("Receive Exception("+e.getClass().getSimpleName()+" "+e.getMessage()+ ")");
+			res.setSampleLabel(
+					getName() + "Receive Exception(" + e.getClass().getSimpleName() + " " + e.getMessage() + ")");
+			res.setResponseMessage("Receive Exception(" + e.getClass().getSimpleName() + " " + e.getMessage() + ")");
 			res.setResponseData(responseDataBytes2);
 			res.sampleEnd();
 			return res;
 		}
-		res.setResponseData(new String(responseDataBytes),this.resultEncoding);
+		res.setResponseData(new String(responseDataBytes), this.resultEncoding);
 		res.setResponseCode("0");
 		res.setSuccessful(true);
 		res.setSamplerData(samplerData);
-		res.setSampleLabel(getName()+" ("+responseMessage+")");
- 
+		res.setSampleLabel(getName() + " (" + responseMessage + ")");
+
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
 		return res;
@@ -224,7 +217,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 	public String getShellName() {
 		return this.shellName;
 	}
-	
+
 	public String getCommand() {
 		return command;
 	}
@@ -232,6 +225,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 	public void setCommand(String command) {
 		this.command = command;
 	}
+
 	public boolean getUseTty() {
 		return useTty;
 	}
@@ -255,6 +249,7 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 	public void setStripCommand(boolean stripCommand) {
 		this.stripCommand = stripCommand;
 	}
+
 	public String getResultEncoding() {
 		return resultEncoding;
 	}

@@ -22,15 +22,12 @@ import java.io.IOException;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 
-
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.ChannelShell;
-
 
 public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 	/**
@@ -42,7 +39,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 
 	public SSHClosePersistentShellSampler() {
 		super("SSHClosePersistentShellSampler");
-		
+
 	}
 
 	@Override
@@ -50,17 +47,17 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 		SampleResult res = new SampleResult();
 		res.sampleStart();
 
-		String samplerData = "Close shell "+this.shellName+" on "+this.connectionName;
+		String samplerData = "Close shell " + this.shellName + " on " + this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
 		String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
-		
+
 		if (this.connectionName.equals("")) {
 			// empty connection name
 			responseMessage = "connection name is empty";
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setResponseCode("-2");
 			res.setSuccessful(false);
 			res.setSamplerData(samplerData);
@@ -76,7 +73,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "connection " + this.connectionName + " not found";
 			res.setResponseCode("-1");
 			res.setSuccessful(false);
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.setResponseMessage(responseMessage);
@@ -88,7 +85,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			responseMessage = "shell name is empty";
 			res.setResponseCode("-3");
 			res.setSuccessful(false);
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.setResponseMessage(responseMessage);
@@ -96,13 +93,12 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			return res;
 		}
 		SshChannelShell cs = sshSess.getChannelShellByName(this.shellName);
-		if (cs==null)
-		{
+		if (cs == null) {
 			// ssh connection not found
-			responseMessage = "shell with name "+this.shellName+" not found on "+this.connectionName;
+			responseMessage = "shell with name " + this.shellName + " not found on " + this.connectionName;
 			res.setResponseCode("-4");
 			res.setSuccessful(false);
-			res.setSampleLabel(getName()+" ("+responseMessage+")");
+			res.setSampleLabel(getName() + " (" + responseMessage + ")");
 			res.setSamplerData(samplerData);
 			res.setResponseData(responseMessage, "UTF-8");
 			res.setResponseMessage(responseMessage);
@@ -110,9 +106,9 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 			return res;
 		}
 		cs.disconnect();
-		
+
 		sshSess.removeChannelShell(this.shellName);
-		responseMessage = "Shell with name "+this.shellName+" closed on "+this.connectionName;
+		responseMessage = "Shell with name " + this.shellName + " closed on " + this.connectionName;
 
 		res.setResponseCode("0");
 		res.setSuccessful(true);
@@ -120,7 +116,7 @@ public class SSHClosePersistentShellSampler extends AbstractSSHMainSampler {
 		res.setResponseData(responseMessage, "UTF-8");
 		res.setResponseMessage(responseMessage);
 		res.sampleEnd();
-		res.setSampleLabel(getName()+" ("+responseMessage+")");
+		res.setSampleLabel(getName() + " (" + responseMessage + ")");
 		return res;
 
 	}

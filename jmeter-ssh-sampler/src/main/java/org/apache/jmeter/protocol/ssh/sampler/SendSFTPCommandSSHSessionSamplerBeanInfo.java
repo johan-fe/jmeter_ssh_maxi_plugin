@@ -21,55 +21,48 @@ import java.beans.PropertyDescriptor;
 
 public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
 
-    public SendSFTPCommandSSHSessionSamplerBeanInfo() {
-        
-        super(SendSFTPCommandSSHSessionSampler.class);
-		createPropertyGroup("connectionManagement", new String[] { 
-				"sftpSessionName", // $NON-NLS-1$
+	public SendSFTPCommandSSHSessionSamplerBeanInfo() {
+
+		super(SendSFTPCommandSSHSessionSampler.class);
+		createPropertyGroup("connectionManagement", new String[] { "sftpSessionName", // $NON-NLS-1$
 				"connectionName" // $NON-NLS-1$
- 
+
 		});
-        createPropertyGroup("fileTransfer", new String[]{
-                    "action", // $NON-NLS-1$
-                    "source", // $NON-NLS-1$
-                    "printFile",// $NON-NLS-1$
-                    "destination" // $NON-NLS-1$ 
-                });
-        
-        PropertyDescriptor p = property("action"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(NOT_OTHER, Boolean.TRUE);
-        p.setValue(DEFAULT, "get");
-        p.setValue(TAGS, new String[]{
-            SSHSFTPSamplerExtra.SFTP_COMMAND_GET, 
-            SSHSFTPSamplerExtra.SFTP_COMMAND_PUT,
-            SSHSFTPSamplerExtra.SFTP_COMMAND_RM, 
-            SSHSFTPSamplerExtra.SFTP_COMMAND_RMDIR,
-            SSHSFTPSamplerExtra.SFTP_COMMAND_LS
-        });
-        
-        p = property("sftpSessionName"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
-        
-        p = property("connectionName"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
-        
-        p = property("source"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
-        
-        p = property("printFile"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.TRUE);
-        
-        p = property("destination"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
-        
-        
-        
-    }
-    
+		createPropertyGroup("fileTransfer", new String[] { "action", // $NON-NLS-1$
+				"source", // $NON-NLS-1$
+				"printFile", // $NON-NLS-1$
+				"destination" // $NON-NLS-1$
+		});
+
+		PropertyDescriptor p = property("action"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(NOT_OTHER, Boolean.TRUE);
+		p.setValue(DEFAULT, "get");
+		p.setValue(TAGS,
+				new String[] { SSHSFTPSamplerExtra.SFTP_COMMAND_GET, SSHSFTPSamplerExtra.SFTP_COMMAND_PUT,
+						SSHSFTPSamplerExtra.SFTP_COMMAND_RM, SSHSFTPSamplerExtra.SFTP_COMMAND_RMDIR,
+						SSHSFTPSamplerExtra.SFTP_COMMAND_LS });
+
+		p = property("sftpSessionName"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("connectionName"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("source"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("printFile"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.TRUE);
+
+		p = property("destination"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+	}
+
 }

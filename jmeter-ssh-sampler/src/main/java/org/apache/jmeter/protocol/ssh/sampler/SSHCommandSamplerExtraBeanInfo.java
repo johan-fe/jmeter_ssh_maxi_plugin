@@ -21,33 +21,32 @@ import java.beans.PropertyDescriptor;
 
 public class SSHCommandSamplerExtraBeanInfo extends AbstractSSHSamplerExtraBeanInfo {
 
-    public SSHCommandSamplerExtraBeanInfo() {
-        
-        super(SSHCommandSamplerExtra.class);
-        
-        createPropertyGroup("execute", new String[]{ 
-                    "command", // $NON-NLS-1$
-                    "useReturnCode", // $NON-NLS-1$
-                    "useTty", // $NON-NLS-1$
-                    "printStdErr" // $NON-NLS-1$
-                });
+	public SSHCommandSamplerExtraBeanInfo() {
 
-        PropertyDescriptor p = property("command"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "date");
-        
-        p = property("useReturnCode"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.TRUE);
-        
-        p = property("useTty"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.FALSE);
-        
-        p = property("printStdErr"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.TRUE);
+		super(SSHCommandSamplerExtra.class);
 
-    }
-    
+		createPropertyGroup("execute", new String[] { "command", // $NON-NLS-1$
+				"useReturnCode", // $NON-NLS-1$
+				"useTty", // $NON-NLS-1$
+				"printStdErr" // $NON-NLS-1$
+		});
+
+		PropertyDescriptor p = property("command"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "date");
+
+		p = property("useReturnCode"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.TRUE);
+
+		p = property("useTty"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.FALSE);
+
+		p = property("printStdErr"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.TRUE);
+
+	}
+
 }

@@ -17,7 +17,6 @@
  */
 package org.apache.jmeter.protocol.ssh.sampler;
 
-
 import com.jcraft.jsch.Session;
 
 import java.util.Iterator;
@@ -35,12 +34,15 @@ public class SshSession {
 	Session session = null;
 	ConcurrentHashMap<String, SshChannelShell> shellChannels = new ConcurrentHashMap<String, SshChannelShell>();
 	ConcurrentHashMap<String, SshChannelSFTP> sftpChannels = new ConcurrentHashMap<String, SshChannelSFTP>();
+
 	public SshSession(Session sess) {
 		this.session = sess;
 	}
+
 	public Session getSession() {
 		return session;
 	}
+
 	public void disconnectAllChannelShells() {
 		synchronized (shellChannels) {
 			Iterator<Map.Entry<String, SshChannelShell>> shellChannelIterator;
@@ -56,10 +58,11 @@ public class SshSession {
 					SshChannelShell cShell = entry.getValue();
 					cShell.disconnect();
 					cShell = null;
-					// this thread should not suffer from it be other threads may still have references 
+					// this thread should not suffer from it be other threads
+					// may still have references
 					// so their operations may fail if the shell is closed here
 					shellChannels.remove(shellChannelNameFromList);
-					log.debug("Session "+shellChannelNameFromList+" successfully closed");
+					log.debug("Session " + shellChannelNameFromList + " successfully closed");
 				} catch (Exception e) {
 					// e.printStackTrace();
 					log.debug("excpetion in closeAllChannelShells:" + e.getMessage());
@@ -67,6 +70,7 @@ public class SshSession {
 			}
 		}
 	}
+
 	public void disconnectAllSftpChannels() {
 		synchronized (sftpChannels) {
 			Iterator<Map.Entry<String, SshChannelSFTP>> sftpChannelIterator;
@@ -82,10 +86,11 @@ public class SshSession {
 					SshChannelSFTP cSftp = entry.getValue();
 					cSftp.disconnect();
 					cSftp = null;
-					// this thread should not suffer from it be other threads may still have references 
+					// this thread should not suffer from it be other threads
+					// may still have references
 					// so their operations may fail if the shell is closed here
 					shellChannels.remove(sftpChannelNameFromList);
-					log.debug("Session "+sftpChannelNameFromList+" successfully closed");
+					log.debug("Session " + sftpChannelNameFromList + " successfully closed");
 				} catch (Exception e) {
 					// e.printStackTrace();
 					log.debug("excpetion in closeAllChannelShells:" + e.getMessage());
@@ -93,34 +98,33 @@ public class SshSession {
 			}
 		}
 	}
+
 	/* closes the ssh session and closes and removes all channels */
 	public synchronized void disconnect() {
 		this.disconnectAllChannelShells();
 		this.disconnectAllSftpChannels();
-		if (session !=null ) {
+		if (session != null) {
 			try {
 				session.disconnect();
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				log.debug("excpetion in ssh session disconnect:" + e.getMessage());
 			}
-			session=null;
+			session = null;
 		}
 	}
 
 	public void addChannelShell(String cName, SshChannelShell cs) {
 		this.shellChannels.put(cName, cs);
 	}
-	public void removeChannelShell(String cName)
-	{
-		try
-		{
+
+	public void removeChannelShell(String cName) {
+		try {
 			this.shellChannels.remove(cName);
-		}
-		catch(Exception e) {
-			log.debug("exception when removing Shell Channel "+cName);
+		} catch (Exception e) {
+			log.debug("exception when removing Shell Channel " + cName);
 		}
 	}
+
 	public SshChannelShell getChannelShellByName(String cName) {
 		SshChannelShell ses = null;
 		try {
@@ -132,20 +136,19 @@ public class SshSession {
 		return ses;
 
 	}
-	
+
 	public void addChannelSftp(String cName, SshChannelSFTP csftp) {
 		this.sftpChannels.put(cName, csftp);
 	}
-	public void removeChannelSftp(String cName)
-	{
-		try
-		{
+
+	public void removeChannelSftp(String cName) {
+		try {
 			this.sftpChannels.remove(cName);
-		}
-		catch(Exception e) {
-			log.debug("exception when removing Sftp Channel "+cName);
+		} catch (Exception e) {
+			log.debug("exception when removing Sftp Channel " + cName);
 		}
 	}
+
 	public SshChannelSFTP getChannelSftpByName(String csftpName) {
 		SshChannelSFTP ses = null;
 		try {
@@ -193,6 +196,7 @@ public class SshSession {
 		return sb.toString();
 		// }
 	}
+
 	public synchronized String GetChannelSftpList(String csftpName) {
 		// start mutex here
 		// synchronized (sessionList) {

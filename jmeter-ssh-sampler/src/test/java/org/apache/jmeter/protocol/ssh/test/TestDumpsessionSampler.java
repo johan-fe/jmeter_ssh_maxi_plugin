@@ -36,8 +36,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
-
 import jline.internal.Log;
 
 public class TestDumpsessionSampler {
@@ -92,7 +90,7 @@ public class TestDumpsessionSampler {
 		this.instance.setUsername("johan");
 		this.instance.setUseTty(false);
 		this.instance.setCloseConnection(false);
-		
+
 		SampleResult sr = this.instance.sample(null);
 		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
@@ -134,36 +132,34 @@ public class TestDumpsessionSampler {
 				responseData2.contains("Welcome to Application Shell"));
 		assertTrue("contains file1 file2 in response Data", responseData2.contains("file1 file2"));
 		LOG.log(Level.INFO, "response data as string:" + responseData2);
-		
-		 SSHOpenPersistentSFTPSampler sftp=new SSHOpenPersistentSFTPSampler();
-		 sftp.setConnectionName("CONN1");
-		 sftp.setSftpSessionName("SESS1");
-		 sr= sftp.sample(null) ;
-		  errorCount= sr.getErrorCount();
-		 LOG.log(Level.INFO, "errorcount:"+ Integer.toString(errorCount));
-		 assertTrue("ErrorCount is 1",errorCount==1);
-		 LOG.log(Level.INFO, "content type:"+sr.getContentType());
-		  responseCode=sr.getResponseCode();
-		 LOG.log(Level.INFO, "response code:"+responseCode);
-		 assertTrue(responseCode.equals("-1"));
-		 responseMessage=sr.getResponseMessage();
-		 LOG.log(Level.INFO, "response message:"+responseMessage);
-		 assertTrue("response message is connection CONN1 not found",
-				 responseMessage.equals("connection CONN1 not found") );		
-		 responseData=sr.getResponseDataAsString();
-		 LOG.log(Level.INFO, "response data as string:"+responseData);
-		 assertTrue("response data is connection CONN1 not found",
-				 responseData.equals("connection CONN1 not found") );
-		 String responseLabel= sr.getSampleLabel();
-		 LOG.log(Level.INFO, "response label as string:"+responseLabel);
-		 assertTrue(" responseLabel is SSHOpenPersistentSFTPSampler (connection CONN1 not found)",
-				 responseLabel.equals("SSHOpenPersistentSFTPSampler (connection CONN1 not found)") );
-		 String responseSamplerData = sr.getSamplerData();
-		 LOG.log(Level.INFO, "response sampler data as string:"+responseSamplerData);
-		 assertTrue("responseSamplerData is Open SFTP SESS1 on CONN1",
-				 responseSamplerData.equals("Open SFTP SESS1 on CONN1") );
-		
-		
+
+		SSHOpenPersistentSFTPSampler sftp = new SSHOpenPersistentSFTPSampler();
+		sftp.setConnectionName("CONN1");
+		sftp.setSftpSessionName("SESS1");
+		sr = sftp.sample(null);
+		errorCount = sr.getErrorCount();
+		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
+		assertTrue("ErrorCount is 1", errorCount == 1);
+		LOG.log(Level.INFO, "content type:" + sr.getContentType());
+		responseCode = sr.getResponseCode();
+		LOG.log(Level.INFO, "response code:" + responseCode);
+		assertTrue(responseCode.equals("-1"));
+		responseMessage = sr.getResponseMessage();
+		LOG.log(Level.INFO, "response message:" + responseMessage);
+		assertTrue("response message is connection CONN1 not found",
+				responseMessage.equals("connection CONN1 not found"));
+		responseData = sr.getResponseDataAsString();
+		LOG.log(Level.INFO, "response data as string:" + responseData);
+		assertTrue("response data is connection CONN1 not found", responseData.equals("connection CONN1 not found"));
+		String responseLabel = sr.getSampleLabel();
+		LOG.log(Level.INFO, "response label as string:" + responseLabel);
+		assertTrue(" responseLabel is SSHOpenPersistentSFTPSampler (connection CONN1 not found)",
+				responseLabel.equals("SSHOpenPersistentSFTPSampler (connection CONN1 not found)"));
+		String responseSamplerData = sr.getSamplerData();
+		LOG.log(Level.INFO, "response sampler data as string:" + responseSamplerData);
+		assertTrue("responseSamplerData is Open SFTP SESS1 on CONN1",
+				responseSamplerData.equals("Open SFTP SESS1 on CONN1"));
+
 		DumpSSHSessionSampler dumper = new DumpSSHSessionSampler();
 		dumper.setConnectionName("");
 		dumper.setDumpChannelInfo(true);
@@ -181,42 +177,41 @@ public class TestDumpsessionSampler {
 		LOG.log(Level.INFO, "response message:" + responseMessage3);
 		String responseData3 = sr3.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData3);
-		assertTrue("contains CONNECT1[ShellChannels[],SFTPChannels[]]", responseData3.contains("CONNECT1[ShellChannels[],SFTPChannels[]]"));
-		
+		assertTrue("contains CONNECT1[ShellChannels[],SFTPChannels[]]",
+				responseData3.contains("CONNECT1[ShellChannels[],SFTPChannels[]]"));
+
 		DumpSSHSessionSampler dumper2 = new DumpSSHSessionSampler();
 		dumper2.setConnectionName("");
 		dumper2.setDumpChannelInfo(false);
 		LOG.log(Level.INFO, "calling session dump sampler");
-		 sr3 = dumper2.sample(null);
-		 errorCount3 = sr3.getErrorCount();
+		sr3 = dumper2.sample(null);
+		errorCount3 = sr3.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount3 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount3));
 		LOG.log(Level.INFO, "content type:" + sr3.getContentType());
-		 responseCode3 = sr3.getResponseCode();
+		responseCode3 = sr3.getResponseCode();
 		assertTrue(responseCode3.equals("Connection(s) Found"));
 		LOG.log(Level.INFO, "response code:" + responseCode3);
-		 responseMessage3 = sr3.getResponseMessage();
+		responseMessage3 = sr3.getResponseMessage();
 		assertTrue("response Message is OK", responseMessage3.equals("OK"));
 		LOG.log(Level.INFO, "response message:" + responseMessage3);
-		 responseData3 = sr3.getResponseDataAsString();
+		responseData3 = sr3.getResponseDataAsString();
 		LOG.log(Level.INFO, "response data as string:" + responseData3);
 		assertTrue("contains CONNECT1", responseData3.equals("CONNECT1"));
-		
 
 		SshSession sess = GlobalDataSsh.GetSessionByName("CONNECT1");
 		// clean up before assert
 		if (sess != null) {
 			try {
 				sess.disconnect();
-			} 
-			catch (Exception e) 
-			{
+			} catch (Exception e) {
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command completed");
 
 			GlobalDataSsh.removeSession("CONNECT1");
 		}
 	}
+
 	@Test
 	public void testDumpSSHSessionSamplerMultipleconnections() {
 		this.instance = new SSHCommandSamplerExtra();
@@ -250,7 +245,7 @@ public class TestDumpsessionSampler {
 		LOG.log(Level.INFO, "response data as string:" + responseData);
 		// sr.connectEnd();
 		// sr.cleanAfterSample();
-		SSHCommandSamplerExtra  instance2 = new SSHCommandSamplerExtra();
+		SSHCommandSamplerExtra instance2 = new SSHCommandSamplerExtra();
 		instance2.setCommand("dir");
 		instance2.setConnectionName("CONNECT2");
 		instance2.setConnectionTimeout(32000);
@@ -277,7 +272,7 @@ public class TestDumpsessionSampler {
 		String responseData4 = sr4.getResponseDataAsString();
 		assertTrue("contains stderr in response Data", responseData4.contains("=== stderr ==="));
 		assertTrue("contains stderr in response Data", responseData4.contains("Welcome to Application Shell"));
-		
+
 		SendCommandSSHSessionSampler sender = new SendCommandSSHSessionSampler();
 		sender.setCommand("ls");
 		sender.setConnectionName("CONNECT1");
@@ -301,11 +296,11 @@ public class TestDumpsessionSampler {
 				responseData2.contains("Welcome to Application Shell"));
 		assertTrue("contains file1 file2 in response Data", responseData2.contains("file1 file2"));
 		LOG.log(Level.INFO, "response data as string:" + responseData2);
-		
+
 		DumpSSHSessionSampler dumper = new DumpSSHSessionSampler();
 		dumper.setConnectionName("");
 		dumper.setDumpChannelInfo(true);
-		
+
 		LOG.log(Level.INFO, "calling session dump sampler");
 		SampleResult sr3 = dumper.sample(null);
 		Integer errorCount3 = sr3.getErrorCount();
@@ -322,7 +317,7 @@ public class TestDumpsessionSampler {
 		assertTrue("contains CONNECT1 in response Data", responseData3.contains("CONNECT1"));
 		assertTrue("contains CONNECT2 in response Data", responseData3.contains("CONNECT2"));
 		LOG.log(Level.INFO, "response data as string:" + responseData3);
-			
+
 		SshSession sess = GlobalDataSsh.GetSessionByName("CONNECT1");
 		// clean up before assert
 		if (sess != null) {
@@ -334,7 +329,7 @@ public class TestDumpsessionSampler {
 
 			GlobalDataSsh.removeSession("CONNECT1");
 		}
-		 sess = GlobalDataSsh.GetSessionByName("CONNECT2");
+		sess = GlobalDataSsh.GetSessionByName("CONNECT2");
 		// clean up before assert
 		if (sess != null) {
 			try {

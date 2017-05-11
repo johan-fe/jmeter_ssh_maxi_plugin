@@ -38,7 +38,6 @@ import org.apache.log.Logger;
 public class SshChannelSFTP {
 	private static final Logger log = LoggingManager.getLoggerForClass();
 	ChannelSftp cSFTP = null;
- 
 
 	public void setChannelSftp(ChannelSftp cs) {
 		this.cSFTP = cs;
@@ -49,7 +48,6 @@ public class SshChannelSFTP {
 	}
 
 	public void disconnect() {
- 
 
 		try {
 			if (cSFTP != null) {
@@ -59,11 +57,9 @@ public class SshChannelSFTP {
 			Log.debug("Error when disconnecting Channel SFTP");
 		}
 	}
- 
 
 	public boolean isConnected() {
 		return this.cSFTP.isConnected();
 	}
- 
 
 }

@@ -21,8 +21,6 @@ package org.apache.jmeter.protocol.ssh.test;
 
 import java.io.FilterOutputStream;
 
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
@@ -37,7 +35,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
- 
 import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.CommandFactory;
@@ -47,8 +44,6 @@ import org.apache.sshd.server.shell.ProcessShellFactory;
 
 import jline.console.ConsoleReader;
 import jline.console.completer.StringsCompleter;
-
-
 
 /**
  * An echo command which pipes the input to the output.
@@ -92,9 +87,10 @@ public class SshExecCommandFactory implements CommandFactory, Runnable {
 
 	}
 
-	public  static class InAppShellExec implements Command, Runnable {
+	public static class InAppShellExec implements Command, Runnable {
 
-		//private static final Logger log = LogManager.getLogger(InAppShell.class);
+		// private static final Logger log =
+		// LogManager.getLogger(InAppShell.class);
 
 		public static final boolean IS_MAC_OSX = System.getProperty("os.name").startsWith("Mac OS X");
 
@@ -120,7 +116,7 @@ public class SshExecCommandFactory implements CommandFactory, Runnable {
 		private String commandstring;
 
 		public InAppShellExec(String command) {
-			this.commandstring=command;
+			this.commandstring = command;
 		}
 
 		public InputStream getIn() {
@@ -196,15 +192,15 @@ public class SshExecCommandFactory implements CommandFactory, Runnable {
 				writer.println("****************************************************");
 				writer.flush();
 
-				//String line;
-				//while ((line = reader.readLine()) != null) {
-					handleUserInput(this.commandstring);
-				//}
+				// String line;
+				// while ((line = reader.readLine()) != null) {
+				handleUserInput(this.commandstring);
+				// }
 
 			} catch (InterruptedIOException e) {
 				// Ignore
 			} catch (Exception e) {
-				//log.error("Error executing InAppShell...", e);
+				// log.error("Error executing InAppShell...", e);
 			} finally {
 				callback.onExit(0);
 			}
@@ -223,20 +219,16 @@ public class SshExecCommandFactory implements CommandFactory, Runnable {
 			else if (line.equalsIgnoreCase(SHELL_CMD_LS))
 				response = "file1 file2 file3";
 			else if (line.equalsIgnoreCase(SHELL_CMD_DIR))
-				response = " Volume in drive C is OSDisk\r\n" + 
-						" Volume Serial Number is 88C9-85F1\r\n" + 
-						"\r\n" + 
-						" Directory of C:\\Temp\r\n" + 
-						"\r\n" + 
-						"23/02/2017  09:18    <DIR>          case wrong recording states\r\n" + 
-						"29/11/2016  14:26       213.387.592 HP 850 G3 Video driver latest sp78116.exe\r\n" + 
-						"30/01/2017  14:57    <DIR>          LogFiles\r\n" + 
-						"20/02/2017  09:49            96.256 RE nPVR Revamp  .msg\r\n" + 
-						"20/02/2017  09:50            85.504 RE nPVR Revamp cm.msg\r\n" + 
-						"23/02/2017  17:40    <DIR>          urhwal1\r\n" + 
-						"               3 File(s)    213.569.352 bytes\r\n" + 
-						"               3 Dir(s)  23.825.162.240 bytes free\r\n" + 
-						"";
+				response = " Volume in drive C is OSDisk\r\n" + " Volume Serial Number is 88C9-85F1\r\n" + "\r\n"
+						+ " Directory of C:\\Temp\r\n" + "\r\n"
+						+ "23/02/2017  09:18    <DIR>          case wrong recording states\r\n"
+						+ "29/11/2016  14:26       213.387.592 HP 850 G3 Video driver latest sp78116.exe\r\n"
+						+ "30/01/2017  14:57    <DIR>          LogFiles\r\n"
+						+ "20/02/2017  09:49            96.256 RE nPVR Revamp  .msg\r\n"
+						+ "20/02/2017  09:50            85.504 RE nPVR Revamp cm.msg\r\n"
+						+ "23/02/2017  17:40    <DIR>          urhwal1\r\n"
+						+ "               3 File(s)    213.569.352 bytes\r\n"
+						+ "               3 Dir(s)  23.825.162.240 bytes free\r\n" + "";
 			else if (line.equalsIgnoreCase(SHELL_CMD_DATE)) {
 				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 				Date dateobj = new Date();

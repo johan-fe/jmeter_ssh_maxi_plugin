@@ -18,119 +18,107 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
 import org.apache.jmeter.samplers.AbstractSampler;
- 
+
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testbeans.TestBean;
- 
+
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
  * Dump ssh session sampler
  */
-public  class DumpSSHSessionSampler extends AbstractSampler implements TestBean  {
+public class DumpSSHSessionSampler extends AbstractSampler implements TestBean {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2954989469756886583L;
 
-	private boolean dumpChannelInfo=true; 
+	private boolean dumpChannelInfo = true;
 	private static final Logger log = LoggingManager.getLoggerForClass();
-    private String connectionName= "";
+	private String connectionName = "";
+
 	public DumpSSHSessionSampler() {
-		 super();
-		//super("SSH Dump Session Sampler");
+		super();
+		// super("SSH Dump Session Sampler");
 		setName("SSHDumpSessionSampler");
-		//System.out.println("in constructor dump sampler");
+		// System.out.println("in constructor dump sampler");
 	}
 
 	@Override
-    public SampleResult sample(Entry e) {
+	public SampleResult sample(Entry e) {
 
-    	SampleResult res=new SampleResult();
-    	res.sampleStart();
-    	String connList=GlobalDataSsh.getConnectionList(this.connectionName, dumpChannelInfo);
-    	if(connList.equals(""))
-    	{
-    		if(connectionName.equals(""))
-    		{res.setResponseCode("No Connections Found");}
-    		else
-    		{res.setResponseCode("No Matching Connections Found");}
-    	}
-    	else
-    	{
-    		if(connectionName.equals(""))
-    		{res.setResponseCode("Connection(s) Found");}
-    		else
-    		{res.setResponseCode("Matching Connection Found");}
-    	}
-    	String samplerData="";
-    	if(connectionName.equals(""))
-    	{
-    		res.setSampleLabel(getName()+" (show_all_connections)");
-    		samplerData="Show all connections avalable";
-    	}
-    	else
-    	{
-    		res.setSampleLabel(getName() + " show connections filtered for:("+this.connectionName  + ")");  
-    		samplerData="Show if connection"+this.connectionName+" is avalable";
-    	}
-        // Set up sampler return types
-        res.setSamplerData(samplerData);
-        res.setDataType(SampleResult.TEXT);
-        res.setContentType("text/plain");
-        res.setResponseData(connList,"UTF-8");
-        res.sampleEnd();
-     // source data
-       // res.setSamplerData(getRequestData());
-        if (connList.equals(""))
-        {
-        	res.setResponseData("no connection found","UTF-8");
-        	res.setResponseMessage("no connection found");
-        	res.setSuccessful(false);
-        }
-        else
-        {
-        	res.setResponseData(connList,"UTF-8");
-        	res.setResponseMessage("OK");
-        	res.setSuccessful(true);
-        }
-    	return res;
-    }
-       
+		SampleResult res = new SampleResult();
+		res.sampleStart();
+		String connList = GlobalDataSsh.getConnectionList(this.connectionName, dumpChannelInfo);
+		if (connList.equals("")) {
+			if (connectionName.equals("")) {
+				res.setResponseCode("No Connections Found");
+			} else {
+				res.setResponseCode("No Matching Connections Found");
+			}
+		} else {
+			if (connectionName.equals("")) {
+				res.setResponseCode("Connection(s) Found");
+			} else {
+				res.setResponseCode("Matching Connection Found");
+			}
+		}
+		String samplerData = "";
+		if (connectionName.equals("")) {
+			res.setSampleLabel(getName() + " (show_all_connections)");
+			samplerData = "Show all connections avalable";
+		} else {
+			res.setSampleLabel(getName() + " show connections filtered for:(" + this.connectionName + ")");
+			samplerData = "Show if connection" + this.connectionName + " is avalable";
+		}
+		// Set up sampler return types
+		res.setSamplerData(samplerData);
+		res.setDataType(SampleResult.TEXT);
+		res.setContentType("text/plain");
+		res.setResponseData(connList, "UTF-8");
+		res.sampleEnd();
+		// source data
+		// res.setSamplerData(getRequestData());
+		if (connList.equals("")) {
+			res.setResponseData("no connection found", "UTF-8");
+			res.setResponseMessage("no connection found");
+			res.setSuccessful(false);
+		} else {
+			res.setResponseData(connList, "UTF-8");
+			res.setResponseMessage("OK");
+			res.setSuccessful(true);
+		}
+		return res;
+	}
 
+	public void setConnectionName(String conn) {
+		this.connectionName = conn.trim();
+	}
 
-	public void setConnectionName(String conn){
-    	this.connectionName=conn.trim();
-    }
-    public String getConnectionName()
-    {
-    	return this.connectionName;
-    }
+	public String getConnectionName() {
+		return this.connectionName;
+	}
+
 	public boolean getDumpChannelInfo() {
 		return dumpChannelInfo;
 	}
 
-	public  void setDumpChannelInfo(boolean dumpChannelInfo) {
+	public void setDumpChannelInfo(boolean dumpChannelInfo) {
 		this.dumpChannelInfo = dumpChannelInfo;
 	}
-    
-    
-    @Override
-    public void finalize() {
-        try {
-            super.finalize();
-        } 
-        catch (Throwable e) {
-            log.error("SSH dump session error", e );
-        } 
-        finally {
-            
-        }
-        
-    }
 
+	@Override
+	public void finalize() {
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			log.error("SSH dump session error", e);
+		} finally {
 
+		}
+
+	}
 
 }

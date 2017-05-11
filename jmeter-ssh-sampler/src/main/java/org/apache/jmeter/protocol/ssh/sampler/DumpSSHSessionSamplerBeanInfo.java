@@ -41,37 +41,31 @@ import org.apache.jmeter.testbeans.TestBean;
 //attribute, so that it can be used for further localization. 
 //TestBeanGUI, for example, uses it to obtain the group's display names from properties groupName.displayName.
 
+public class DumpSSHSessionSamplerBeanInfo extends BeanInfoSupport {
+	// class must have a public constructor to become visible in the menu
 
+	// public DumpSSHSessionSamplerBeanInfo(Class<? extends
+	// DumpSSHSessionSampler> clazz) {
+	// super(clazz);
+	// @SuppressWarnings("unchecked")
+	public DumpSSHSessionSamplerBeanInfo() {
+		super(DumpSSHSessionSampler.class);
 
-public class DumpSSHSessionSamplerBeanInfo extends  BeanInfoSupport {
-	//class must have a public constructor to become visible in the menu
-	 
-		// public DumpSSHSessionSamplerBeanInfo(Class<? extends DumpSSHSessionSampler> clazz) {
-	    //super(clazz);
-	   // @SuppressWarnings("unchecked")
-	public DumpSSHSessionSamplerBeanInfo() {  
-		super( DumpSSHSessionSampler.class); 
+		createPropertyGroup("connectionManagement", new String[] { "connectionName" // $NON-NLS-1$
 
-        createPropertyGroup("connectionManagement", 
-        		new String[]{ 
-                "connectionName" // $NON-NLS-1$
+		});
+		createPropertyGroup("dumpParameters", new String[] { "dumpChannelInfo" // $NON-NLS-1$
+		});
 
-            });
-        createPropertyGroup("dumpParameters", 
-        		new String[]{  
-                "dumpChannelInfo" // $NON-NLS-1$
-            });
-        
-        
-        PropertyDescriptor p;
-     
-        p = property("connectionName"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
-        
-        p = property("dumpChannelInfo"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,Boolean.TRUE );
+		PropertyDescriptor p;
+
+		p = property("connectionName"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("dumpChannelInfo"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.TRUE);
 
 	}
 }

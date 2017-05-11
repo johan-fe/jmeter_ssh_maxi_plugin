@@ -42,11 +42,11 @@ import org.apache.jmeter.testbeans.BeanInfoSupport;
 //p.setValue(NOT_EXPRESSION,Boolean.TRUE);
 // see https://wiki.apache.org/jmeter/DeveloperManual/TestBeanTutorial
 
-public abstract class AbstractSSHMainSamplerBeanInfo extends BeanInfoSupport{
+public abstract class AbstractSSHMainSamplerBeanInfo extends BeanInfoSupport {
 	public AbstractSSHMainSamplerBeanInfo(Class<? extends AbstractSSHMainSampler> clazz) {
-        super(clazz);
-   //     createPropertyGroup("dummy", // $NON-NLS-1$
-   //             new String[]{
-   //             });
-    }
+		super(clazz);
+		// createPropertyGroup("dummy", // $NON-NLS-1$
+		// new String[]{
+		// });
+	}
 }

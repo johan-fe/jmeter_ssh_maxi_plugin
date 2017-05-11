@@ -40,28 +40,29 @@ import org.apache.log.Logger;
 //chance to control how the cloning is done, if you need it. 
 // Properties need to be defined in [ComponentName].java with public getters and setters. 
 
-
 public abstract class AbstractSSHMainSampler extends AbstractSampler implements TestBean {
-    /**
+	/**
 	 * 
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggingManager.getLoggerForClass();
-	public AbstractSSHMainSampler(String name){
-        super();
-        setName(name);
-		log.info("initializing class:"+name);
+
+	public AbstractSSHMainSampler(String name) {
+		super();
+		setName(name);
+		log.info("initializing class:" + name);
 	}
-	   @Override
-	    public void finalize() {
-	        try {
-	            super.finalize();
-	        } catch (Throwable e) {
-	            log.error("SSH session finalize error", e);
-	        } finally {
-	            
-	            }
-	        
-	    }
+
+	@Override
+	public void finalize() {
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			log.error("SSH session finalize error", e);
+		} finally {
+
+		}
+
+	}
 }

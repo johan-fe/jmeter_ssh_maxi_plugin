@@ -41,25 +41,21 @@ import org.apache.jmeter.testbeans.TestBean;
 //attribute, so that it can be used for further localization. 
 //TestBeanGUI, for example, uses it to obtain the group's display names from properties groupName.displayName.
 
+public class CloseSSHSessionSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
+	// class must have a public constructor to become visible in the menu
 
-
-public class CloseSSHSessionSamplerBeanInfo extends  AbstractSSHMainSamplerBeanInfo {
-	//class must have a public constructor to become visible in the menu
-	
 	public CloseSSHSessionSamplerBeanInfo() {
-       
-		super( CloseSSHSessionSampler.class); 
 
-        createPropertyGroup("connectionManagement", 
-        		new String[]{ 
-                "connectionName", // $NON-NLS-1$
+		super(CloseSSHSessionSampler.class);
 
-            });
-        PropertyDescriptor p;
-     
-        p = property("connectionName"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT,"" );
+		createPropertyGroup("connectionManagement", new String[] { "connectionName", // $NON-NLS-1$
+
+		});
+		PropertyDescriptor p;
+
+		p = property("connectionName"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
 
 	}
 }

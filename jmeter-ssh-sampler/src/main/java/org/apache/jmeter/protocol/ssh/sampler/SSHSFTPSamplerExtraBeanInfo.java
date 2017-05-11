@@ -21,44 +21,38 @@ import java.beans.PropertyDescriptor;
 
 public class SSHSFTPSamplerExtraBeanInfo extends AbstractSSHSamplerExtraBeanInfo {
 
-    public SSHSFTPSamplerExtraBeanInfo() {
-        
-        super(SSHSFTPSamplerExtra.class);
-        
-        createPropertyGroup("fileTransfer", new String[]{
-                    "action", // $NON-NLS-1$
-                    "source", // $NON-NLS-1$
-                    "printFile",// $NON-NLS-1$
-                    "destination" // $NON-NLS-1$
-                    
-                });
-        
-        PropertyDescriptor p = property("action"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(NOT_OTHER, Boolean.TRUE);
-        p.setValue(DEFAULT, "get");
-        p.setValue(TAGS, new String[]{
-            SSHSFTPSamplerExtra.SFTP_COMMAND_GET, 
-            SSHSFTPSamplerExtra.SFTP_COMMAND_PUT,
-            SSHSFTPSamplerExtra.SFTP_COMMAND_RM, 
-            SSHSFTPSamplerExtra.SFTP_COMMAND_RMDIR,
-            SSHSFTPSamplerExtra.SFTP_COMMAND_LS
-        });
-        
-        p = property("source"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
-        
-        p = property("printFile"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, Boolean.TRUE);
-        
-        p = property("destination"); // $NON-NLS-1$
-        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-        p.setValue(DEFAULT, "");
-        
-        
-        
-    }
-    
+	public SSHSFTPSamplerExtraBeanInfo() {
+
+		super(SSHSFTPSamplerExtra.class);
+
+		createPropertyGroup("fileTransfer", new String[] { "action", // $NON-NLS-1$
+				"source", // $NON-NLS-1$
+				"printFile", // $NON-NLS-1$
+				"destination" // $NON-NLS-1$
+
+		});
+
+		PropertyDescriptor p = property("action"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(NOT_OTHER, Boolean.TRUE);
+		p.setValue(DEFAULT, "get");
+		p.setValue(TAGS,
+				new String[] { SSHSFTPSamplerExtra.SFTP_COMMAND_GET, SSHSFTPSamplerExtra.SFTP_COMMAND_PUT,
+						SSHSFTPSamplerExtra.SFTP_COMMAND_RM, SSHSFTPSamplerExtra.SFTP_COMMAND_RMDIR,
+						SSHSFTPSamplerExtra.SFTP_COMMAND_LS });
+
+		p = property("source"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+		p = property("printFile"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, Boolean.TRUE);
+
+		p = property("destination"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "");
+
+	}
+
 }

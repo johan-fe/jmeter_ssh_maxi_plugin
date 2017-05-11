@@ -50,27 +50,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SSHTestServer extends Thread {
-	 private static final Logger log =Logger.getLogger(SSHTestServer.class.getName());
+	private static final Logger log = Logger.getLogger(SSHTestServer.class.getName());
 	// LogManager.getLogger(SSHTestServer.class);
 	// static final String pathLoggerConfig =
 	// "C:\\Users\\id093108\\Documents\\tools\\eclipse_oxygen\\johanworkspace_oxygen_java\\sshd-daemon-demo\\target\\log4j.properties";
 	static BouncyCastleProvider bcProvider = null;
-	SSHTestServer(){
+
+	SSHTestServer() {
 		super();
 	}
-	/*public void GenSignCastle() {
-		if (bcProvider == null) {
-			bcProvider = new BouncyCastleProvider();
-			Provider[] providers = Security.getProviders();
+	/*
+	 * public void GenSignCastle() { if (bcProvider == null) { bcProvider = new
+	 * BouncyCastleProvider(); Provider[] providers = Security.getProviders();
+	 * 
+	 * String name = bcProvider.getName(); Security.removeProvider(name); //
+	 * remove old instance
+	 * 
+	 * Security.addProvider(bcProvider); } }
+	 */
 
-			String name = bcProvider.getName();
-			Security.removeProvider(name); // remove old instance
-
-			Security.addProvider(bcProvider);
-		}
-	}*/
-
-	 void prinClassPath() {
+	void prinClassPath() {
 		ClassLoader cl = ClassLoader.getSystemClassLoader();
 
 		URL[] urls = ((URLClassLoader) cl).getURLs();
@@ -80,9 +79,10 @@ public class SSHTestServer extends Thread {
 		}
 		System.out.println("");
 	}
-	//public static void main(String args[]) {
-	      //  (new Thread(new SSHTestServer())).start();
-	//}
+
+	// public static void main(String args[]) {
+	// (new Thread(new SSHTestServer())).start();
+	// }
 	public void startdaemon() {
 		// PropertyConfigurator.configure(pathLoggerConfig);
 		// prinClassPath();
@@ -102,7 +102,7 @@ public class SSHTestServer extends Thread {
 		sshd.setKeyExchangeFactories(Arrays.<NamedFactory<KeyExchange>>asList(new DHG1.Factory()));
 
 		sshd.setShellFactory(new InAppShellFactory());
-		
+
 		/*
 		 * if (System.getProperty("os.name").toLowerCase().indexOf("windows") <
 		 * 0) { sshd.setShellFactory(new ProcessShellFactory(new String[] {
@@ -124,7 +124,6 @@ public class SSHTestServer extends Thread {
 		// sshd.setSubsystemFactories(Collections.<NamedFactory<Command>>singletonList(new
 		// SftpSubsystem.Factory()));
 
-		
 		// sshd.setCommandFactory(new ScpCommandFactory());
 		sshd.setCommandFactory(new SshExecCommandFactory());
 		// log.info("registering SshExecCommandFactory");
@@ -142,30 +141,31 @@ public class SSHTestServer extends Thread {
 			Thread.sleep(Long.MAX_VALUE);
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
-		              Thread.sleep(1000L);
-		          } catch (InterruptedException e) {
-		              // good practice
-		              Thread.currentThread().interrupt();
-		              log.log(Level.INFO, "SSHTestServer stopped");
-		              return;
-		          }
+					Thread.sleep(1000L);
+				} catch (InterruptedException e) {
+					// good practice
+					Thread.currentThread().interrupt();
+					log.log(Level.INFO, "SSHTestServer stopped");
+					return;
+				}
 			}
 		} catch (Exception e) {
 			Thread.currentThread().interrupt();
 			log.log(Level.INFO, "SSHTestServer stopped");
-            return;
+			return;
 		}
 		// java.lang.System.out.println( "leaving daemon ssh");
 	}
-	/*void stop() {
-		Thread.currentThread().interrupt();
-	}*/
+
+	/*
+	 * void stop() { Thread.currentThread().interrupt(); }
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		startdaemon();
 		log.log(Level.INFO, "SSHTestServer leaving run function");
-		
+
 	}
 
 }

@@ -31,176 +31,173 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- * SSH Sampler that collects single lines of output and returns
- * them as samples.
+ * SSH Sampler that collects single lines of output and returns them as samples.
  *
  */
 public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 9180249991509027397L;
 	private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final String SFTP_COMMAND_GET = "get";
-    public static final String SFTP_COMMAND_PUT = "put";
-    public static final String SFTP_COMMAND_RM = "rm";
-    public static final String SFTP_COMMAND_RMDIR = "rmdir";
-    public static final String SFTP_COMMAND_LS = "ls";
-    public static final String SFTP_COMMAND_RENAME = "ls";
-    private String source;
-    private String destination;
-    private String action;
-    private boolean printFile = true;
+	public static final String SFTP_COMMAND_GET = "get";
+	public static final String SFTP_COMMAND_PUT = "put";
+	public static final String SFTP_COMMAND_RM = "rm";
+	public static final String SFTP_COMMAND_RMDIR = "rmdir";
+	public static final String SFTP_COMMAND_LS = "ls";
+	public static final String SFTP_COMMAND_RENAME = "ls";
+	private String source;
+	private String destination;
+	private String action;
+	private boolean printFile = true;
 
-    public SSHSFTPSamplerExtra() {
-        super("SSHSFTPSamplerExtra");
-    }
+	public SSHSFTPSamplerExtra() {
+		super("SSHSFTPSamplerExtra");
+	}
 
-    /**
-     * Returns last line of output from the command
-     */
-    public SampleResult sample(Entry e) {
-        SampleResult res = new SampleResult();
-        res.setSampleLabel(getName() + ":(" + getUsername() + "@" + getHostname() + ":" + getPort() + ")");
+	/**
+	 * Returns last line of output from the command
+	 */
+	public SampleResult sample(Entry e) {
+		SampleResult res = new SampleResult();
+		res.setSampleLabel(getName() + ":(" + getUsername() + "@" + getHostname() + ":" + getPort() + ")");
 
+		// Set up sampler return types
+		res.setSamplerData(action + " " + source);
 
+		res.setDataType(SampleResult.TEXT);
+		res.setContentType("text/plain");
 
-        // Set up sampler return types
-        res.setSamplerData(action + " " + source);
+		String response;
+		if (getSession() == null) {
+			connect();
+		}
 
-        res.setDataType(SampleResult.TEXT);
-        res.setContentType("text/plain");
+		try {
+			if (getSession() == null) {
+				log.error("Failed to connect to server with credentials " + getUsername() + "@" + getHostname() + ":"
+						+ getPort() + " pw=" + getPassword());
+				throw new NullPointerException("Failed to connect to server: " + getFailureReason());
+			}
 
-        String response;
-        if (getSession() == null) {
-            connect();
-        }
+			response = doFileTransfer(getSession(), source, destination, res);
+			res.setResponseData(response.getBytes());
 
-        try {
-            if (getSession() == null) {
-                log.error("Failed to connect to server with credentials "
-                        + getUsername() + "@" + getHostname() + ":" + getPort()
-                        + " pw=" + getPassword());
-                throw new NullPointerException("Failed to connect to server: " + getFailureReason());
-            }
+			res.setSuccessful(true);
 
-            response = doFileTransfer(getSession(), source, destination, res);
-            res.setResponseData(response.getBytes());
+			res.setResponseMessageOK();
+		} catch (JSchException e1) {
+			res.setSuccessful(false);
+			res.setResponseCode("JSchException");
+			res.setResponseMessage(e1.getMessage());
+		} catch (SftpException e1) {
+			res.setSuccessful(false);
+			res.setResponseCode("SftpException");
+			res.setResponseMessage(e1.getMessage());
+		} catch (IOException e1) {
+			res.setSuccessful(false);
+			res.setResponseCode("IOException");
+			res.setResponseMessage(e1.getMessage());
+		} catch (NullPointerException e1) {
+			res.setSuccessful(false);
+			res.setResponseCode("Connection Failed");
+			res.setResponseMessage(e1.getMessage());
+		} finally {
+			// Try a disconnect/sesson = null here instead of in finalize.
+			disconnect();
+			setSession(null);
+		}
+		return res;
+	}
 
+	/**
+	 * Executes a the given command inside a short-lived channel in the session.
+	 * 
+	 * Performance could be likely improved by reusing a single channel, though
+	 * the gains would be minimal compared to sharing the Session.
+	 * 
+	 * @param session
+	 *            Session in which to create the channel
+	 * @param command
+	 *            Command to send to the server for execution
+	 * @return All standard output from the command
+	 * @throws JSchException
+	 * @throws SftpException
+	 * @throws IOException
+	 */
+	private String doFileTransfer(Session session, String src, String dst, SampleResult res)
+			throws JSchException, SftpException, IOException {
+		StringBuilder sb = new StringBuilder();
+		ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
 
-            res.setSuccessful(true);
+		res.sampleStart();
+		channel.connect();
 
-            res.setResponseMessageOK();
-        } catch (JSchException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("JSchException");
-            res.setResponseMessage(e1.getMessage());
-        } catch (SftpException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("SftpException");
-            res.setResponseMessage(e1.getMessage());
-        } catch (IOException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("IOException");
-            res.setResponseMessage(e1.getMessage());
-        } catch (NullPointerException e1) {
-            res.setSuccessful(false);
-            res.setResponseCode("Connection Failed");
-            res.setResponseMessage(e1.getMessage());
-        } finally {
-            // Try a disconnect/sesson = null here instead of in finalize.
-            disconnect();
-            setSession(null);
-        }
-        return res;
-    }
+		if (SFTP_COMMAND_GET.equals(action)) {
 
-    /**
-     * Executes a the given command inside a short-lived channel in the session.
-     * 
-     * Performance could be likely improved by reusing a single channel, though
-     * the gains would be minimal compared to sharing the Session.
-     *  
-     * @param session Session in which to create the channel
-     * @param command Command to send to the server for execution
-     * @return All standard output from the command
-     * @throws JSchException 
-     * @throws SftpException
-     * @throws IOException
-     */
-    private String doFileTransfer(Session session, String src, String dst, SampleResult res) throws JSchException, SftpException, IOException {
-        StringBuilder sb = new StringBuilder();
-        ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
+			if (!printFile) {
+				channel.get(src, dst);
+			} else {
+				BufferedReader br = new BufferedReader(new InputStreamReader(channel.get(src)));
+				for (String line = br.readLine(); line != null; line = br.readLine()) {
+					sb.append(line);
+					sb.append("\n");
+				}
+			}
 
-        res.sampleStart();
-        channel.connect();
+		} else if (SFTP_COMMAND_PUT.equals(action)) {
+			channel.put(src, dst);
+		} else if (SFTP_COMMAND_LS.equals(action)) {
+			List<ChannelSftp.LsEntry> ls = channel.ls(src);
+			for (ChannelSftp.LsEntry line : ls) {
+				sb.append(line.getLongname());
+				sb.append("\n");
+			}
+		} else if (SFTP_COMMAND_RM.equals(action)) {
+			channel.rm(src);
+		} else if (SFTP_COMMAND_RMDIR.equals(action)) {
+			channel.rmdir(src);
+		} else if (SFTP_COMMAND_RENAME.equals(action)) {
+			channel.rename(src, dst);
+		}
 
-        if (SFTP_COMMAND_GET.equals(action)) {
+		res.sampleEnd();
 
-            if (!printFile) {
-                channel.get(src, dst);
-            } else {
-                BufferedReader br = new BufferedReader(new InputStreamReader(channel.get(src)));
-                for (String line = br.readLine(); line != null; line = br.readLine()) {
-                    sb.append(line);
-                    sb.append("\n");
-                }
-            }
+		channel.disconnect();
+		return sb.toString();
+	}
 
-        } else if (SFTP_COMMAND_PUT.equals(action)) {
-            channel.put(src, dst);
-        } else if (SFTP_COMMAND_LS.equals(action)) {
-            List<ChannelSftp.LsEntry> ls = channel.ls(src);
-            for (ChannelSftp.LsEntry line : ls) {
-                sb.append(line.getLongname());
-                sb.append("\n");
-            }
-        } else if (SFTP_COMMAND_RM.equals(action)) {
-            channel.rm(src);
-        } else if (SFTP_COMMAND_RMDIR.equals(action)) {
-            channel.rmdir(src);
-        } else if (SFTP_COMMAND_RENAME.equals(action)) {
-            channel.rename(src, dst);
-        }
+	// Accessors
+	public String getDestination() {
+		return destination;
+	}
 
-        res.sampleEnd();
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
 
+	public String getSource() {
+		return source;
+	}
 
-        channel.disconnect();
-        return sb.toString();
-    }
+	public void setSource(String source) {
+		this.source = source;
+	}
 
-    // Accessors
-    public String getDestination() {
-        return destination;
-    }
+	public String getAction() {
+		return action;
+	}
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
+	public void setAction(String action) {
+		this.action = action;
+	}
 
-    public String getSource() {
-        return source;
-    }
+	public boolean getPrintFile() {
+		return printFile;
+	}
 
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public boolean getPrintFile() {
-        return printFile;
-    }
-
-    public void setPrintFile(boolean printFile) {
-        this.printFile = printFile;
-    }
+	public void setPrintFile(boolean printFile) {
+		this.printFile = printFile;
+	}
 }

@@ -16,28 +16,26 @@
  *
  */
 package org.apache.jmeter.protocol.ssh.test;
- 
+
 import jline.console.ConsoleReader;
 import jline.console.completer.StringsCompleter;
 import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
- 
 
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 /**
  * @author Maxim Kalina
  * @version $Id$
  */
 public class InAppShellFactory implements Factory<Command> {
-	//private static final Logger log = LogManager.getLogger(InAppShellFactory.class);
-
+	// private static final Logger log =
+	// LogManager.getLogger(InAppShellFactory.class);
 
 	public Command create() {
 		return new InAppShell();
@@ -45,7 +43,8 @@ public class InAppShellFactory implements Factory<Command> {
 
 	private static class InAppShell implements Command, Runnable {
 
-		//private static final Logger log = LogManager.getLogger(InAppShell.class);
+		// private static final Logger log =
+		// LogManager.getLogger(InAppShell.class);
 
 		public static final boolean IS_MAC_OSX = System.getProperty("os.name").startsWith("Mac OS X");
 
@@ -148,7 +147,7 @@ public class InAppShellFactory implements Factory<Command> {
 			} catch (InterruptedIOException e) {
 				// Ignore
 			} catch (Exception e) {
-				//log.error("Error executing InAppShell...", e);
+				// log.error("Error executing InAppShell...", e);
 			} finally {
 				callback.onExit(0);
 			}
