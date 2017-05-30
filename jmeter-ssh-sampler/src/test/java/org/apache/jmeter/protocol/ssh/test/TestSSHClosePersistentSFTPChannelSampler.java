@@ -61,6 +61,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 	// If you allocate expensive external resources in a
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
+	@SuppressWarnings("unused")
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		sshts.interrupt();
@@ -69,6 +70,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 
 	// When writing tests, it is common to find that several tests need similar
 	// objects created before they can run
+	@SuppressWarnings("unused")
 	@Before
 	public void setUp() throws Exception {
 		// super.setUp();
