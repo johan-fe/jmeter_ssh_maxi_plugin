@@ -25,22 +25,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
+
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.EnumSet;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.CommandFactory;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
-import org.apache.sshd.server.shell.ProcessShellFactory;
+
 
 import jline.console.ConsoleReader;
 import jline.console.completer.StringsCompleter;
@@ -135,28 +130,34 @@ public class SshExecCommandFactory implements CommandFactory, Runnable {
 			return environment;
 		}
 
+		@Override
 		public void setInputStream(InputStream in) {
 			this.in = in;
 		}
 
+		@Override
 		public void setOutputStream(OutputStream out) {
 			this.out = out;
 		}
 
+		@Override
 		public void setErrorStream(OutputStream err) {
 			this.err = err;
 		}
 
+		@Override
 		public void setExitCallback(ExitCallback callback) {
 			this.callback = callback;
 		}
 
+		@Override
 		public void start(Environment env) throws IOException {
 			environment = env;
 			thread = new Thread(this, SHELL_THREAD_NAME);
 			thread.start();
 		}
 
+		@Override
 		public void destroy() {
 			if (reader != null)
 				reader.shutdown();

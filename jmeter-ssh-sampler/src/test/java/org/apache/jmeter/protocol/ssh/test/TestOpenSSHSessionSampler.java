@@ -23,8 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 import org.apache.jmeter.protocol.ssh.sampler.OpenSSHSessionSampler;
-import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
-import org.apache.jmeter.protocol.ssh.sampler.SendCommandSSHSessionSampler;
+
 import org.apache.jmeter.protocol.ssh.sampler.SshSession;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -53,6 +52,7 @@ public class TestOpenSSHSessionSampler {
 	// If you allocate expensive external resources in a
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
+	@SuppressWarnings("unused")
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		sshts.interrupt();
@@ -70,6 +70,7 @@ public class TestOpenSSHSessionSampler {
 
 	// When writing tests, it is common to find that several tests need similar
 	// objects created before they can run
+	@SuppressWarnings("unused")
 	@Before
 	public void setUp() throws Exception {
 		// super.setUp();
@@ -81,6 +82,7 @@ public class TestOpenSSHSessionSampler {
 
 	// If you allocate external resources in a Before method you need to release
 	// them after the test runs.
+	@SuppressWarnings("unused")
 	@After
 	public void tearDown() throws Exception {
 		// super.tearDown();

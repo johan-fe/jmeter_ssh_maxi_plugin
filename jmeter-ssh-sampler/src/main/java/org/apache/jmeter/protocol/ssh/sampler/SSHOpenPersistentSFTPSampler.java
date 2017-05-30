@@ -1,24 +1,14 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.testbeans.TestBean;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+//import org.apache.jorphan.logging.LoggingManager;
+//import org.apache.log.Logger;
 
-import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import com.jcraft.jsch.ChannelShell;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -39,8 +29,9 @@ import com.jcraft.jsch.ChannelShell;
  */
 
 /**
- * SSHOpenPersistentSFTPSampler Sampler that opens a persistent SFTP channel over which SFTP commands can be sent 
- * to the server. The SFTP channel is established over a persistent SSH connection
+ * SSHOpenPersistentSFTPSampler Sampler that opens a persistent SFTP channel
+ * over which SFTP commands can be sent to the server. The SFTP channel is
+ * established over a persistent SSH connection
  */
 public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 
@@ -61,9 +52,9 @@ public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
 		res.sampleStart();
 
 		String samplerData = "Open SFTP " + this.sftpSessionName + " on " + this.connectionName;
-		String responseData = "";
+		// String responseData = "";
 		String responseMessage = "";
-		String responseCode = "";
+		// String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
 		res.setSamplerData(samplerData);

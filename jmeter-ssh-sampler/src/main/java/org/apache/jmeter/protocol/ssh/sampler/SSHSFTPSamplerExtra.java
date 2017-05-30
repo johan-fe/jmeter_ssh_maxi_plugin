@@ -149,6 +149,7 @@ public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 		} else if (SFTP_COMMAND_PUT.equals(action)) {
 			channel.put(src, dst);
 		} else if (SFTP_COMMAND_LS.equals(action)) {
+			@SuppressWarnings("unchecked")
 			List<ChannelSftp.LsEntry> ls = channel.ls(src);
 			for (ChannelSftp.LsEntry line : ls) {
 				sb.append(line.getLongname());

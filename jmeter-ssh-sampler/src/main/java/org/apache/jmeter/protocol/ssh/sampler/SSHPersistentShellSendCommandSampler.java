@@ -51,9 +51,9 @@ public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler
 
 		String samplerData = "Send Command " + this.command + " to shell " + this.shellName + " on "
 				+ this.connectionName;
-		String responseData = "";
+//		String responseData = "";
 		String responseMessage = "";
-		String responseCode = "";
+//		String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
 		if (this.connectionName.equals("")) {

@@ -37,6 +37,7 @@ public class InAppShellFactory implements Factory<Command> {
 	// private static final Logger log =
 	// LogManager.getLogger(InAppShellFactory.class);
 
+	@Override
 	public Command create() {
 		return new InAppShell();
 	}
@@ -66,44 +67,54 @@ public class InAppShellFactory implements Factory<Command> {
 		private ConsoleReader reader;
 		private PrintWriter writer;
 
+		@SuppressWarnings("unused")
 		public InputStream getIn() {
 			return in;
 		}
 
+		@SuppressWarnings("unused")
 		public OutputStream getOut() {
 			return out;
 		}
 
+		@SuppressWarnings("unused")
 		public OutputStream getErr() {
 			return err;
 		}
 
+		@SuppressWarnings("unused")
 		public Environment getEnvironment() {
 			return environment;
 		}
 
+		@Override
 		public void setInputStream(InputStream in) {
 			this.in = in;
 		}
 
+		@Override
 		public void setOutputStream(OutputStream out) {
 			this.out = out;
 		}
 
+		@Override
 		public void setErrorStream(OutputStream err) {
 			this.err = err;
 		}
 
+		@Override
 		public void setExitCallback(ExitCallback callback) {
 			this.callback = callback;
 		}
 
+		@Override
 		public void start(Environment env) throws IOException {
 			environment = env;
 			thread = new Thread(this, SHELL_THREAD_NAME);
 			thread.start();
 		}
 
+		@Override
 		public void destroy() {
 			if (reader != null)
 				reader.shutdown();

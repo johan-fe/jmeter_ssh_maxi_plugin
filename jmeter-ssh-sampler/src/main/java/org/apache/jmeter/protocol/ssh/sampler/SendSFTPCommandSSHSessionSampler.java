@@ -56,7 +56,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	private String connectionName = "";
 	private boolean printFile = true;
 	private boolean useTty;
-	private String resultEncoding = "UTF-8";
+//	private String resultEncoding = "UTF-8";
 
 	public SendSFTPCommandSSHSessionSampler() {
 		super("SendSFTPCommandSSHSessionSampler");
@@ -80,7 +80,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 				+ this.connectionName;
 		String responseData = "";
 		String responseMessage = "";
-		String responseCode = "";
+//		String responseCode = "";
 		res.setSamplerData(samplerData);
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
@@ -289,6 +289,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 		} else if (SFTP_COMMAND_PUT.equals(action)) {
 			channel.put(src, dst);
 		} else if (SFTP_COMMAND_LS.equals(action)) {
+			@SuppressWarnings("unchecked")
 			List<ChannelSftp.LsEntry> ls = channel.ls(src);
 			for (ChannelSftp.LsEntry line : ls) {
 				sb.append(line.getLongname());

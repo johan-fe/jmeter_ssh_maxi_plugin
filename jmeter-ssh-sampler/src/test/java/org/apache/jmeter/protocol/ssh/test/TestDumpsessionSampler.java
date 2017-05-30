@@ -56,18 +56,21 @@ public class TestDumpsessionSampler {
 	// If you allocate expensive external resources in a
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
+	@SuppressWarnings("unused")
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		sshts.interrupt();
 
 	}
 
+	@SuppressWarnings("unused")
 	@Before
 	public void setUp() throws Exception {
 		// this.instance = new SSHCommandSamplerExtra(); // for some reason this
 		// must be there or else it fails
 	}
 
+	@SuppressWarnings("unused")
 	@After
 	public void tearDown() throws Exception {
 		// super.tearDown();
@@ -205,6 +208,7 @@ public class TestDumpsessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				//
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command completed");
 
@@ -324,6 +328,7 @@ public class TestDumpsessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				//
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1");
 
@@ -335,6 +340,7 @@ public class TestDumpsessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				//
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT2, test session dumps completed");
 

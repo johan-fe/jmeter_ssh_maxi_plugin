@@ -52,6 +52,7 @@ public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
 	/**
 	 * Returns last line of output from the command
 	 */
+	@Override
 	public SampleResult sample(Entry e) {
 		SampleResult res = new SampleResult();
 		res.setSampleLabel(getName() + ":(" + getUsername() + "@" + getHostname() + ":" + getPort() + ")");
@@ -127,21 +128,21 @@ public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
 	 * 
 	 * @param session
 	 *            Session in which to create the channel
-	 * @param command
+	 * @param commandToExecute
 	 *            Command to send to the server for execution
 	 * @return All standard output from the command
 	 * @throws JSchException
 	 * @throws IOException
 	 *             Error has occurred down in the network layer
 	 */
-	private String doCommand(Session session, String command, SampleResult res) throws JSchException, IOException {
+	private String doCommand(Session session, String commandToExecute, SampleResult res) throws JSchException, IOException {
 		StringBuilder sb = new StringBuilder();
 		ChannelExec channel = (ChannelExec) session.openChannel("exec");
 		channel.setPty(useTty);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(channel.getInputStream()));
 		BufferedReader err = new BufferedReader(new InputStreamReader(channel.getErrStream()));
-		channel.setCommand(command);
+		channel.setCommand(commandToExecute);
 		res.sampleStart();
 		channel.connect();
 
@@ -169,7 +170,7 @@ public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
 			try {
 				Thread.sleep(250);
 			} catch (InterruptedException e) {
-
+					//
 			}
 		} // wait until channel is closed otherwise you get -1 in getExitStatus
 		if (useReturnCode) {

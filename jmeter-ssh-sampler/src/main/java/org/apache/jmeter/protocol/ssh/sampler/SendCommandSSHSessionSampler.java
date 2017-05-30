@@ -115,6 +115,7 @@ public class SendCommandSSHSessionSampler extends AbstractSSHMainSampler impleme
 			samplerData = "Invalid sampler configuration connection name is required";
 			res.setSampleLabel(getName() + " (" + samplerData + ")");
 			responseData = "Connection name not configured in sampler!";
+			res.setResponseData(responseData, "UTF-8");
 			res.setSuccessful(false);
 		} else {
 			if (this.command.equals("")) {
@@ -122,6 +123,7 @@ public class SendCommandSSHSessionSampler extends AbstractSSHMainSampler impleme
 				samplerData = "no command configured in sampler";
 				res.setSampleLabel(getName() + " (" + samplerData + ")");
 				responseData = "Command not configured in sampler!";
+				res.setResponseData(responseData, "UTF-8");
 				res.setSuccessful(false);
 				res.setResponseCode("No Command Configured");
 			} else {
@@ -171,7 +173,7 @@ public class SendCommandSSHSessionSampler extends AbstractSSHMainSampler impleme
 					res.setResponseMessage(getName() + " connection " + this.connectionName + " not found");
 					res.setResponseCode("Connection Not Found");
 					res.setSuccessful(false);
-					samplerData = "coonection " + this.connectionName + " not found!";
+					samplerData = "Connection " + this.connectionName + " not found!";
 					res.setSampleLabel(getName() + " (" + samplerData + ")");
 					res.setResponseData("", "UTF-8");
 				}
@@ -228,7 +230,7 @@ public class SendCommandSSHSessionSampler extends AbstractSSHMainSampler impleme
 		} catch (Throwable e) {
 			log.error("SSH dump session error", e);
 		} finally {
-
+//
 		}
 
 	}

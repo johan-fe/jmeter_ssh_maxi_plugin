@@ -33,8 +33,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.jcraft.jsch.Session;
-
 import jline.internal.Log;
 
 public class TestSendCommandSSHSessionSampler {
@@ -57,12 +55,14 @@ public class TestSendCommandSSHSessionSampler {
 	// If you allocate expensive external resources in a
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
+	@SuppressWarnings("unused")
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		sshts.interrupt();
 
 	}
 
+	@SuppressWarnings("unused")
 	@Before
 	public void setUp() throws Exception {
 		this.instance = new SSHCommandSamplerExtra(); // for some reason this
@@ -70,6 +70,7 @@ public class TestSendCommandSSHSessionSampler {
 														// it fails
 	}
 
+	@SuppressWarnings("unused")
 	@After
 	public void tearDown() throws Exception {
 		// super.tearDown();
@@ -142,6 +143,7 @@ public class TestSendCommandSSHSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				//
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command completed");
 
@@ -158,6 +160,7 @@ public class TestSendCommandSSHSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				//
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command ready to start");
 
@@ -248,6 +251,7 @@ public class TestSendCommandSSHSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				//
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send empty command completed");
 
@@ -323,6 +327,7 @@ public class TestSendCommandSSHSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				//
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1, test send command completed");
 

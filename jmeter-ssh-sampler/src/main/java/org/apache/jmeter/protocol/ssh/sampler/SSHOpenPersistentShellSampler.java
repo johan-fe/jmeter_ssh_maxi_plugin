@@ -55,9 +55,9 @@ public class SSHOpenPersistentShellSampler extends AbstractSSHMainSampler {
 		res.sampleStart();
 
 		String samplerData = "Open shell " + this.shellName + " on " + this.connectionName;
-		String responseData = "";
+//		String responseData = "";
 		String responseMessage = "";
-		String responseCode = "";
+//		String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
 		res.setSamplerData(samplerData);
