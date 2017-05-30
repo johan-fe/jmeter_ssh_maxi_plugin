@@ -26,9 +26,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.ChannelShell;
-
+/**
+ * This class is used to keep track of all persistent SSH sessions established and also to keep track of 
+ * the SFTP channels and Shall channels that are established on these SHH sessions
+ * 
+ */
 public class SshSession {
 	private static final Logger log = LoggingManager.getLoggerForClass();
 	Session session = null;

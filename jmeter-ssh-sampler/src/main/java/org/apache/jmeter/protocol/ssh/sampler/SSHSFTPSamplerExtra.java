@@ -32,7 +32,6 @@ import org.apache.log.Logger;
 
 /**
  * SSH Sampler that collects single lines of output and returns them as samples.
- *
  */
 public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 
@@ -59,6 +58,7 @@ public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 	/**
 	 * Returns last line of output from the command
 	 */
+	@Override
 	public SampleResult sample(Entry e) {
 		SampleResult res = new SampleResult();
 		res.setSampleLabel(getName() + ":(" + getUsername() + "@" + getHostname() + ":" + getPort() + ")");
@@ -119,7 +119,7 @@ public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 	 * 
 	 * @param session
 	 *            Session in which to create the channel
-	 * @param command
+	 *
 	 *            Command to send to the server for execution
 	 * @return All standard output from the command
 	 * @throws JSchException

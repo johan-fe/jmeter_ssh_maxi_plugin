@@ -26,8 +26,6 @@ public abstract class AbstractSSHSamplerExtraBeanInfo extends AbstractSSHMainSam
 
 	public AbstractSSHSamplerExtraBeanInfo(Class<? extends AbstractSSHSamplerExtra> clazz) {
 		super(clazz);
-		// public AbstractSSHSamplerExtraBeanInfo() {
-		// super(AbstractSSHSamplerExtra.class);
 
 		createPropertyGroup("server", // $NON-NLS-1$
 				new String[] { "hostname", // $NON-NLS-1$

@@ -27,11 +27,10 @@ import org.apache.log.Logger;
 
 import java.lang.StringBuilder;
 
-//import com.jcraft.jsch.ChannelExec;
-//import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
-//create a singleton to store global data
+//create enum as a singleton to initialize global data
+/**
+ * Class to store the peristent ssh connections and peristent channels.
+ */
 public enum GlobalDataSsh {
 	INSTANCE;
 	// using concurrent since synchronized may throw exception when iterating
@@ -207,10 +206,12 @@ public enum GlobalDataSsh {
 				try {
 					session.disconnectAllChannelShells();
 				} catch (Exception e) {
+					// We don't log errors for failure on closing channels
 				}
 				try {
 					session.disconnectAllSftpChannels();
 				} catch (Exception e) {
+					//// We don't log errors for failure on closing channels
 				}
 				session.disconnect();
 				GlobalDataSsh.removeSession(entry.getKey());

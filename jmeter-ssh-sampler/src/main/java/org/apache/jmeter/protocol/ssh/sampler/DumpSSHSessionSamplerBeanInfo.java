@@ -20,7 +20,7 @@ package org.apache.jmeter.protocol.ssh.sampler;
 import java.beans.PropertyDescriptor;
 
 import org.apache.jmeter.testbeans.BeanInfoSupport;
-import org.apache.jmeter.testbeans.TestBean;
+
 
 //import org.apache.jmeter.testbeans.gui.FileEditor;
 //public abstract class BeanInfoSupport
@@ -40,7 +40,9 @@ import org.apache.jmeter.testbeans.TestBean;
 //The resource bundle will be stored as the bean descriptor's "resourceBundle"
 //attribute, so that it can be used for further localization. 
 //TestBeanGUI, for example, uses it to obtain the group's display names from properties groupName.displayName.
-
+/**
+ * GUI to Dump ssh session sampler.THis sampler is used to dump all open persistent ssh connections.
+ */
 public class DumpSSHSessionSamplerBeanInfo extends BeanInfoSupport {
 	// class must have a public constructor to become visible in the menu
 

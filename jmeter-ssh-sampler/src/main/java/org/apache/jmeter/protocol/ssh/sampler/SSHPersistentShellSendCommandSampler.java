@@ -17,26 +17,18 @@
  */
 package org.apache.jmeter.protocol.ssh.sampler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintStream;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.testbeans.TestBean;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import com.jcraft.jsch.ChannelShell;
 
+/**
+ * SSHPersistentShellSendCommandSampler Sampler that sends shell commands over a persistent Shell channel
+ * to the server. The Shell channel is established by another sampler over a persistent SSH connection
+ */
 public class SSHPersistentShellSendCommandSampler extends AbstractSSHMainSampler {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1098L;
 	private String connectionName = "";
 	private String shellName = "";

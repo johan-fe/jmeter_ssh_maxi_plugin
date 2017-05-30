@@ -18,7 +18,10 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
-
+/**
+ * GUI SSHOpenPersistentSFTPSampler Sampler that opens a persistent SFTP channel over which SFTP commands can be sent 
+ * to the server. The SFTP channel is established over a persistent SSH connection
+ */
 public class SSHOpenPersistentSFTPSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
 	// class must have a public constructor to become visible in the menu
 	public SSHOpenPersistentSFTPSamplerBeanInfo() {

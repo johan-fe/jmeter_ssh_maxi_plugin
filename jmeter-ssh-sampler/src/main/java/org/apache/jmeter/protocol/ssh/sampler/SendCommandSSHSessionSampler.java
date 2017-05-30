@@ -21,8 +21,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.apache.jmeter.samplers.AbstractSampler;
-
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testbeans.TestBean;
@@ -35,12 +33,10 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 /**
- * Dump ssh session sampler
+ * Send Command SSH session sampler, This sampler sends a command on an exec
+ * channel on a peristent ssh session
  */
 public class SendCommandSSHSessionSampler extends AbstractSSHMainSampler implements TestBean {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2954989469756886583L;
 
 	private static final Logger log = LoggingManager.getLoggerForClass();
@@ -55,14 +51,14 @@ public class SendCommandSSHSessionSampler extends AbstractSSHMainSampler impleme
 		// setName("SendCommandSSHSessionSampler");
 	}
 
-	private String doCommand(Session session, String command, SampleResult res) throws JSchException, IOException {
+	private String doCommand(Session session, String commandToExecute, SampleResult res) throws JSchException, IOException {
 		StringBuilder sb = new StringBuilder();
 		ChannelExec channel = (ChannelExec) session.openChannel("exec");
 		channel.setPty(useTty);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(channel.getInputStream()));
 		BufferedReader err = new BufferedReader(new InputStreamReader(channel.getErrStream()));
-		channel.setCommand(command);
+		channel.setCommand(commandToExecute);
 
 		channel.connect();
 
@@ -89,7 +85,7 @@ public class SendCommandSSHSessionSampler extends AbstractSSHMainSampler impleme
 			try {
 				Thread.sleep(250);
 			} catch (InterruptedException e) {
-
+				// 
 			}
 		} // wait until channel is closed otherwise you get -1 in getExitStatus
 		if (this.useReturnCode) {

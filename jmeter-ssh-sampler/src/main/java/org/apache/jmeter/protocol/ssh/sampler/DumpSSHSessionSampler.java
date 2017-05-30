@@ -27,12 +27,10 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- * Dump ssh session sampler
+ * Dump ssh session sampler.THis sampler is used to dump all open persistent ssh connections.
  */
 public class DumpSSHSessionSampler extends AbstractSampler implements TestBean {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 2954989469756886583L;
 
 	private boolean dumpChannelInfo = true;
@@ -116,7 +114,7 @@ public class DumpSSHSessionSampler extends AbstractSampler implements TestBean {
 		} catch (Throwable e) {
 			log.error("SSH dump session error", e);
 		} finally {
-
+//
 		}
 
 	}

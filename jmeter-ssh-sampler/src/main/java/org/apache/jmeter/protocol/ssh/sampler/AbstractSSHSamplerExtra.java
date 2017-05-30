@@ -31,13 +31,10 @@ import java.io.Serializable;
 
 /**
  * Abstract SSH Sampler that manage SSH connection and delegates sampling.
- *
+ * Contains main ssh connection parameters for connection setup
  */
 public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3671700263133265972L;
 
 	private static final Logger log = LoggingManager.getLoggerForClass();
@@ -69,7 +66,7 @@ public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
 		if (this.getPropertyAsString("connectionName", "").equals("")) {
 			this.setProperty("connectionName", this.getConnectionName());
 		} else {
-			// TODO Iterate over these samplers to see if there is no duplicate
+			// todo Iterate over these samplers to see if there is no duplicate
 			// e.g when dupicating sampler in gui
 		}
 	}
@@ -311,7 +308,7 @@ public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
 		public SSHSamplerUserInfo(AbstractSSHSamplerExtra owner) {
 			this.owner = owner;
 		}
-
+		@Override
 		public String getPassphrase() {
 			String retval = owner.getPassphrase();
 			if ((retval.length() == 0) && !useKeyFile()) {
@@ -319,7 +316,7 @@ public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
 			}
 			return retval;
 		}
-
+		@Override
 		public String getPassword() {
 			String retval = owner.getPassword();
 			if (retval.length() == 0) {
@@ -329,18 +326,19 @@ public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
 		}
 
 		/* Prompts/show should be taken care of by Jmeter */
+		@Override
 		public boolean promptPassword(String message) {
 			return true;
 		}
-
+		@Override
 		public boolean promptPassphrase(String message) {
 			return true;
 		}
-
+		@Override
 		public boolean promptYesNo(String message) {
 			return true;
 		}
-
+		@Override
 		public void showMessage(String message) {
 			return;
 		}
@@ -353,6 +351,7 @@ public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
 		 */
 		/**
 		 * useKeyFile returns true if owner.sshkeyfile is not empty
+		 * @return true or false
 		 */
 		public boolean useKeyFile() {
 			return owner.getSshkeyfile().length() > 0;
@@ -361,10 +360,8 @@ public abstract class AbstractSSHSamplerExtra extends AbstractSSHMainSampler {
 		public boolean hasConnectionName() {
 			if (owner.getConnectionName() != null) {
 				return owner.getConnectionName().length() > 0;
-			} else {
-				return false;
-
 			}
+			return false;
 		}
 	} /* Class SSHSamplerUserInfo */
 

@@ -19,8 +19,6 @@ package org.apache.jmeter.protocol.ssh.sampler;
 
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.testbeans.TestBean;
-//import org.apache.jorphan.logging.LoggingManager;
-//import org.apache.log.Logger;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 // a component in the testbean framork is defined by 3 files
@@ -42,7 +40,7 @@ import org.apache.log.Logger;
 
 public abstract class AbstractSSHMainSampler extends AbstractSampler implements TestBean {
 	/**
-	 * 
+	 * Parent class of some Samplers in the SSH package
 	 */
 
 	private static final long serialVersionUID = 1L;
@@ -61,7 +59,7 @@ public abstract class AbstractSSHMainSampler extends AbstractSampler implements 
 		} catch (Throwable e) {
 			log.error("SSH session finalize error", e);
 		} finally {
-
+//
 		}
 
 	}

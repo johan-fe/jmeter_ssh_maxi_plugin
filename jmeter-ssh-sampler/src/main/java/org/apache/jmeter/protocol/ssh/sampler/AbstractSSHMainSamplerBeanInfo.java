@@ -41,7 +41,10 @@ import org.apache.jmeter.testbeans.BeanInfoSupport;
 //p.setValue(DEFAULT, "");
 //p.setValue(NOT_EXPRESSION,Boolean.TRUE);
 // see https://wiki.apache.org/jmeter/DeveloperManual/TestBeanTutorial
-
+/**
+ * AbstractSSHMainSamplerBeanInfo: Sampler GUI for abstract class that realizes the GUI of the parent 
+ * class for all SSH samplers in this package
+ */
 public abstract class AbstractSSHMainSamplerBeanInfo extends BeanInfoSupport {
 	public AbstractSSHMainSamplerBeanInfo(Class<? extends AbstractSSHMainSampler> clazz) {
 		super(clazz);

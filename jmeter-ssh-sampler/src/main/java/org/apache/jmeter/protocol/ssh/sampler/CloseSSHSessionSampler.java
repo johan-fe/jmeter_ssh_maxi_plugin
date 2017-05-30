@@ -17,24 +17,19 @@
  */
 package org.apache.jmeter.protocol.ssh.sampler;
 
-import org.apache.jmeter.samplers.AbstractSampler;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.testbeans.TestBean;
 
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import com.jcraft.jsch.Session;
 
 /**
- * Close ssh session sampler
+ * Close ssh session sampler, This sampler is used to close a persistent SSH session
  */
 public class CloseSSHSessionSampler extends AbstractSSHMainSampler {
-	/**
-	 * init
-	 */
+
 	private static final long serialVersionUID = 2954989469756886583L;
 
 	private static final Logger log = LoggingManager.getLoggerForClass();
@@ -112,7 +107,7 @@ public class CloseSSHSessionSampler extends AbstractSSHMainSampler {
 		} catch (Throwable e) {
 			log.error("SSH dump session error", e);
 		} finally {
-
+			// ...
 		}
 
 	}

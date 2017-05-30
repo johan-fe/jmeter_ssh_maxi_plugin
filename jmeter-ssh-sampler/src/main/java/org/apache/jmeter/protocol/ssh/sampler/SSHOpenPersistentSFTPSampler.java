@@ -37,10 +37,13 @@ import com.jcraft.jsch.ChannelShell;
  * limitations under the License.
  *
  */
+
+/**
+ * SSHOpenPersistentSFTPSampler Sampler that opens a persistent SFTP channel over which SFTP commands can be sent 
+ * to the server. The SFTP channel is established over a persistent SSH connection
+ */
 public class SSHOpenPersistentSFTPSampler extends AbstractSSHMainSampler {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1098L;
 	private String connectionName = "";
 	private String sftpSessionName = "";

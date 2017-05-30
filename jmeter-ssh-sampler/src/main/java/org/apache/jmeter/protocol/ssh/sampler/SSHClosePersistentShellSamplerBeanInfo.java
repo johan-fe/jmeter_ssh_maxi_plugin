@@ -18,7 +18,10 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
-
+/**
+ * This class is used to realize the GUI to close a persistent Shell channel that
+ * was previously established over a persistent SSH session
+ */
 public class SSHClosePersistentShellSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
 	// class must have a public constructor to become visible in the menu
 	public SSHClosePersistentShellSamplerBeanInfo() {

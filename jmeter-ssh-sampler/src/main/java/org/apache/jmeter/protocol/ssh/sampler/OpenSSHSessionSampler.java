@@ -17,13 +17,7 @@
  */
 package org.apache.jmeter.protocol.ssh.sampler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-
-//import org.apache.jmeter.protocol.ssh.sampler.OpenSSHSessionSampler.SSHSamplerUserInfo;
-import org.apache.jmeter.samplers.AbstractSampler;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -32,19 +26,16 @@ import org.apache.jmeter.testbeans.TestBean;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 
 /**
- * Dump ssh session sampler
+ * Open SSH session sampler, This sampler establishes a persistent named SSH
+ * session towards the SSH server
  */
 public class OpenSSHSessionSampler extends AbstractSSHMainSampler implements TestBean {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2954789087756886583L;
 	private static final Logger log = LoggingManager.getLoggerForClass();
 	private String hostname = "";
@@ -142,12 +133,12 @@ public class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Tes
 	@Override
 	public SampleResult sample(Entry en) {
 		SampleResult res = new SampleResult();
-		;
+
 		String samplerData = "Open SSH connection (" + this.getUsername() + "@" + this.getHostname() + ") with name: "
 				+ this.connectionName;
-		String responseData = "";
+		// String responseData = "";
 		String responseMessage = "";
-		String responseCode = "";
+		// String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
 		res.sampleStart();
@@ -329,6 +320,7 @@ public class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Tes
 			this.owner = owner;
 		}
 
+		@Override
 		public String getPassphrase() {
 			String retval = owner.getPassphrase();
 			if ((retval.length() == 0) && !useKeyFile()) {
@@ -337,6 +329,7 @@ public class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Tes
 			return retval;
 		}
 
+		@Override
 		public String getPassword() {
 			String retval = owner.getPassword();
 			if (retval.length() == 0) {
@@ -346,18 +339,22 @@ public class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Tes
 		}
 
 		/* Prompts/show should be taken care of by Jmeter */
+		@Override
 		public boolean promptPassword(String message) {
 			return true;
 		}
 
+		@Override
 		public boolean promptPassphrase(String message) {
 			return true;
 		}
 
+		@Override
 		public boolean promptYesNo(String message) {
 			return true;
 		}
 
+		@Override
 		public void showMessage(String message) {
 			return;
 		}
@@ -378,10 +375,9 @@ public class OpenSSHSessionSampler extends AbstractSSHMainSampler implements Tes
 		public boolean hasConnectionName() {
 			if (owner.getConnectionName() != null) {
 				return owner.getConnectionName().length() > 0;
-			} else {
-				return false;
-
 			}
+			return false;
+
 		}
 	} /* Class SSHSamplerUserInfo */
 

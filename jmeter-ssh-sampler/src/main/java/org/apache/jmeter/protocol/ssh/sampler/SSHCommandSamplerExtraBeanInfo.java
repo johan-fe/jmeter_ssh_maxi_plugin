@@ -18,7 +18,10 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
-
+/**
+ * GUI for the SSH Sampler that collects single lines of output and returns them as samples. It's using an exec channel
+ * to send the commands and receive the return values
+ */
 public class SSHCommandSamplerExtraBeanInfo extends AbstractSSHSamplerExtraBeanInfo {
 
 	public SSHCommandSamplerExtraBeanInfo() {

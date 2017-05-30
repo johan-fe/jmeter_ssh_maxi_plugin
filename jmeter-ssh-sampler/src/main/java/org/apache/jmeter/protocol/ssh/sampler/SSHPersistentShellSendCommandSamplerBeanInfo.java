@@ -18,7 +18,10 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
-
+/**
+ * GUI for SSHPersistentShellSendCommandSampler Sampler that sends shell commands over a persistent Shell channel
+ * to the server. The Shell channel is established by another sampler over a persistent SSH connection
+ */
 public class SSHPersistentShellSendCommandSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
 	// class must have a public constructor to become visible in the menu
 	public SSHPersistentShellSendCommandSamplerBeanInfo() {

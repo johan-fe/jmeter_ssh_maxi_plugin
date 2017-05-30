@@ -29,12 +29,12 @@ import java.util.List;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testbeans.TestBean;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+//import org.apache.jorphan.logging.LoggingManager;
+//import org.apache.log.Logger;
 
 /**
- * SSH Sampler that collects single lines of output and returns them as samples.
- *
+ * Send SFTP Command SSH session sampler, This sampler sends an SFTP command to an SFTP channel on 
+ * a persistent SSH session
  */
 public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler implements TestBean {
 
@@ -42,7 +42,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	 * 
 	 */
 	private static final long serialVersionUID = 9180249991509027397L;
-	private static final Logger log = LoggingManager.getLoggerForClass();
+//	private static final Logger log = LoggingManager.getLoggerForClass();
 	public static final String SFTP_COMMAND_GET = "get";
 	public static final String SFTP_COMMAND_PUT = "put";
 	public static final String SFTP_COMMAND_RM = "rm";
@@ -63,7 +63,8 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	}
 
 	/**
-	 * Returns last line of output from the command
+	 * function to get last line as sampler label
+	 * @return last line of output from the command
 	 */
 	public String getSamplerLabel() {
 		StringBuilder sb = new StringBuilder(getName());
@@ -261,17 +262,14 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	 * Performance could be likely improved by reusing a single channel, though
 	 * the gains would be minimal compared to sharing the Session.
 	 * 
-	 * @param session
-	 *            Session in which to create the channel
-	 * @param command
-	 *            Command to send to the server for execution
+	 * @param channel channel on which the sftp command is sent
 	 * @return All standard output from the command
 	 * @throws JSchException
 	 * @throws SftpException
 	 * @throws IOException
 	 */
 	private String doFileTransfer(ChannelSftp channel, String src, String dst, SampleResult res)
-			throws JSchException, SftpException, IOException {
+			throws  SftpException, IOException {
 		StringBuilder sb = new StringBuilder("");
 		// ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
 		// channel.connect();

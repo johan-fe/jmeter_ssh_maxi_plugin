@@ -29,8 +29,8 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- * SSH Sampler that collects single lines of output and returns them as samples.
- *
+ * SSH Sampler that collects single lines of output and returns them as samples. It's using an exec channel
+ * to send the commands and receive the return values
  */
 public class SSHCommandSamplerExtra extends AbstractSSHSamplerExtra {
 

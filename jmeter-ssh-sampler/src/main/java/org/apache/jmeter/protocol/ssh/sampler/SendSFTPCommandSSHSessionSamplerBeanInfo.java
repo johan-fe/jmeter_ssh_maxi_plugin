@@ -18,7 +18,10 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
-
+/**
+ * GUI for send SFTP Command SSH session sampler, This sampler realizes the GUI for sending an SFTP command to
+ * an SFTP channel on a persistent SSH session
+ */
 public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
 
 	public SendSFTPCommandSSHSessionSamplerBeanInfo() {

@@ -18,25 +18,18 @@
 package org.apache.jmeter.protocol.ssh.sampler;
 
 import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.ChannelShell;
-import com.jcraft.jsch.Session;
 
 import jline.internal.Log;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
+//import org.apache.jorphan.logging.LoggingManager;
+//import org.apache.log.Logger;
+/**
+ * This class is used to store the information about a persistent SFTP channel that
+ * is established over a persistent SSH session
+ */
 public class SshChannelSFTP {
-	private static final Logger log = LoggingManager.getLoggerForClass();
+//	private static final Logger log = LoggingManager.getLoggerForClass();
 	ChannelSftp cSFTP = null;
 
 	public void setChannelSftp(ChannelSftp cs) {

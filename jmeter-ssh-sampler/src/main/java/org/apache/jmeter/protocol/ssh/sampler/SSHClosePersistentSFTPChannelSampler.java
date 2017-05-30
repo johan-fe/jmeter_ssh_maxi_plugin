@@ -17,17 +17,14 @@
  */
 package org.apache.jmeter.protocol.ssh.sampler;
 
-import java.io.IOException;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.ChannelShell;
+/**
+ * This class is used to close a persistent SFTP channel that
+ * was previously established over a persistent SSH session
+ */
 
 public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler {
 	/**
@@ -48,9 +45,9 @@ public class SSHClosePersistentSFTPChannelSampler extends AbstractSSHMainSampler
 		res.sampleStart();
 
 		String samplerData = "Close SFTP " + this.sftpSessionName + " on " + this.connectionName;
-		String responseData = "";
+		//String responseData = "";
 		String responseMessage = "";
-		String responseCode = "";
+		//String responseCode = "";
 		res.setDataType(SampleResult.TEXT);
 		res.setContentType("text/plain");
 

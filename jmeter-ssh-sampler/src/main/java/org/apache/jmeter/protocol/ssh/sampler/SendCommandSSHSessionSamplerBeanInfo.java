@@ -19,8 +19,6 @@ package org.apache.jmeter.protocol.ssh.sampler;
 
 import java.beans.PropertyDescriptor;
 
-import org.apache.jmeter.testbeans.BeanInfoSupport;
-import org.apache.jmeter.testbeans.TestBean;
 
 //import org.apache.jmeter.testbeans.gui.FileEditor;
 //public abstract class BeanInfoSupport
@@ -40,7 +38,9 @@ import org.apache.jmeter.testbeans.TestBean;
 //The resource bundle will be stored as the bean descriptor's "resourceBundle"
 //attribute, so that it can be used for further localization. 
 //TestBeanGUI, for example, uses it to obtain the group's display names from properties groupName.displayName.
-
+/**
+ * GUI for Send COmmand SSH session sampler, This sampler sends a command on an exec channel on a peristent ssh session
+ */
 public class SendCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSamplerBeanInfo {
 	// class must have a public constructor to become visible in the menu
 	// public SendCommandSSHSessionSamplerBeanInfo(Class<? extends
