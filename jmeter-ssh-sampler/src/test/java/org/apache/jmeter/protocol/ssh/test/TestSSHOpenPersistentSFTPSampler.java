@@ -24,11 +24,7 @@ import java.util.logging.Logger;
 
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
 import org.apache.jmeter.protocol.ssh.sampler.OpenSSHSessionSampler;
-import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
 import org.apache.jmeter.protocol.ssh.sampler.SSHOpenPersistentSFTPSampler;
-import org.apache.jmeter.protocol.ssh.sampler.SendSFTPCommandSSHSessionSampler;
-import org.apache.jmeter.protocol.ssh.sampler.SshChannelSFTP;
-import org.apache.jmeter.protocol.ssh.sampler.SshSession;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -40,7 +36,7 @@ import jline.internal.Log;
 
 public class TestSSHOpenPersistentSFTPSampler {
 	private final static Logger LOG = Logger.getLogger(TestSSHOpenPersistentSFTPSampler.class.getName());
-	private OpenSSHSessionSampler instance = null;
+	protected OpenSSHSessionSampler instance;
 	static private Thread sshts = null;
 
 	public TestSSHOpenPersistentSFTPSampler() {
@@ -63,7 +59,7 @@ public class TestSSHOpenPersistentSFTPSampler {
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		sshts.interrupt();
 
 	}
@@ -71,7 +67,7 @@ public class TestSSHOpenPersistentSFTPSampler {
 	// When writing tests, it is common to find that several tests need similar
 	// objects created before they can run
 	@Before
-	public void setUp() throws Exception {
+	public void setUp()  {
 		// super.setUp();
 
 		this.instance = new OpenSSHSessionSampler();
@@ -82,7 +78,7 @@ public class TestSSHOpenPersistentSFTPSampler {
 	// If you allocate external resources in a Before method you need to release
 	// them after the test runs.
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		// super.tearDown();
 		this.instance = null;// close connection and cleanup of globaldata in
 								// test itself
@@ -99,7 +95,7 @@ public class TestSSHOpenPersistentSFTPSampler {
 		sftp.setConnectionName("CONN1X");
 		sftp.setSftpSessionName("SESS1X");
 		sr = sftp.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 1", errorCount == 1);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());

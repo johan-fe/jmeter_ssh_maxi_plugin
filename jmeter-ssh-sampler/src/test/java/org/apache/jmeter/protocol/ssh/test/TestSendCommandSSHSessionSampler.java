@@ -96,7 +96,7 @@ public class TestSendCommandSSHSessionSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -120,7 +120,7 @@ public class TestSendCommandSSHSessionSampler {
 		sender.setUseReturnCode(true);
 		LOG.log(Level.INFO, "calling command sender");
 		SampleResult sr2 = sender.sample(null);
-		Integer errorCount2 = sr2.getErrorCount();
+		int errorCount2 = sr2.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount2 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount2));
 		LOG.log(Level.INFO, "content type:" + sr2.getContentType());
@@ -173,7 +173,7 @@ public class TestSendCommandSSHSessionSampler {
 		sender.setUseReturnCode(true);
 		LOG.log(Level.INFO, "calling command sender");
 		SampleResult sr2 = sender.sample(null);
-		Integer errorCount2 = sr2.getErrorCount();
+		int errorCount2 = sr2.getErrorCount();
 		assertTrue("ErrorCount is 1", errorCount2 == 1);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount2));
 		LOG.log(Level.INFO, "content type:" + sr2.getContentType());
@@ -208,7 +208,7 @@ public class TestSendCommandSSHSessionSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -230,7 +230,7 @@ public class TestSendCommandSSHSessionSampler {
 		sender.setUseReturnCode(true);
 		LOG.log(Level.INFO, "calling command sender");
 		SampleResult sr2 = sender.sample(null);
-		Integer errorCount2 = sr2.getErrorCount();
+		int errorCount2 = sr2.getErrorCount();
 		assertTrue("ErrorCount is 1", errorCount2 == 1);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount2));
 		LOG.log(Level.INFO, "content type:" + sr2.getContentType());
@@ -277,7 +277,7 @@ public class TestSendCommandSSHSessionSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 0", errorCount == 0);
 
@@ -303,7 +303,7 @@ public class TestSendCommandSSHSessionSampler {
 
 		LOG.log(Level.INFO, "calling command sender");
 		SampleResult sr2 = sender.sample(null);
-		Integer errorCount2 = sr2.getErrorCount();
+		int errorCount2 = sr2.getErrorCount();
 		LOG.log(Level.INFO, "errorcount2:" + Integer.toString(errorCount2));
 		assertTrue("ErrorCount is 0", errorCount2 == 0);
 

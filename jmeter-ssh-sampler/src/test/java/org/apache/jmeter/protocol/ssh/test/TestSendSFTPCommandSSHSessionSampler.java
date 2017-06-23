@@ -102,7 +102,7 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		this.instance.setPort(5222);
 		this.instance.setUsername("johan");
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -220,7 +220,7 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		this.instance.setPort(5222);
 		this.instance.setUsername("johan");
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -280,15 +280,8 @@ public class TestSendSFTPCommandSSHSessionSampler {
 		SshSession sess = GlobalDataSsh.GetSessionByName("CONN1");
 		assertTrue("session is not null", sess != null);
 		SshChannelSFTP csftp = sess.getChannelSftpByName("SESS1");
-		assertTrue("csftp is not null", csftp == null);
-		if (csftp != null) {
-			try {
-				csftp.disconnect(); // closes all shells
-			} catch (Exception e) {
-				LOG.log(Level.INFO, "disconnect failed for csftp");
-			}
-			LOG.log(Level.INFO, "removing csftp session GlobalDataSsh from CONN1");
-		}
+		assertTrue("csftp is null", csftp == null);
+
 		if (sess != null) {
 			try {
 				sess.disconnect(); // closes all shells

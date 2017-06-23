@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import org.apache.sshd.server.PasswordAuthenticator;
 import org.apache.sshd.server.session.ServerSession;
 
+
 /**
  * @author Maxim Kalina
  * @version $Id$

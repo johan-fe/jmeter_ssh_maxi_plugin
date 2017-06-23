@@ -102,7 +102,7 @@ public class TestOpenSSHSessionSampler {
 		this.instance.setPort(5222);
 		this.instance.setUsername("johan");
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -151,7 +151,7 @@ public class TestOpenSSHSessionSampler {
 		this.instance.setPort(5222);
 		this.instance.setUsername("johan");
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 0", errorCount == 1);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());

@@ -233,7 +233,7 @@ public class TestDumpsessionSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -263,7 +263,7 @@ public class TestDumpsessionSampler {
 		instance2.setUseTty(false);
 		instance2.setCloseConnection(false);
 		SampleResult sr4 = instance2.sample(null);
-		Integer errorCount4 = sr4.getErrorCount();
+		int errorCount4 = sr4.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount4 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount4));
 		LOG.log(Level.INFO, "content type:" + sr4.getContentType());
@@ -284,7 +284,7 @@ public class TestDumpsessionSampler {
 		sender.setUseReturnCode(true);
 		LOG.log(Level.INFO, "calling command sender");
 		SampleResult sr2 = sender.sample(null);
-		Integer errorCount2 = sr2.getErrorCount();
+		int errorCount2 = sr2.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount2 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount2));
 		LOG.log(Level.INFO, "content type:" + sr2.getContentType());
@@ -307,7 +307,7 @@ public class TestDumpsessionSampler {
 
 		LOG.log(Level.INFO, "calling session dump sampler");
 		SampleResult sr3 = dumper.sample(null);
-		Integer errorCount3 = sr3.getErrorCount();
+		int errorCount3 = sr3.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount3 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount3));
 		LOG.log(Level.INFO, "content type:" + sr3.getContentType());

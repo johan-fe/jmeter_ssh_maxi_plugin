@@ -34,12 +34,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.jcraft.jsch.Session;
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsEqual;
 import jline.internal.Log;
-import org.junit.Assert;
+
+
 
 public class TestSSHClosePresistenShellSampler {
 	private final static Logger LOG = Logger.getLogger(TestSSHClosePresistenShellSampler.class.getName());
@@ -66,7 +63,7 @@ public class TestSSHClosePresistenShellSampler {
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		sshts.interrupt();
 
 	}
@@ -74,7 +71,7 @@ public class TestSSHClosePresistenShellSampler {
 	// When writing tests, it is common to find that several tests need similar
 	// objects created before they can run
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		// super.setUp();
 
 		this.instance = new SSHCommandSamplerExtra();
@@ -85,7 +82,7 @@ public class TestSSHClosePresistenShellSampler {
 	// If you allocate external resources in a Before method you need to release
 	// them after the test runs.
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown()  {
 		// super.tearDown();
 		this.instance = null;// close connection and cleanup of globaldata in
 								// test itself
@@ -109,7 +106,7 @@ public class TestSSHClosePresistenShellSampler {
 		this.instance.setUseTty(false);
 		this.instance.setCloseConnection(false);
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -205,6 +202,7 @@ public class TestSSHClosePresistenShellSampler {
 			try {
 				sess.disconnect(); // closes all shells
 			} catch (Exception e) {
+				LOG.log(Level.WARNING ,"failed to disconnect");
 			}
 			LOG.log(Level.INFO, "removing ssh session GlobalDataSsh from CONN1");
 

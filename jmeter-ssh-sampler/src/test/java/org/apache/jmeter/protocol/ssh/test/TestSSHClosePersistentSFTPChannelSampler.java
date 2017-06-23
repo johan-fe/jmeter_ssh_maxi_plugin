@@ -83,7 +83,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 	// If you allocate external resources in a Before method you need to release
 	// them after the test runs.
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown()  {
 		// super.tearDown();
 		this.instance = null;// close connection and cleanup of globaldata in
 								// test itself
@@ -91,6 +91,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 	// The Test annotation tells JUnit that the public void method to which it
 	// is attached can be run as a test case.
 
+	@SuppressWarnings("unused")
 	@Test
 	public void testSSHClosePersistentSFTPChannelSampler() {
 		this.instance = new OpenSSHSessionSampler();
@@ -101,7 +102,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 		this.instance.setPort(5222);
 		this.instance.setUsername("johan");
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -209,7 +210,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 		sftp3.setConnectionName("CONN1");
 		sftp3.setSftpSessionName("SESS1");
 		SampleResult sr = sftp3.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 1", errorCount == 1);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -233,6 +234,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 				responseSamplerData.equals("Close SFTP SESS1 on CONN1"));
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	public void testjavaSSHClosePersistentSFTPChannelSamplerNotExistingSFTPShell() {
 		this.instance = new OpenSSHSessionSampler();
@@ -243,7 +245,7 @@ public class TestSSHClosePersistentSFTPChannelSampler {
 		this.instance.setPort(5222);
 		this.instance.setUsername("johan");
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());

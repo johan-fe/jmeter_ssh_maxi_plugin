@@ -17,21 +17,18 @@
  */
 package org.apache.jmeter.protocol.ssh.test;
 
+
 //import java.security.Security;
 import java.lang.System;
 import java.lang.Thread;
 import org.apache.sshd.common.file.virtualfs.VirtualFileSystemFactory;
 import java.net.URL;
 import java.net.URLClassLoader;
-//import java.security.Provider;
-//import java.security.Security;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//import java.util.logging.Logger;
 import java.util.List;
-
-//import org.apache.log.Logger;
 import org.apache.sshd.SshServer;
 import org.apache.sshd.common.KeyExchange;
 import org.apache.sshd.common.NamedFactory;
@@ -48,6 +45,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 public class SSHTestServer extends Thread {
 	private static final Logger log = Logger.getLogger(SSHTestServer.class.getName());

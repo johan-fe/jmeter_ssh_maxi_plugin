@@ -23,27 +23,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.jmeter.protocol.ssh.sampler.GlobalDataSsh;
-//import org.apache.jmeter.control.LoopController;
-//import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.protocol.ssh.sampler.SSHCommandSamplerExtra;
 import org.apache.jmeter.protocol.ssh.sampler.SSHOpenPersistentShellSampler;
 import org.apache.jmeter.protocol.ssh.sampler.SshSession;
-//import org.apache.jmeter.protocol.ssh.sampler.SendCommandSSHSessionSamplerBeanInfo;
-//import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.jcraft.jsch.Session;
-
-//import org.junit.runner.RunWith;
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsEqual;
 import jline.internal.Log;
-import org.junit.Assert;
+
 
 public class TestSSHOpenPresistenShellSampler {
 	private final static Logger LOG = Logger.getLogger(TestSSHOpenPresistenShellSampler.class.getName());
@@ -69,7 +59,7 @@ public class TestSSHOpenPresistenShellSampler {
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		sshts.interrupt();
 
 	}
@@ -77,7 +67,7 @@ public class TestSSHOpenPresistenShellSampler {
 	// When writing tests, it is common to find that several tests need similar
 	// objects created before they can run
 	@Before
-	public void setUp() throws Exception {
+	public void setUp()  {
 		// super.setUp();
 
 		this.instance = new SSHCommandSamplerExtra();
@@ -88,7 +78,7 @@ public class TestSSHOpenPresistenShellSampler {
 	// If you allocate external resources in a Before method you need to release
 	// them after the test runs.
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		// super.tearDown();
 		this.instance = null;// close connection and cleanup of globaldata in
 								// test itself
@@ -112,7 +102,7 @@ public class TestSSHOpenPresistenShellSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -180,6 +170,7 @@ public class TestSSHOpenPresistenShellSampler {
 				sess.disconnect();// disconnecting all sessions closes as well
 									// all channelshells
 			} catch (Exception e) {
+				LOG.log(Level.WARNING, "failed to disconnect");
 			}
 			LOG.log(Level.INFO, "removing ssh session GlobalDataSsh from CONN1");
 

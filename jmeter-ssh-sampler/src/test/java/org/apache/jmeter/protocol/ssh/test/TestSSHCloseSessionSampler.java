@@ -34,10 +34,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.jcraft.jsch.Session;
-
 import jline.internal.Log;
+
 
 public class TestSSHCloseSessionSampler {
 	private final static Logger LOG = Logger.getLogger(TestSSHCloseSessionSampler.class.getName());
@@ -61,19 +59,19 @@ public class TestSSHCloseSessionSampler {
 	// BeforeClass method you need to release them after all the tests in the
 	// class have run.
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		sshts.interrupt();
 
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp()  {
 		// this.instance = new SSHCommandSamplerExtra(); // for some reason this
 		// must be there or else it fails
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown()  {
 		// super.tearDown();
 		this.instance = null;// close connection and cleanup of globaldata in
 								// test itself
@@ -96,7 +94,7 @@ public class TestSSHCloseSessionSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -120,7 +118,7 @@ public class TestSSHCloseSessionSampler {
 		sender.setUseReturnCode(true);
 		LOG.log(Level.INFO, "calling command sender");
 		SampleResult sr2 = sender.sample(null);
-		Integer errorCount2 = sr2.getErrorCount();
+		int errorCount2 = sr2.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount2 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount2));
 		LOG.log(Level.INFO, "content type:" + sr2.getContentType());
@@ -140,7 +138,7 @@ public class TestSSHCloseSessionSampler {
 		CloseSSHSessionSampler css = new CloseSSHSessionSampler();
 		css.setConnectionName("CONNECT1");
 		SampleResult sr5 = css.sample(null);
-		Integer errorCount5 = sr5.getErrorCount();
+		int errorCount5 = sr5.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount5 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount5));
 		LOG.log(Level.INFO, "content type:" + sr5.getContentType());
@@ -166,9 +164,9 @@ public class TestSSHCloseSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				LOG.log(Level.WARNING, "failed to disconnect");
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1,session not correctly closed");
-
 			GlobalDataSsh.removeSession("CONNECT1");
 		}
 		assertTrue("connection CONNECT1 sucessfully closed", sess == null);
@@ -191,7 +189,7 @@ public class TestSSHCloseSessionSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -222,7 +220,7 @@ public class TestSSHCloseSessionSampler {
 		instance2.setUseTty(false);
 		instance2.setCloseConnection(false);
 		SampleResult sr4 = instance2.sample(null);
-		Integer errorCount4 = sr4.getErrorCount();
+		int errorCount4 = sr4.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount4 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount4));
 		LOG.log(Level.INFO, "content type:" + sr4.getContentType());
@@ -243,7 +241,7 @@ public class TestSSHCloseSessionSampler {
 		sender.setUseReturnCode(true);
 		LOG.log(Level.INFO, "calling command sender");
 		SampleResult sr2 = sender.sample(null);
-		Integer errorCount2 = sr2.getErrorCount();
+		int errorCount2 = sr2.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount2 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount2));
 		LOG.log(Level.INFO, "content type:" + sr2.getContentType());
@@ -265,7 +263,7 @@ public class TestSSHCloseSessionSampler {
 
 		LOG.log(Level.INFO, "calling session dump sampler");
 		SampleResult sr3 = dumper.sample(null);
-		Integer errorCount3 = sr3.getErrorCount();
+		int errorCount3 = sr3.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount3 == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount3));
 		LOG.log(Level.INFO, "content type:" + sr3.getContentType());
@@ -283,7 +281,7 @@ public class TestSSHCloseSessionSampler {
 		CloseSSHSessionSampler css = new CloseSSHSessionSampler();
 		css.setConnectionName("CONNECT1");
 		SampleResult sr5 = css.sample(null);
-		Integer errorCount5 = sr5.getErrorCount();
+		int errorCount5 = sr5.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount5));
 		assertTrue("ErrorCount is 0", errorCount5 == 0);
 		LOG.log(Level.INFO, "content type:" + sr5.getContentType());
@@ -305,7 +303,7 @@ public class TestSSHCloseSessionSampler {
 		CloseSSHSessionSampler css2 = new CloseSSHSessionSampler();
 		css2.setConnectionName("CONNECT2");
 		SampleResult sr6 = css2.sample(null);
-		Integer errorCount6 = sr6.getErrorCount();
+		int errorCount6 = sr6.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount6));
 		assertTrue("ErrorCount is 0", errorCount6 == 0);
 		LOG.log(Level.INFO, "content type:" + sr6.getContentType());
@@ -331,6 +329,7 @@ public class TestSSHCloseSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				LOG.log(Level.WARNING, "failed to disconnect");
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT1,session not correctly closed");
 
@@ -344,6 +343,7 @@ public class TestSSHCloseSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				LOG.log(Level.WARNING, "failed to disconnect");
 			}
 			LOG.log(Level.INFO, "removing session GlobalDataSsh from CONNECT2, session not closed correctly");
 
@@ -359,7 +359,7 @@ public class TestSSHCloseSessionSampler {
 		CloseSSHSessionSampler css = new CloseSSHSessionSampler();
 		css.setConnectionName("");
 		SampleResult sr5 = css.sample(null);
-		Integer errorCount5 = sr5.getErrorCount();
+		int errorCount5 = sr5.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount5));
 		assertTrue("ErrorCount is 1", errorCount5 == 1);
 		LOG.log(Level.INFO, "content type:" + sr5.getContentType());
@@ -387,7 +387,7 @@ public class TestSSHCloseSessionSampler {
 		CloseSSHSessionSampler css = new CloseSSHSessionSampler();
 		css.setConnectionName("CCCC");
 		SampleResult sr5 = css.sample(null);
-		Integer errorCount5 = sr5.getErrorCount();
+		int errorCount5 = sr5.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount5));
 		assertTrue("ErrorCount is 1", errorCount5 == 1);
 		LOG.log(Level.INFO, "content type:" + sr5.getContentType());
@@ -424,7 +424,7 @@ public class TestSSHCloseSessionSampler {
 		this.instance.setCloseConnection(false);
 
 		SampleResult sr = this.instance.sample(null);
-		Integer errorCount = sr.getErrorCount();
+		int errorCount = sr.getErrorCount();
 		assertTrue("ErrorCount is 0", errorCount == 0);
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount));
 		LOG.log(Level.INFO, "content type:" + sr.getContentType());
@@ -447,6 +447,7 @@ public class TestSSHCloseSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				LOG.log(Level.WARNING, "failed to disconnect");
 			}
 			LOG.log(Level.INFO, "GlobalDataSsh from CONNECT1,session disconnected");
 
@@ -455,7 +456,7 @@ public class TestSSHCloseSessionSampler {
 		CloseSSHSessionSampler css = new CloseSSHSessionSampler();
 		css.setConnectionName("CONNECT1");
 		SampleResult sr5 = css.sample(null);
-		Integer errorCount5 = sr5.getErrorCount();
+		int errorCount5 = sr5.getErrorCount();
 		LOG.log(Level.INFO, "errorcount:" + Integer.toString(errorCount5));
 		assertTrue("ErrorCount is 0", errorCount5 == 0);
 		LOG.log(Level.INFO, "content type:" + sr5.getContentType());
@@ -481,6 +482,7 @@ public class TestSSHCloseSessionSampler {
 			try {
 				sess.disconnect();
 			} catch (Exception e) {
+				LOG.log(Level.WARNING, "failed to disconnect");
 			}
 			LOG.log(Level.INFO, "GlobalDataSsh from CONNECT1,session disconnected");
 			GlobalDataSsh.removeSession("CONNECT1");
