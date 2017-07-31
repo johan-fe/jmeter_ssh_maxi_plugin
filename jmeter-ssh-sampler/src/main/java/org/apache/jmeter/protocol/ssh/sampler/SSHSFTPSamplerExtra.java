@@ -20,6 +20,7 @@ package org.apache.jmeter.protocol.ssh.sampler;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.SftpException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,7 +46,8 @@ public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 	public static final String SFTP_COMMAND_RM = "rm";
 	public static final String SFTP_COMMAND_RMDIR = "rmdir";
 	public static final String SFTP_COMMAND_LS = "ls";
-	public static final String SFTP_COMMAND_RENAME = "ls";
+	public static final String SFTP_COMMAND_CD ="cd";
+	public static final String SFTP_COMMAND_RENAME="rename";
 	private String source;
 	private String destination;
 	private String action;

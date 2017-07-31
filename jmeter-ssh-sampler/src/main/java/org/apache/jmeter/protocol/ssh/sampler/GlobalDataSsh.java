@@ -27,6 +27,7 @@ import org.apache.log.Logger;
 
 import java.lang.StringBuilder;
 
+
 //create enum as a singleton to initialize global data
 /**
  * Class to store the peristent ssh connections and peristent channels.
@@ -36,7 +37,7 @@ public enum GlobalDataSsh {
 	// using concurrent since synchronized may throw exception when iterating
 	// over it
 	static ConcurrentHashMap<String, SshSession> sessionList = new ConcurrentHashMap<String, SshSession>();
-	static Long connection_counter = 1L;
+	static long connection_counter = 1L;
 	private static final Logger log = LoggingManager.getLoggerForClass();
 
 	public static void addSession(String connName, SshSession ses) {
@@ -66,7 +67,7 @@ public enum GlobalDataSsh {
 		StringBuilder sb = new StringBuilder("CONNECTION_");
 		Date now = new Date();
 		Long longTime = new Long(now.getTime() / 1000);
-		sb.append(Long.toString(longTime)).append("_").append(Long.toString(connection_counter));
+		sb.append(longTime.toString()).append("_").append(Long.toString(connection_counter));
 		connection_counter++;
 		return sb.toString();
 	}

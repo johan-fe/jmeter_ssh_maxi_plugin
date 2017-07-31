@@ -42,7 +42,8 @@ public class SSHSFTPSamplerExtraBeanInfo extends AbstractSSHSamplerExtraBeanInfo
 		p.setValue(TAGS,
 				new String[] { SSHSFTPSamplerExtra.SFTP_COMMAND_GET, SSHSFTPSamplerExtra.SFTP_COMMAND_PUT,
 						SSHSFTPSamplerExtra.SFTP_COMMAND_RM, SSHSFTPSamplerExtra.SFTP_COMMAND_RMDIR,
-						SSHSFTPSamplerExtra.SFTP_COMMAND_LS });
+						SSHSFTPSamplerExtra.SFTP_COMMAND_RENAME,SSHSFTPSamplerExtra.SFTP_COMMAND_LS
+						,SSHSFTPSamplerExtra.SFTP_COMMAND_CD });
 
 		p = property("source"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);

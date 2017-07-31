@@ -42,9 +42,15 @@ public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSam
 		p.setValue(NOT_OTHER, Boolean.TRUE);
 		p.setValue(DEFAULT, "get");
 		p.setValue(TAGS,
-				new String[] { SSHSFTPSamplerExtra.SFTP_COMMAND_GET, SSHSFTPSamplerExtra.SFTP_COMMAND_PUT,
-						SSHSFTPSamplerExtra.SFTP_COMMAND_RM, SSHSFTPSamplerExtra.SFTP_COMMAND_RMDIR,
-						SSHSFTPSamplerExtra.SFTP_COMMAND_LS });
+				new String[] { SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_GET, SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_PUT,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_RM, SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_RMDIR,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LS, SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LLS,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LLSL,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_CD,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_PWD,SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LPWD,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LCD,SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_MKDIR,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LMKDIR,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_STAT, SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LSTAT});
 
 		p = property("sftpSessionName"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
