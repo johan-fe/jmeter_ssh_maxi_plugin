@@ -77,11 +77,20 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	public static final String SFTP_COMMAND_LSTAT = "lstat";
 	public static final String SFTP_COMMAND_LLS = "local ls";
 	public static final String SFTP_COMMAND_LMKDIR = "local mkdir";
+	public static final String SFTP_COMMAND_HRDL = "hard link";
+	public static final String SFTP_COMMAND_VERS = "get server and client version";
+	public static final String SFTP_COMMAND_CHMOD = "chmod";
+	public static final String SFTP_COMMAND_CHGRP = "chgrp";
+	public static final String SFTP_COMMAND_CHOWN = "chown";
+	
 	private String source;
 	private String destination;
 	private String action;
 	private String sftpSessionName = "";
 	private String connectionName = "";
+	private int groupId=0;
+	private int userId=0;
+	private int permissions=755;
 	private boolean printFile = true;
 	private boolean useTty;
 	// private String resultEncoding = "UTF-8";
@@ -214,7 +223,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 
 		try {
 			// execute the sftp command
-			responseData = this.doFileTransfer(cSftp.getChannelSftp(), source, destination, res);
+			responseData = this.doFileTransfer(cSftp.getChannelSftp(), source, destination,userId,groupId,permissions, res);
 
 		} catch (Exception e) {
 			byte[] responseDataBytes2 = {};
@@ -298,7 +307,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	 * @throws SftpException
 	 * @throws IOException
 	 */
-	private String doFileTransfer(ChannelSftp channel, String src, String dst, SampleResult res)
+	private String doFileTransfer(ChannelSftp channel, String src, String dst,int uid, int gid , int permissions ,SampleResult res)
 			throws SftpException, IOException, Exception {
 		StringBuilder sb = new StringBuilder("");
 		// ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
@@ -353,15 +362,15 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			sb.append("Created remote directory " + src);
 		} else if (SFTP_COMMAND_STAT.equals(action)) {
 			SftpATTRS sftpAttrs = channel.stat(src);
-			int permissions = sftpAttrs.getPermissions();
+			int permissionsAttr = sftpAttrs.getPermissions();
 			String aTimeString = sftpAttrs.getAtimeString();
 			String extendedPermissions[] = sftpAttrs.getExtended();
 			int flags = sftpAttrs.getFlags();
-			int gid = sftpAttrs.getGId();
+			int gidAttr = sftpAttrs.getGId();
 			String mTimeString = sftpAttrs.getMtimeString();
 			String permissionString = sftpAttrs.getPermissionsString();
 			long size = sftpAttrs.getSize();
-			int uid = sftpAttrs.getUId();
+			int uidAttr = sftpAttrs.getUId();
 			int hashcode = sftpAttrs.hashCode();
 			boolean isBlk = sftpAttrs.isBlk();
 			boolean isChr = sftpAttrs.isChr();
@@ -371,13 +380,13 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			boolean isReg = sftpAttrs.isReg();
 			boolean isSock = sftpAttrs.isSock();
 			sb.append(sftpAttrs.toString()).append("\n\n");
-			sb.append("permissions: ").append(permissionString).append(" (").append(permissions).append(")")
+			sb.append("permissions: ").append(permissionString).append(" (").append(permissionsAttr).append(")")
 					.append("\n");
 			sb.append("atime: ").append(aTimeString).append("\n");
 			sb.append("mtime: ").append(mTimeString).append("\n");
 			sb.append("size: ").append(size).append("\n");
-			sb.append("gid: ").append(gid).append("\n");
-			sb.append("uid: ").append(uid).append("\n");
+			sb.append("gid: ").append(gidAttr).append("\n");
+			sb.append("uid: ").append(uidAttr).append("\n");
 			sb.append("flags: ").append(flags).append("\n");
 			sb.append("is block device: ").append(isBlk).append("\n");
 			sb.append("is character device: ").append(isChr).append("\n");
@@ -419,15 +428,15 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 		} else if (SFTP_COMMAND_LSTAT.equals(action)) {
 
 			SftpATTRS sftpAttrs = channel.lstat(src);
-			int permissions = sftpAttrs.getPermissions();
+			int permissionsAttr = sftpAttrs.getPermissions();
 			String aTimeString = sftpAttrs.getAtimeString();
 			String extendedPermissions[] = sftpAttrs.getExtended();
 			int flags = sftpAttrs.getFlags();
-			int gid = sftpAttrs.getGId();
+			int gidAttr = sftpAttrs.getGId();
 			String mTimeString = sftpAttrs.getMtimeString();
 			String permissionString = sftpAttrs.getPermissionsString();
 			long size = sftpAttrs.getSize();
-			int uid = sftpAttrs.getUId();
+			int uidAttr = sftpAttrs.getUId();
 			int hashcode = sftpAttrs.hashCode();
 			boolean isBlk = sftpAttrs.isBlk();
 			boolean isChr = sftpAttrs.isChr();
@@ -437,13 +446,13 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			boolean isReg = sftpAttrs.isReg();
 			boolean isSock = sftpAttrs.isSock();
 			sb.append(sftpAttrs.toString()).append("\n\n");
-			sb.append("permissions: ").append(permissionString).append(" (").append(permissions).append(")")
+			sb.append("permissions: ").append(permissionString).append(" (").append(permissionsAttr).append(")")
 					.append("\n");
 			sb.append("atime: ").append(aTimeString).append("\n");
 			sb.append("mtime: ").append(mTimeString).append("\n");
 			sb.append("size: ").append(size).append("\n");
-			sb.append("gid: ").append(gid).append("\n");
-			sb.append("uid: ").append(uid).append("\n");
+			sb.append("gid: ").append(gidAttr).append("\n");
+			sb.append("uid: ").append(uidAttr).append("\n");
 			sb.append("flags: ").append(flags).append("\n");
 			sb.append("is block device: ").append(isBlk).append("\n");
 			sb.append("is character device: ").append(isChr).append("\n");
@@ -492,15 +501,6 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 				Exception e = new Exception(sb.toString());
 				throw e;
 			}
-
-			// SftpATTRS attrs =channel.lstat(src);
-
-			// channel.chgrp(gid, src);
-			// channel.chmod(permissions, src);
-			// channel.chown(uid, path);
-			// channel.hardlink(oldpath, newpath);
-			// channel.lcd(src);
-			// channel.ls(path, selector);
 		} else if (SFTP_COMMAND_LRMDIR.equals(action)) {
 			String localPath = channel.lpwd();
 			String directoryName = localPath + File.separator + src;
@@ -614,8 +614,25 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 					sb.append(attrStr).append(' ').append(sizeStr).append(' ').append(lastModTimeStr).append(' ')
 							.append(file).append("\n");
 				}
-			}
+			} 
 
+		}else if (SFTP_COMMAND_VERS.equals(action)) {
+		 	int serverVersion = channel.getServerVersion();
+		 	String version= channel.version();
+		 	sb.append("Server Version:").append(serverVersion).append(" Client Version:").append(version);
+		}else if (SFTP_COMMAND_HRDL.equals(action)) {
+			channel.hardlink(src, dst);
+			sb.append(src).append(" hard linked to ").append(dst);
+		}else if (SFTP_COMMAND_CHMOD.equals(action)) {
+			channel.chmod(permissions, src);
+			sb.append("changed permssions of file '").append(src).append("' to: ").append(permissions);
+		}else if (SFTP_COMMAND_CHGRP.equals(action)) {
+			channel.chgrp(gid, src);
+			sb.append("changed group of file '").append(src).append("' to: ").append(gid);
+		}else if (SFTP_COMMAND_CHOWN.equals(action)) {
+			channel.chown(uid, src);
+			sb.append("Changed owner of file '").append(src).append("' to: ").append(uid);
+	
 		}
 
 		// res.sampleEnd();
@@ -672,4 +689,29 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	public void setConnectionName(String connectionName) {
 		this.connectionName = connectionName;
 	}
+	public String getGroupId() {
+		return Integer.toString(groupId);
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = Integer.parseInt(groupId);
+	}
+
+	public String getUserId() {
+		return Integer.toString(userId);
+	}
+
+	public void setUserId(String userId) {
+		this.userId = Integer.parseInt(userId);
+	}
+
+	public String getPermissions() {
+		return Integer.toString(permissions);
+	}
+
+	public void setPermissions(String permissions) {
+		this.permissions = Integer.parseInt(permissions);
+	}
+
+
 }

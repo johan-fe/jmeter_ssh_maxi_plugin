@@ -36,6 +36,11 @@ public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSam
 				"printFile", // $NON-NLS-1$
 				"destination" // $NON-NLS-1$
 		});
+		createPropertyGroup("fileProperties", new String[] {
+				"permissions", // $NON-NLS-1$
+				"userId", // $NON-NLS-1$
+				"groupId" // $NON-NLS-1$
+		});
 
 		PropertyDescriptor p = property("action"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
@@ -57,7 +62,12 @@ public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSam
 						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_PWD,
 						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LPWD,
 						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_STAT, 
-						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LSTAT});
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_LSTAT,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_HRDL,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_VERS,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_CHMOD,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_CHGRP,
+						SendSFTPCommandSSHSessionSampler.SFTP_COMMAND_CHOWN});
 
 		p = property("sftpSessionName"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
@@ -78,6 +88,19 @@ public class SendSFTPCommandSSHSessionSamplerBeanInfo extends AbstractSSHMainSam
 		p = property("destination"); // $NON-NLS-1$
 		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
 		p.setValue(DEFAULT, "");
+		
+		p = property("permissions"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "755");
+		
+		p = property("userId"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "500");
+		
+		p = property("groupId"); // $NON-NLS-1$
+		p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+		p.setValue(DEFAULT, "500");
+		
 
 	}
 
