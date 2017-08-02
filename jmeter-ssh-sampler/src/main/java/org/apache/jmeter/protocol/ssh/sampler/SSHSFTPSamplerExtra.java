@@ -20,7 +20,7 @@ package org.apache.jmeter.protocol.ssh.sampler;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpATTRS;
+//import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.SftpException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -124,6 +124,7 @@ public class SSHSFTPSamplerExtra extends AbstractSSHSamplerExtra {
 	 *
 	 *            Command to send to the server for execution
 	 * @return All standard output from the command
+	 * 
 	 * @throws JSchException
 	 * @throws SftpException
 	 * @throws IOException
