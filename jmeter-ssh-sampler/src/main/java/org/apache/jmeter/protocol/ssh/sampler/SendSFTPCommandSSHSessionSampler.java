@@ -223,7 +223,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 
 		try {
 			// execute the sftp command
-			responseData = this.doFileTransfer(cSftp.getChannelSftp(), source, destination,userId,groupId,permissions, res);
+			responseData = this.doSSHAction(cSftp.getChannelSftp(), source, destination,userId,groupId,permissions, res);
 
 		} catch (Exception e) {
 			byte[] responseDataBytes2 = {};
@@ -302,12 +302,24 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 	 * 
 	 * @param channel
 	 *            channel on which the sftp command is sent
+	 * @param scr
+	 * 	   source file on which the command is executed 
+	 * @param dst
+	 * 	   destination file on which the command is executed 
+	 * @param uid 
+	 * 	   numeric user id for the chown command 
+	 * @param gid
+	 *     numeric group id for the  chgrp command 
+	 * @param permiss 
+	 * 	   numeric permissions for the chmod command
+	 * @param res
+	 *     contains the result of the operation 
 	 * @return All standard output from the command
 	 * @throws JSchException
 	 * @throws SftpException
 	 * @throws IOException
 	 */
-	private String doFileTransfer(ChannelSftp channel, String src, String dst,int uid, int gid , int permissions ,SampleResult res)
+	private String doSSHAction(ChannelSftp channel, String src, String dst,int uid, int gid , int permiss ,SampleResult res)
 			throws SftpException, IOException, Exception {
 		StringBuilder sb = new StringBuilder("");
 		// ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
@@ -624,8 +636,8 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			channel.hardlink(src, dst);
 			sb.append(src).append(" hard linked to ").append(dst);
 		}else if (SFTP_COMMAND_CHMOD.equals(action)) {
-			channel.chmod(permissions, src);
-			sb.append("changed permssions of file '").append(src).append("' to: ").append(permissions);
+			channel.chmod(permiss, src);
+			sb.append("changed permssions of file '").append(src).append("' to: ").append(permiss);
 		}else if (SFTP_COMMAND_CHGRP.equals(action)) {
 			channel.chgrp(gid, src);
 			sb.append("changed group of file '").append(src).append("' to: ").append(gid);
