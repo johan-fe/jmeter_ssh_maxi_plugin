@@ -11,10 +11,16 @@
 
 	<name>ApacheJMeter_ssh</name>
 	<url>http://maven.apache.org</url>
-	<!-- <scm> <url>https://github.com/yciabaud/jmeter-ssh-sampler</url> <connection>scm:git:git://github.com/yciabaud/jmeter-ssh-sampler.git</connection> 
-		<developerConnection>scm:git:git@github.com:yciabaud/jmeter-ssh-sampler.git</developerConnection> 
-		<tag>HEAD</tag> </scm> <issueManagement> <url>https://github.com/yciabaud/jmeter-ssh-sampler/issues</url> 
-		<system>GitHub Issues</system> </issueManagement> -->
+	<scm>
+		<url>https:https://github.com/johan-fe/jmeter_ssh_maxi_plugin</url>
+		<connection>scm:git:git://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:johan-fe/jmeter_ssh_maxi_plugin.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/johan-fe/jmeter_ssh_maxi_plugin/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
 
 	<dependencies>
@@ -31,8 +37,8 @@
 			<artifactId>ApacheJMeter_core</artifactId>
 			<version>3.1</version>
 		</dependency>
-		<!--  dependency for test server-->
-				<dependency>
+		<!-- dependency for test server -->
+		<dependency>
 			<groupId>org.apache.sshd</groupId>
 			<artifactId>sshd-core</artifactId>
 			<version>0.14.0</version>
@@ -120,8 +126,7 @@
 							<target>
 								<exec executable="cmd.exe" spawn="true">
 									<arg value="/c" />
-									<arg
-										value="${jmeter_base_dir}\bin\jmeter.bat" />
+									<arg value="${jmeter_base_dir}\bin\jmeter.bat" />
 								</exec>
 							</target>
 						</configuration>
