@@ -9,9 +9,9 @@
 
 	<name>ApacheJMeter_ssh</name>
 	<url>http://maven.apache.org</url>
-	<!-- <scm> <url>https://github.com/yciabaud/jmeter-ssh-sampler</url> <connection>scm:git:git://github.com/yciabaud/jmeter-ssh-sampler.git</connection> 
-		<developerConnection>scm:git:git@github.com:yciabaud/jmeter-ssh-sampler.git</developerConnection> 
-		<tag>HEAD</tag> </scm> <issueManagement> <url>https://github.com/yciabaud/jmeter-ssh-sampler/issues</url> 
+	<!-- <scm> <url>https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</url> <connection>https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</connection> 
+		<developerConnection>scm:https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</developerConnection> 
+		<tag>HEAD</tag> </scm> <issueManagement> <url>https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</url> 
 		<system>GitHub Issues</system> </issueManagement> -->
 
 	<properties>
