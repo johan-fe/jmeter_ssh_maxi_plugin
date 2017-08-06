@@ -4,11 +4,12 @@ This version of the jmeter ssh plugin is based on https://github.com/yciabaud/jm
 
 But eventually it became so different that I started a separate repository
 Several features were added:
--Using persistent ssh sessions
--support for tunneling
--support for more sftp commands
--support for exec, shell, sftp type of channels
--added junit tests to dummy java server
+1. Using persistent ssh sessions
+2. Support for tunneling
+3. support for more sftp commands
+4. support for exec, shell, sftp type of channels
+5. support for keepalive timer for persistent connection
+6. added junit tests to dummy java server
 
 Overview
 ------------
