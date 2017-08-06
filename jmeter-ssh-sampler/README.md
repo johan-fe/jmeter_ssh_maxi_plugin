@@ -1,16 +1,23 @@
-# jmeter-ssh-sampler [![travis][travis-image]][travis-url]
+ 
 
-[travis-image]: https://travis-ci.org/yciabaud/jmeter-ssh-sampler.svg?branch=master
-[travis-url]: https://travis-ci.org/yciabaud/jmeter-ssh-sampler
+This version of the jmeter ssh plugin is based on https://github.com/yciabaud/jmeter-ssh-sampler/
+
+But eventually it became so different that I started a separate repository
+Several features were added:
+-Using persistent ssh sessions
+-support for tunneling
+-support for more sftp commands
+-support for exec, shell, sftp type of channels
+-added junit tests to dummy java server
 
 Overview
 ------------
 
-SSH Sampler for Jakarta JMeter that executes commands (eg, iostat) over an SSH session, and returns the output.
+SSH Sampler for Jakarta JMeter that executes commands (eg, ls) over a numbber of persistent SSH sessions, and returns the output.
 The output may then be parsed or logged by a listener for use elsewhere in the testing process.
 This repository is a fork of http://code.google.com/p/jmeter-ssh-sampler/ to manage pull reqests.
 
-A second component deals with SFTP to allow you to download files over SSH to assert on their content.
+A second component deals with SFTP to allow you to download files over persistent SSH connections to assert on their content.
 
 Installation
 ------------
@@ -18,7 +25,7 @@ Installation
 Installation is fairly straightforward, and only involves adding the plugin and JSch to the right directory:
 
 1. Build with maven
-2. Place the jmeter-ssh-sampler jar file into JMeter's lib/ext directory
+2. configure maven propersies so that jmeter_base_dir is set to point to the base directory of jmeter
 3. Place JSch into JMeter's lib directory
 4. Run JMeter, and find "SSH Sampler" in the Samplers category
 
@@ -53,9 +60,11 @@ Dependencies
 Maven retrieves the following dependencies:
 
 * SSH functionality is provided by the JSch library
-* JMeter 2.3+ is capable of running this plugin
+* JMeter 2.3+ is capable of running this plugin, tested mainly on 3.1
 
-
+Built with:
+-----------
+Eclipse Oxygen and Eclipse Mars on Windows
 
 Contributing
 ------------
