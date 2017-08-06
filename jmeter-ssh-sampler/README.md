@@ -1,4 +1,4 @@
- 
+# jmeter_ssh_maxi_plugin 
 
 This version of the jmeter ssh plugin is based on https://github.com/yciabaud/jmeter-ssh-sampler/
 
@@ -27,9 +27,10 @@ Installation is fairly straightforward, and only involves adding the plugin and 
 1. Build with maven
 2. configure maven propersies so that jmeter_base_dir is set to point to the base directory of jmeter
 3. Place JSch into JMeter's lib directory
-4. Run JMeter, and find "SSH Sampler" in the Samplers category
+4. build with eclipse package or copy release jar into jmeter_base_dir/ext/lib 
+4. Run JMeter, and find different samplers to open ssh connections, channels, send commands etc. in the Samplers category
 
-Usage
+Usage (to be completed)
 ------------
 
 Using the plugin is simple (assuming familiarity with SSH and JMeter):
@@ -74,4 +75,4 @@ Contributing
 3. Commit your changes (`git commit -am "Added feature"`)
 4. Push to the branch (`git push origin my_plugin`)
 5. Create an issue with a link to your branch
-6. Enjoy a refreshing Diet Coke and wait
+6. Be patient and wait
