@@ -8,11 +8,17 @@
 *.zip
 *.tar.gz
 *.rar
-/target
-!/target/ApacheJMeter_ssh-*.jar
 # Compiled class file
 *.class
+/target/antrun
+/target/generated-sources/*
+/target/generated-test-sources/*
+/target/maven-archiver/*
+/target/maven-status/*
+/target/surefire-reports/*
+!/target/ApacheJMeter_ssh-*.jar
 
+hostkey.ser
 # Log file
 *.log
 *.ser
@@ -27,3 +33,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /probleem register windows.txt
+
+
+
