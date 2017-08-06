@@ -36,17 +36,52 @@ Usage (to be completed)
 
 Using the plugin is simple (assuming familiarity with SSH and JMeter):
 
-### SSH Command
+### SSH Close Named Connection
+
+TBC
+
+### SSH Dump Connections
+
+TBC
+
+### SSH Send Command Via Exec Channel On Named SSH Connection
+
+TBC
+
+### SSH Send SFTP Command on Named SFTP channel
+
+TBC
+
+### SSH Close Persistent SFTP channel
+
+TBC
+
+### SSH Close Persistent Shell channel
+
+TBC
+
+
+
+### SSH Open Named Connection
 
 1. Create a new Test Plan
 2. Add a Thread Group
 3. Add a Sampler > SSH Command
-4. Specify the host to connect to, port, username and password (unencrypted) or a key file, and a command to execute (such as date)
+4. Specify the host to connect to, port, username and password (unencrypted) or a key file, keepalive timer, connect timeout, tunnels to set up 
+5. Add a Listener > View Results Tree
+6. Run the test
+
+### SSH Open Named Connection And Send Command On Exec Channel
+
+1. Create a new Test Plan
+2. Add a Thread Group
+3. Add a Sampler > SSH Command
+4. Specify the host to connect to, port, username and password (unencrypted) or a key file, and a command to execute via exec channel(such as date)
 5. Add a Listener > View Results Tree
 6. Run the test
 
 
-### SSH SFTP
+### SSH Open Persistent Named SFTP Channel
 
 1. Create a new Test Plan
 2. Add a Thread Group
@@ -55,6 +90,19 @@ Using the plugin is simple (assuming familiarity with SSH and JMeter):
 5. Specify a source file to download, an output file or to print the content in the test
 5. Add a Listener > View Results Tree
 6. Run the test
+
+### SSH Open Persistent Named Shell Channel
+
+TBC
+
+### SSH Persistent Shell Channel Send Command
+
+TBC
+
+### SSH Open Named Connection And Action On SFTP Channel
+
+TBC
+
 
 Dependencies
 ------------
