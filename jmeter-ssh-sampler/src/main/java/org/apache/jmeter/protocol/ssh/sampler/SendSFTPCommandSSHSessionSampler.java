@@ -329,6 +329,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 
 			if (!printFile) {
 				channel.get(src, dst);
+				sb.append("retrieved file '").append(src).append("' to '").append(dst).append("'.");
 			} else {
 				BufferedReader br = new BufferedReader(new InputStreamReader(channel.get(src)));
 				for (String line = br.readLine(); line != null; line = br.readLine()) {
@@ -348,30 +349,29 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			}
 		} else if (SFTP_COMMAND_RM.equals(action)) {
 			channel.rm(src);
+			sb.append("Successfully removed remote file '").append(src).append("'");
 		} else if (SFTP_COMMAND_RMDIR.equals(action)) {
 			channel.rmdir(src);
+			sb.append("Successfully removed remote directory '").append(src).append("'");
 		} else if (SFTP_COMMAND_RENAME.equals(action)) {
 			channel.rename(src, dst);
+			sb.append("Successfully remote file '").append(src).append("' to '").append(dst).append("'");
 		} else if (SFTP_COMMAND_CD.equals(action)) {
 			// try {
 			channel.cd(src);
-			sb.append("change to directory " + src + " succeeded");
-			// }catch(SftpException sftpe) {
-			// sb.append("change to directory "+src+" failed,
-			// "+sftpe.getMessage());
-			// }
+			sb.append("change to remote directory '" + src + "' succeeded");
 		} else if (SFTP_COMMAND_PWD.equals(action)) {
 			String workingDirectory = channel.pwd();
-			sb.append(workingDirectory);
+			sb.append("Current remote working directory is '").append(workingDirectory).append("'");
 		} else if (SFTP_COMMAND_LPWD.equals(action)) {
 			String workingDirectory = channel.lpwd();
-			sb.append(workingDirectory);
+			sb.append("Current local working directory is '").append(workingDirectory).append("'");
 		} else if (SFTP_COMMAND_LCD.equals(action)) {
 			channel.lcd(src);
-			sb.append("Changed local directory to " + src);
+			sb.append("Changed local directory to '").append(src).append("'");
 		} else if (SFTP_COMMAND_MKDIR.equals(action)) {
 			channel.mkdir(src);
-			sb.append("Created remote directory " + src);
+			sb.append("Created remote directory '" + src).append("'");
 		} else if (SFTP_COMMAND_STAT.equals(action)) {
 			SftpATTRS sftpAttrs = channel.stat(src);
 			int permissionsAttr = sftpAttrs.getPermissions();
@@ -504,9 +504,9 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			boolean result = f.mkdir();
 
 			if (result == true) {
-				sb.append("Created directory ").append(directoryName);
+				sb.append("Created directory '").append(directoryName).append("'");
 			} else {
-				sb.append("Failed to create directory ").append(directoryName);
+				sb.append("Failed to create directory '").append(directoryName).append("'");
 				if (f.exists()) {
 					sb.append(", directory already exists");
 				}
@@ -528,9 +528,9 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 			}
 
 			if (result == true) {
-				sb.append("Deleted directory ").append(directoryName);
+				sb.append("Deleted directory '").append(directoryName).append("'");
 			} else {
-				sb.append("Failed to delete directory ").append(directoryName);
+				sb.append("Failed to delete directory '").append(directoryName).append("'");
 				Exception e = new Exception(sb.toString());
 				throw e;
 			}
@@ -634,7 +634,7 @@ public class SendSFTPCommandSSHSessionSampler extends AbstractSSHMainSampler imp
 		 	sb.append("Server Version:").append(serverVersion).append(" Client Version:").append(version);
 		}else if (SFTP_COMMAND_HRDL.equals(action)) {
 			channel.hardlink(src, dst);
-			sb.append(src).append(" hard linked to ").append(dst);
+			sb.append("'").append(src).append("' hard linked to '").append(dst).append("'");
 		}else if (SFTP_COMMAND_CHMOD.equals(action)) {
 			channel.chmod(permiss, src);
 			sb.append("changed permssions of file '").append(src).append("' to: ").append(permiss);
