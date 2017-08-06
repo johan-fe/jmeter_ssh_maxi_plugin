@@ -2,7 +2,7 @@
 
 This version of the jmeter ssh plugin is based on https://github.com/yciabaud/jmeter-ssh-sampler/
 
-But eventually it became so different that I started a separate repository
+But eventually it became so different that I started a separate repository.
 Several features were added:
 1. Using persistent ssh sessions
 2. Support for tunneling
@@ -26,7 +26,7 @@ Installation
 Installation is fairly straightforward, and only involves adding the plugin and JSch to the right directory:
 
 1. Build with maven
-2. configure maven propersies so that jmeter_base_dir is set to point to the base directory of jmeter
+2. configure maven properties so that jmeter_base_dir is set to point to the base directory of jmeter
 3. Place JSch into JMeter's lib directory
 4. build with eclipse package or copy release jar into jmeter_base_dir/ext/lib 
 4. Run JMeter, and find different samplers to open ssh connections, channels, send commands etc. in the Samplers category
@@ -62,11 +62,11 @@ Dependencies
 Maven retrieves the following dependencies:
 
 * SSH functionality is provided by the JSch library
-* JMeter 2.3+ is capable of running this plugin, tested mainly on 3.1
+* JMeter 2.3+ should be capable of running this plugin, tested mainly on 3.1
 
-Built with:
+Built with
 -----------
-Eclipse Oxygen and Eclipse Mars on Windows
+Eclipse Oxygen and Eclipse Mars on Windows, but should work fine with other environments too
 
 Contributing
 ------------
