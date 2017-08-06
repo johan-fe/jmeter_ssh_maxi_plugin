@@ -1,22 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<groupId>org.apache.jmeter.protocol.ssh.sampler</groupId>
 	<artifactId>jmeter-ssh-sampler-extra</artifactId>
-	<version>1.1.2-SNAPSHOT</version>
+	<version>1.1.2-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>ApacheJMeter_ssh</name>
 	<url>http://maven.apache.org</url>
-	<!-- <scm> <url>https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</url> <connection>https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</connection> 
-		<developerConnection>scm:https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</developerConnection> 
-		<tag>HEAD</tag> </scm> <issueManagement> <url>https://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</url> 
-		<system>GitHub Issues</system> </issueManagement> -->
+	<scm>
+		<url>https:https://github.com/johan-fe/jmeter_ssh_maxi_plugin</url>
+		<connection>scm:git:git://github.com/johan-fe/jmeter_ssh_maxi_plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:johan-fe/jmeter_ssh_maxi_plugin.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/johan-fe/jmeter_ssh_maxi_plugin/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -32,8 +37,8 @@
 			<artifactId>ApacheJMeter_core</artifactId>
 			<version>3.1</version>
 		</dependency>
-		<!--  dependency for test server-->
-				<dependency>
+		<!-- dependency for test server -->
+		<dependency>
 			<groupId>org.apache.sshd</groupId>
 			<artifactId>sshd-core</artifactId>
 			<version>0.14.0</version>
@@ -96,12 +101,12 @@
 				<configuration>
 					<artifactItems>
 						<artifactItem>
-							<groupId>org.apache.jmeter.protocol.ssh.sampler</groupId>
-							<artifactId>jmeter-ssh-sampler-extra</artifactId>
-							<version>1.1.2-SNAPSHOT</version>
-							<type>jar</type>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+							<type>${project.type}</type>
 							<overWrite>true</overWrite>
-							<outputDirectory>C:\Users\id093108\Documents\_NPVR_Halo_Dynamic\jmeter3\apache-jmeter-3.1\lib\ext</outputDirectory>
+							<outputDirectory>${jmeter_base_dir}\lib\ext</outputDirectory>
 							<!-- <destFileName>optional-new-name.jar</destFileName> -->
 						</artifactItem>
 					</artifactItems>
@@ -121,8 +126,7 @@
 							<target>
 								<exec executable="cmd.exe" spawn="true">
 									<arg value="/c" />
-									<arg
-										value="C:\Users\id093108\Documents\_NPVR_Halo_Dynamic\jmeter3\apache-jmeter-3.1\bin\jmeter.bat" />
+									<arg value="${jmeter_base_dir}\bin\jmeter.bat" />
 								</exec>
 							</target>
 						</configuration>
