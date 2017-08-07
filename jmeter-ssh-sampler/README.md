@@ -65,7 +65,7 @@ A teardown thread group can be used to close SSH connections and channels opened
 ### SSH Send Command Via Exec Channel On Named SSH Connection
 
 1. ensure the SSH Open Named Connection is executed before this sampler 
-2. fill in the persisten shh connection name 
+2. fill in the persistent SSH connection name 
 3. fill in the command to execute over the exec channel
 4. fill in parameters e.g. to for stderr
 
@@ -73,7 +73,7 @@ A teardown thread group can be used to close SSH connections and channels opened
 ### SSH Dump Connections
 
 Allows you to get a list of all persistent SSH connections with the channels opened on there
-1. add a sapler in your test plan.
+1. add a sampler in your test plan.
 2. if you fill in no connection name all connections will be shown 
 3. optionally a connection name can be filled in for filtering
 
