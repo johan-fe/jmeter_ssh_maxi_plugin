@@ -59,8 +59,8 @@ A teardown thread group can be used to close SSH connections and channels opened
 
 ### SSH Close Persistent Shell channel
 
-1. fill in she shell channel name that was opened bepore
-2. fill in the ssh connection name that was opened before
+1. fill in she shell channel name that was opened before
+2. fill in the SSH connection name that was opened before
 
 ### SSH Send Command Via Exec Channel On Named SSH Connection
 
@@ -74,13 +74,43 @@ A teardown thread group can be used to close SSH connections and channels opened
 
 Allows you to get a list of all persistent SSH connections with the channels opened on there
 1. add a sampler in your test plan.
-2. if you fill in no connection name all connections will be shown 
+2. if you fill in no connection name, all connections will be shown in the dump
 3. optionally a connection name can be filled in for filtering
 
 
 ### SSH Send SFTP Command on Named SFTP channel
 
-TBC
+1. add this sampler to the test plan
+2. ensure before its execution a persistent SSH connection and sftp channel thereon is opened.
+3. enter the name of the SSH connection and the SFTP channel thereon
+4. select the command to execute
+5. enter source and destination file if needed
+6. set the file properties if you want to use chmod, chown or chgrp command
+supported commands:
+1. get
+2. put
+3. rm 
+4. rmdir
+5. local rmdir
+6. ls
+7. rename
+8. local ls -l
+9. cd
+10. local cd
+11. pwd
+12. local pwd
+13. mkdir
+14. stat
+15. lstat
+16. local ls
+17. local mkdir
+18. hard link
+19. get server and client version
+20. chmod
+21. chgrp
+22. chown
+
+
 
 ### SSH Close Persistent SFTP channel
 
