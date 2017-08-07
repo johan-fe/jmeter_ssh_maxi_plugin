@@ -35,18 +35,48 @@ Usage (to be completed)
 ------------
 
 Using the plugin is simple (assuming familiarity with SSH and JMeter):
+The samplers need to be executed in a certain order e.g. open ssh connection -open shell channel - send commands to shell channel -close shell channel -close SSH connection. 
+Persistent SSH connections, channels can be opened in a setup thread group. Opening in other thread groups is also possible, but take into account the settings of your test plan (Run thread groups consecutively,Run teardown thread groups after shutdown of main threads, Functional test mode).
+A teardown thread group can be used to close SSH connections and channels opened on these.
+
+
+### SSH Open Named Connection
+
+1. Create a new Test Plan
+2. Add a Thread Group
+3. Add a Sampler > SSH Command
+4. Specify the host to connect to, port, username and password (unencrypted) or a key file, connection timeout, 
+5. optionally define tunnels e.g. L20000:127.0.0.1:80, multiple tunnels can be setup, separate by semicolon, local and remote are supported 
+6. define the name of the connection, you need this name to set up sftp or shell channels
+7. Add a Listener > View Results Tree
+8. add an SSH Close Named Connection to you test plan that is executed after the SSH Open Named Connection
+9. Run the test
 
 ### SSH Close Named Connection
 
-TBC
+1. add this sampler to the test plan in such a way that it is executed after SSH Open Named Connection
+2. fill in the connection name used in SSH Open Named Connection
 
-### SSH Dump Connections
+### SSH Close Persistent Shell channel
 
-TBC
+1. fill in she shell channel name that was opened bepore
+2. fill in the ssh connection name that was opened before
 
 ### SSH Send Command Via Exec Channel On Named SSH Connection
 
-TBC
+1. ensure the SSH Open Named Connection is executed before this sampler 
+2. fill in the persisten shh connection name 
+3. fill in the command to execute over the exec channel
+4. fill in parameters e.g. to for stderr
+
+
+### SSH Dump Connections
+
+Allows you to get a list of all persistent SSH connections with the channels opened on there
+1. add a sapler in your test plan.
+2. if you fill in no connection name all connections will be shown 
+3. optionally a connection name can be filled in for filtering
+
 
 ### SSH Send SFTP Command on Named SFTP channel
 
@@ -55,21 +85,6 @@ TBC
 ### SSH Close Persistent SFTP channel
 
 TBC
-
-### SSH Close Persistent Shell channel
-
-TBC
-
-
-
-### SSH Open Named Connection
-
-1. Create a new Test Plan
-2. Add a Thread Group
-3. Add a Sampler > SSH Command
-4. Specify the host to connect to, port, username and password (unencrypted) or a key file, keepalive timer, connect timeout, tunnels to set up 
-5. Add a Listener > View Results Tree
-6. Run the test
 
 ### SSH Open Named Connection And Send Command On Exec Channel
 
